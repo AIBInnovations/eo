@@ -100,7 +100,9 @@ export default function useDoorComposite(
     let inflight = 0;
     let doorLoaded = 0;
     const doorTotal = Math.min(doorLastFrame, doorFrames.length - 1) + 1;
-    const report = () => window.dispatchEvent(new CustomEvent('ice:hero-progress', { detail: { loaded: doorLoaded, total: doorTotal } }));
+    // the preloader only waits for the first `gate` frames; the rest keep streaming behind the page
+    const gate = Math.min(doorTotal, 48);
+    const report = () => window.dispatchEvent(new CustomEvent('ice:hero-progress', { detail: { loaded: doorLoaded, total: doorTotal, gate } }));
     const pump = () => {
       while (inflight < concurrency && queue.length) {
         const job = queue.shift();

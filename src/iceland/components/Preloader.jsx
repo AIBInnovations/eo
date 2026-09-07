@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { lockScroll } from '../perf.js';
 
 const MIN_MS = 700;
-const MAX_MS = 9000;
+const MAX_MS = 6000;
 
 /**
  * First-load screen: the wordmark and a progress bar while the fonts and the hero's first act
@@ -42,9 +42,10 @@ export default function Preloader({ onDone }) {
       if (heroReady && fontsReady && performance.now() - started >= MIN_MS) finish();
     };
     const onHero = (e) => {
-      const { loaded, total } = e.detail;
-      setProgress((p) => Math.max(p, Math.min(0.95, loaded / total)));
-      if (loaded >= total) {
+      const { loaded, gate, total } = e.detail;
+      const need = gate || total;
+      setProgress((p) => Math.max(p, Math.min(0.95, loaded / need)));
+      if (loaded >= need) {
         heroReady = true;
         check();
       }
