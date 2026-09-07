@@ -1,0 +1,3739 @@
+/* =====================================================================================
+   EO Punjab · Iceland 2027 — theme layer on top of the reference site's design CSS.
+   Palette: cream + deep navy + restrained gold, aurora green/blue only as accents.
+   Type: Fs R everywhere (the reference site's typeface). The 1vw/em scale and the
+   991 / 767 / 479 breakpoints of the base system are kept.
+   ===================================================================================== */
+
+body.iceland {
+  --white: #f4efe6;
+  --black: #0b1f3a;
+  --cream-2: #ebe4d6;
+  --gold: #c9a227;
+  --aurora: #3fbf9f;
+  --ice: #7fb7d8;
+  --line: rgba(11, 31, 58, 0.14);
+  /* Same typeface as the reference site (Fs R) for every text role */
+  --serif: 'Fs R', sans-serif;
+  --sans: 'Fs R', sans-serif;
+  font-family: var(--sans);
+  letter-spacing: 0.01em;
+  background-color: var(--white);
+  color: var(--black);
+}
+body.iceland h1,
+body.iceland h2,
+body.iceland h3,
+body.iceland .h1_interaction,
+body.iceland .h2,
+body.iceland .h3,
+body.iceland .m_txt,
+body.iceland .title_txt,
+body.iceland .ice-h2,
+body.iceland .ice-h3,
+body.iceland .ice-h4 {
+  font-family: var(--serif);
+  font-weight: 400;
+}
+body.iceland .interaction_door canvas {
+  background-color: transparent !important;
+}
+body.iceland .ice-main > section {
+  position: relative;
+  z-index: 16;
+  background-color: var(--white);
+}
+body.iceland .ice-main > .threed_story {
+  z-index: 15;
+  background: none;
+}
+body.iceland .destination_name,
+body.iceland .city_km,
+body.iceland .h_txt,
+body.iceland .caption_txt,
+body.iceland .footer_link,
+body.iceland .title_footer,
+body.iceland .info_small,
+body.iceland .explore_link,
+body.iceland .menu_txt,
+body.iceland .mobile_link,
+body.iceland .button_base,
+body.iceland .footer_button {
+  font-family: var(--sans);
+}
+body.iceland .h_txt {
+  white-space: nowrap;
+  line-height: 1;
+  padding-top: 0.2em;
+}
+body.iceland .h_link {
+  font-size: 0.72em;
+  letter-spacing: 0.12em;
+}
+body.iceland .lf_menu {
+  width: auto;
+  margin-left: 2em;
+  margin-right: auto;
+}
+body.iceland .lf_menu .flexbox {
+  grid-column-gap: 3.5em;
+  grid-row-gap: 3.5em;
+}
+body.iceland .rg_side {
+  width: 34%;
+}
+body.iceland .logotype {
+  font-family: var(--serif);
+  font-size: 1.05em;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+body.iceland .logo_txt {
+  line-height: 1.1;
+}
+.ice-header-my {
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--gold);
+}
+.ice-brand-line {
+  opacity: 0.85;
+}
+
+/* ---------- utilities ---------- */
+.ice-eyebrow {
+  font-size: 0.72em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 0.9em;
+}
+.ice-eyebrow--light {
+  color: var(--gold);
+}
+.ice-p {
+  font-size: 1.02em;
+  line-height: 1.5;
+  letter-spacing: 0;
+  margin: 0;
+}
+.ice-muted {
+  opacity: 0.72;
+}
+.ice-small {
+  font-size: 0.82em;
+  line-height: 1.5;
+}
+.ice-mt {
+  margin-top: 1.4em;
+}
+.ice-h2 {
+  font-size: 6.2em;
+  line-height: 1.05;
+  margin: 0;
+}
+.ice-h2--big {
+  font-size: 6.6em;
+}
+.ice-h3 {
+  font-size: 1.7em;
+  line-height: 1.15;
+  margin: 0 0 0.6em;
+}
+.ice-h4 {
+  font-size: 1.5em;
+  margin: 0 0 0.7em;
+}
+.ice-headline-box {
+  margin-bottom: 0;
+}
+.ice-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 4px;
+  padding: 1.15em 2.2em 0.95em;
+  font: inherit;
+  font-size: 0.86em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.4s;
+}
+.ice-btn:hover {
+  opacity: 0.85;
+}
+.ice-btn--navy {
+  background: var(--black);
+  color: var(--white);
+}
+.ice-btn--gold {
+  background: var(--gold);
+  color: var(--black);
+}
+.ice-btn--selected {
+  background: var(--aurora);
+  color: var(--black);
+}
+.ice-link-btn {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  font-size: 0.9em;
+  color: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.ice-list {
+  margin: 1em 0 0;
+  padding-left: 1.1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45em;
+}
+.ice-list li {
+  font-size: 0.95em;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+.ice-list--two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45em 1.5em;
+}
+.ice-chips {
+  display: flex;
+  gap: 0.4em;
+  flex-wrap: wrap;
+}
+.ice-chip {
+  font-size: 0.7em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+  padding: 0.5em 0.7em 0.35em;
+}
+.ice-footnote {
+  margin-top: 2em;
+}
+
+/* ---------- floating MY ICELAND pill + panel ---------- */
+body.iceland .airplane_middle.ice-pill {
+  width: max-content;
+  min-width: 10em;
+  padding: 0 1.3em;
+  color: var(--black);
+}
+.ice-pill .glass-tint {
+  background-color: rgba(244, 239, 230, 0.82);
+}
+.ice-pill-inner {
+  position: relative;
+  z-index: 2;
+  gap: 0.55em;
+}
+.ice-pill-flag {
+  font-size: 1.1em;
+  line-height: 1;
+}
+.ice-pill-txt {
+  font-size: 0.72em;
+  letter-spacing: 0.18em;
+  font-weight: 600;
+  padding-top: 0.15em;
+}
+body.iceland .fixed_calculator.ice-panel {
+  height: auto;
+  max-width: 46em;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  max-height: calc(100vh - 6em);
+  overflow: auto;
+}
+.ice-panel .glass-tint {
+  background-color: rgba(244, 239, 230, 0.9);
+}
+.ice-panel-box {
+  position: relative;
+  z-index: 2;
+}
+
+/* ---------- hero ---------- */
+.ice-hero .headline.box_01 {
+  width: auto;
+  min-width: 0;
+  max-width: none;
+}
+.ice-hero .h1_interaction {
+  font-size: 6.4em;
+  line-height: 1.02;
+  font-weight: 400;
+  max-width: 6.2em; /* "Land of Fire" / "& Ice." */
+}
+.ice-hero .h1_interaction.second_part {
+  font-size: 4.6em;
+  max-width: 9.5em;
+}
+.ice-hero .box_in._01 {
+  width: 62%;
+}
+.ice-hero .box_in._02,
+.ice-hero .box_in._03 {
+  width: auto;
+  max-width: 62%;
+}
+.ice-hero .description {
+  width: 50ch;
+}
+.ice-hero .b_txt.white {
+  font-size: 1em;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+.ice-hero-sub {
+  color: var(--white);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.9em;
+  line-height: 1.2;
+  margin: 0.5em 0 0;
+}
+.ice-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8em;
+  margin-top: 1.6em;
+  color: var(--white);
+  font-size: 0.82em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ice-dot {
+  color: var(--gold);
+}
+.ice-hero-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.8em;
+}
+.ice-hero .button_base.invert {
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.82em;
+}
+.ice-countdown {
+  color: var(--white);
+}
+.ice-countdown-label {
+  font-size: 0.72em;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 0.8em;
+}
+.ice-countdown-grid {
+  display: flex;
+  gap: 1.6em;
+}
+.ice-countdown-value {
+  font-family: var(--serif);
+  font-size: 2.8em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.ice-countdown-unit {
+  font-size: 0.65em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-top: 0.5em;
+}
+.ice-hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(11, 31, 58, 0.6) 0%, rgba(11, 31, 58, 0.15) 45%, rgba(11, 31, 58, 0.62) 100%);
+}
+.ice-frames {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.ice-hero-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ice-hero-card .title_txt {
+  opacity: 1;
+  font-size: 1.05em;
+}
+.ice-hero-card .info_small {
+  font-size: 0.78em;
+}
+
+/* ---------- section intro rows ---------- */
+.ice-section .left_part .ice-p {
+  font-size: 0.95em;
+}
+
+/* ---------- journey ---------- */
+.ice-day-wrap {
+  padding-top: 52px;
+  padding-bottom: 62px;
+  border-top: 1px solid var(--line);
+}
+.ice-day:first-of-type .ice-day-wrap {
+  border-top: 0;
+}
+.ice-day-num {
+  font-family: var(--serif);
+  font-size: 4.4em;
+  line-height: 1;
+  font-weight: 600;
+}
+.ice-day-num span {
+  color: var(--gold);
+}
+.ice-day-date {
+  font-size: 0.85em;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin: 0.7em 0 1.6em;
+  opacity: 0.75;
+}
+.ice-day-title {
+  font-family: var(--serif);
+  font-size: 2.4em;
+  line-height: 1.1;
+  margin: 0 0 0.5em;
+  font-weight: 500;
+}
+.ice-day-sub {
+  font-size: 0.92em;
+  line-height: 1.5;
+  opacity: 0.72;
+  margin: 0;
+}
+.ice-tagline {
+  margin-top: 1.6em;
+  color: var(--gold);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.45em;
+}
+.ice-day-body {
+  width: 68.8%;
+  margin-left: auto;
+}
+body.iceland .img_blog.r_side.ice-day-img {
+  width: 100%;
+  height: 44em;
+  border-radius: 4px;
+  position: relative;
+}
+.ice-day-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 3em;
+  margin-top: 2.2em;
+}
+.ice-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9em;
+}
+.ice-timeline li {
+  display: grid;
+  grid-template-columns: 8em 1fr;
+  gap: 1.2em;
+  border-top: 1px solid var(--line);
+  padding-top: 0.9em;
+  font-size: 1em;
+  letter-spacing: 0;
+}
+.ice-time {
+  font-size: 0.76em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  padding-top: 0.35em;
+}
+.ice-time-label {
+  line-height: 1.5;
+}
+.ice-expect {
+  background: var(--cream-2);
+  border-radius: 4px;
+  padding: 1.6em;
+  align-self: start;
+}
+.ice-expect ul {
+  margin: 0;
+  padding-left: 1.1em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+.ice-expect li {
+  font-size: 0.95em;
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+.ice-journey .special_cards {
+  padding-top: 92px;
+}
+
+/* ---------- adventure ---------- */
+.ice-activity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 3.2em;
+}
+body.iceland .featured_cards.ice-activity-card {
+  height: 27em;
+}
+.ice-activity-card .content_wrapper {
+  justify-content: space-between;
+}
+.ice-activity-card .destination_name {
+  font-family: var(--serif);
+  text-transform: none;
+  font-size: 1.5em;
+  letter-spacing: 0;
+  line-height: 1.1;
+}
+.ice-activity-card .city_km {
+  margin-top: 0.5em;
+  opacity: 0.85;
+}
+.ice-activity-body {
+  padding-top: 1.4em;
+  display: flex;
+  flex-direction: column;
+}
+.ice-spec {
+  display: grid;
+  gap: 0.75em;
+  margin: 1.2em 0 1.4em;
+}
+.ice-spec dt {
+  font-size: 0.7em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+.ice-spec dd {
+  margin: 0.25em 0 0;
+  font-size: 0.92em;
+  line-height: 1.45;
+}
+.ice-activity .ice-btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* ---------- stay ---------- */
+.ice-stay .destination_name {
+  font-family: var(--serif);
+  text-transform: none;
+  font-size: 1.4em;
+  letter-spacing: 0;
+}
+.ice-stay .cont_dest_link {
+  cursor: grab;
+}
+
+/* ---------- my retreat / login ---------- */
+.ice-side-copy .ice-h2 {
+  font-size: 3.4em;
+  margin: 0 0 0.6em;
+}
+.ice-panel-card {
+  width: 60%;
+  margin-left: auto;
+  background: var(--cream-2);
+  border-radius: 6px;
+  padding: 2.8em;
+}
+.ice-login-title {
+  font-family: var(--serif);
+  font-size: 2.4em;
+  line-height: 1.1;
+  margin: 0.2em 0 0.5em;
+  font-weight: 500;
+}
+.is-compact .ice-login-title {
+  font-size: 1.8em;
+}
+.ice-login-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1em;
+}
+.ice-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-top: 1.4em;
+}
+.ice-form-row {
+  display: flex;
+  align-items: center;
+  gap: 1.4em;
+}
+.ice-field span {
+  display: block;
+  font-size: 0.7em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 0.6em;
+}
+.ice-field input {
+  width: 100%;
+  height: 52px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: #fff;
+  padding: 8px 16px 4px;
+  font: inherit;
+  font-size: 1em;
+  color: var(--black);
+}
+.ice-field input:focus {
+  outline: 0;
+  border-color: var(--black);
+}
+.ice-error {
+  margin-top: 1em;
+  color: #b3261e;
+  font-size: 0.9em;
+}
+.ice-steps {
+  list-style: none;
+  padding: 0;
+  margin: 1.2em 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  counter-reset: step;
+}
+.ice-steps li {
+  counter-increment: step;
+  font-size: 0.72em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.6em 1em 0.45em;
+}
+.ice-steps li::before {
+  content: counter(step, decimal-leading-zero) ' ';
+  color: var(--gold);
+  font-weight: 600;
+}
+.ice-steps--vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4em;
+  margin: 1.8em 0 1.4em;
+}
+.ice-record {
+  margin: 0;
+}
+.ice-record-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 1em;
+  border-top: 1px solid var(--line);
+  padding: 0.85em 0;
+}
+.ice-record dt {
+  font-size: 0.72em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding-top: 0.2em;
+}
+.ice-record dd {
+  margin: 0;
+  font-size: 0.95em;
+  line-height: 1.45;
+}
+
+/* ---------- travel desk ---------- */
+.ice-keytimes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 3.2em;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 1.8em 0;
+}
+.ice-keytime-value {
+  font-family: var(--serif);
+  font-size: 1.85em;
+  line-height: 1.15;
+}
+.ice-desk-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 2.4em;
+}
+.ice-desk-card {
+  background: var(--cream-2);
+  border-radius: 4px;
+  padding: 1.9em 1.7em;
+  min-height: 15em;
+}
+.ice-desk-card--flight {
+  background: var(--black);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+}
+.ice-desk-card--flight .ice-btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+.ice-phone {
+  display: inline-block;
+  font-family: var(--serif);
+  font-size: 1.9em;
+  color: inherit;
+  text-decoration: none;
+  margin: 0.1em 0 0.4em;
+}
+.ice-essentials {
+  padding-top: 0;
+}
+.ice-side-main {
+  width: 68.8%;
+  margin-left: auto;
+}
+.ice-note {
+  background: var(--cream-2);
+  border-left: 3px solid var(--gold);
+  padding: 1.2em 1.4em;
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 1em;
+}
+.ice-table-wrap {
+  overflow-x: auto;
+  margin-top: 2.2em;
+}
+.ice-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92em;
+}
+.ice-table caption {
+  text-align: left;
+  font-family: var(--serif);
+  font-size: 1.7em;
+  margin-bottom: 0.6em;
+}
+.ice-table th {
+  font-size: 0.72em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: left;
+  padding: 0.8em 0.8em 0.6em;
+  border-bottom: 1px solid var(--black);
+}
+.ice-table td {
+  padding: 1em 0.8em;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.ice-table td:first-child {
+  white-space: nowrap;
+  font-weight: 600;
+}
+.ice-table td:nth-child(2) {
+  min-width: 16em;
+}
+.ice-addons {
+  padding-top: 0;
+}
+.ice-addon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 2.4em;
+}
+.ice-addon {
+  text-align: left;
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1.7em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  transition: all 0.4s;
+  min-height: 15em;
+}
+.ice-addon:hover {
+  background: var(--black);
+  color: var(--white);
+}
+.ice-addon-num {
+  color: var(--gold);
+  font-size: 0.78em;
+  letter-spacing: 0.16em;
+}
+.ice-addon-name {
+  font-family: var(--serif);
+  font-size: 1.6em;
+  line-height: 1.1;
+}
+.ice-addon-text {
+  font-size: 0.92em;
+  line-height: 1.45;
+  opacity: 0.8;
+}
+.ice-addon-cta {
+  margin-top: auto;
+  padding-top: 1em;
+  font-size: 0.74em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ice-extensions {
+  padding-top: 0;
+}
+.ice-ext-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 3.2em;
+}
+.ice-ext {
+  display: flex;
+  flex-direction: column;
+}
+body.iceland .featured_cards.ice-ext-card {
+  height: 26em;
+}
+.ice-ext-card .destination_name {
+  font-family: var(--serif);
+  text-transform: none;
+  font-size: 1.6em;
+  letter-spacing: 0;
+}
+.ice-ext .ice-list {
+  margin: 1.4em 0 1.6em;
+}
+.ice-ext .ice-btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* ---------- family ---------- */
+.ice-family-head {
+  max-width: 72%;
+}
+.ice-counts {
+  display: flex;
+  gap: 4em;
+  margin: 2.2em 0 1.6em;
+}
+.ice-count-value {
+  font-family: var(--serif);
+  font-size: 4.2em;
+  line-height: 1;
+  color: var(--gold);
+}
+.ice-count-label {
+  font-size: 0.74em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  margin-top: 0.5em;
+}
+.ice-family-text {
+  max-width: 62ch;
+}
+.ice-wall {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+  margin-top: 3.4em;
+}
+.ice-wall-tile {
+  aspect-ratio: 1;
+  background: var(--cream-2);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  transition: all 0.4s;
+}
+.ice-wall-tile:hover {
+  background: var(--black);
+  color: var(--white);
+}
+.ice-wall-mono {
+  font-family: var(--serif);
+  font-size: 2.2em;
+}
+.ice-wall-name {
+  font-size: 0.7em;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* ---------- updates ---------- */
+.ice-updates-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 3.2em;
+  margin-top: 3.2em;
+}
+.ice-announcements,
+.ice-deadlines,
+.ice-downloads {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ice-announcements li {
+  border-top: 1px solid var(--line);
+  padding: 1.3em 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+}
+.ice-announcements strong {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 1.55em;
+  line-height: 1.15;
+}
+.ice-announcements .ice-eyebrow {
+  margin-bottom: 0;
+}
+.ice-deadlines {
+  margin-bottom: 2.6em;
+}
+.ice-deadlines li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  border-top: 1px solid var(--line);
+  padding: 0.95em 0;
+  font-size: 0.95em;
+}
+.ice-downloads {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
+}
+.ice-download {
+  font-size: 1em;
+  color: inherit;
+  text-decoration: underline;
+}
+.ice-faq {
+  margin-top: 4.2em;
+  max-width: 72%;
+}
+.ice-faq-item {
+  border-top: 1px solid var(--line);
+}
+.ice-faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--serif);
+  font-size: 1.55em;
+  padding: 0.75em 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+.ice-faq-item summary::-webkit-details-marker {
+  display: none;
+}
+.ice-faq-item summary::after {
+  content: '+';
+  color: var(--gold);
+}
+.ice-faq-item[open] summary::after {
+  content: '–';
+}
+.ice-faq-item p {
+  padding-bottom: 1.3em;
+  max-width: 62ch;
+}
+.ice-contacts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 4.2em;
+  border-top: 1px solid var(--black);
+  padding-top: 2.2em;
+}
+.ice-contact-name {
+  font-family: var(--serif);
+  font-size: 1.6em;
+  line-height: 1.15;
+  margin: 0.1em 0 0.3em;
+}
+
+/* ---------- footer ---------- */
+.ice-footer .h3.white {
+  font-size: 2.6em;
+}
+.ice-footer .h3.white.grey {
+  font-size: 1.3em;
+  margin-top: 0.5em;
+  font-family: var(--sans);
+}
+.ice-footer-my {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 0.1em;
+}
+.ice-last-line {
+  margin-top: 12em;
+}
+.ice-mobile-my {
+  background: none;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* =====================================================================================
+   Tablet ≤ 991px  (1em ≈ 9.9px → sizes scale up like the base system does)
+   ===================================================================================== */
+@media screen and (max-width: 991px) {
+  body.iceland .h_link {
+    font-size: 1.2em;
+  }
+  body.iceland .lf_menu .flexbox {
+    grid-column-gap: 2.4em;
+    grid-row-gap: 2.4em;
+  }
+  body.iceland .logotype {
+    font-size: 2em;
+  }
+  .ice-eyebrow,
+  .ice-countdown-label {
+    font-size: 1.2em;
+  }
+  .ice-p,
+  .ice-section .left_part .ice-p {
+    font-size: 1.65em;
+  }
+  .ice-small {
+    font-size: 1.35em;
+  }
+  .ice-h2 {
+    font-size: 7em;
+  }
+  .ice-h2--big {
+    font-size: 8.2em;
+  }
+  .ice-h3 {
+    font-size: 2.8em;
+  }
+  .ice-h4 {
+    font-size: 2.5em;
+  }
+  .ice-btn {
+    font-size: 1.45em;
+  }
+  .ice-link-btn {
+    font-size: 1.5em;
+  }
+  .ice-list li,
+  .ice-expect li {
+    font-size: 1.6em;
+  }
+  .ice-chip {
+    font-size: 1.15em;
+  }
+  body.iceland .airplane_middle.ice-pill {
+    min-width: 16em;
+    height: 5.7em;
+  }
+  .ice-pill-txt {
+    font-size: 1.25em;
+  }
+  .ice-pill-flag {
+    font-size: 2em;
+  }
+  body.iceland .fixed_calculator.ice-panel {
+    max-width: none;
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+  .ice-hero .h1_interaction {
+    font-size: 8em;
+  }
+  .ice-hero .h1_interaction.second_part {
+    font-size: 6.6em;
+  }
+  .ice-hero .box_in._01,
+  .ice-hero .box_in._02,
+  .ice-hero .box_in._03 {
+    width: 78%;
+    max-width: 78%;
+  }
+  .ice-hero .description {
+    width: 66ch;
+  }
+  .ice-hero .b_txt.white {
+    font-size: 1.65em;
+  }
+  .ice-hero-sub {
+    font-size: 3.2em;
+  }
+  .ice-stats {
+    font-size: 1.35em;
+  }
+  .ice-countdown-value {
+    font-size: 4.6em;
+  }
+  .ice-countdown-unit {
+    font-size: 1.05em;
+  }
+  .ice-hero .button_base.invert {
+    font-size: 1.4em;
+  }
+  .ice-day-num {
+    font-size: 7em;
+  }
+  .ice-day-date {
+    font-size: 1.4em;
+  }
+  .ice-day-title {
+    font-size: 3.8em;
+  }
+  .ice-day-sub {
+    font-size: 1.5em;
+  }
+  .ice-tagline {
+    font-size: 2.4em;
+  }
+  .ice-timeline li {
+    grid-template-columns: 11em 1fr;
+    font-size: 1.6em;
+  }
+  .ice-time {
+    font-size: 0.75em;
+  }
+  .ice-day-grid {
+    grid-template-columns: 1fr;
+    gap: 2.4em;
+  }
+  .ice-activity-grid,
+  .ice-addon-grid,
+  .ice-desk-grid,
+  .ice-ext-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ice-activity-card .destination_name,
+  .ice-ext-card .destination_name,
+  .ice-stay .destination_name {
+    font-size: 2.6em;
+  }
+  .ice-spec dt,
+  .ice-record dt,
+  .ice-field span,
+  .ice-steps li,
+  .ice-addon-num,
+  .ice-addon-cta,
+  .ice-count-label,
+  .ice-wall-name {
+    font-size: 1.2em;
+  }
+  .ice-spec dd,
+  .ice-record dd,
+  .ice-deadlines li,
+  .ice-addon-text {
+    font-size: 1.55em;
+  }
+  .ice-side-copy .ice-h2 {
+    font-size: 5em;
+  }
+  .ice-login-title,
+  .is-compact .ice-login-title {
+    font-size: 3.4em;
+  }
+  .ice-field input {
+    font-size: 1.6em;
+  }
+  .ice-keytime-value {
+    font-size: 2.8em;
+  }
+  .ice-phone {
+    font-size: 3em;
+  }
+  .ice-table {
+    font-size: 1.5em;
+  }
+  .ice-table caption {
+    font-size: 1.8em;
+  }
+  .ice-table th {
+    font-size: 0.8em;
+  }
+  .ice-addon-name {
+    font-size: 2.5em;
+  }
+  .ice-count-value {
+    font-size: 6.5em;
+  }
+  .ice-wall {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .ice-wall-mono {
+    font-size: 3.4em;
+  }
+  .ice-announcements strong,
+  .ice-faq-item summary,
+  .ice-contact-name {
+    font-size: 2.5em;
+  }
+  .ice-download {
+    font-size: 1.6em;
+  }
+  .ice-updates-grid {
+    grid-template-columns: 1fr;
+  }
+  .ice-footer .h3.white {
+    font-size: 4.2em;
+  }
+  .ice-footer .h3.white.grey {
+    font-size: 2em;
+  }
+}
+
+/* =====================================================================================
+   Mobile landscape ≤ 767px
+   ===================================================================================== */
+@media screen and (max-width: 767px) {
+  .ice-eyebrow,
+  .ice-countdown-label {
+    font-size: 1.7em;
+  }
+  .ice-p,
+  .ice-section .left_part .ice-p {
+    font-size: 2.2em;
+  }
+  .ice-small {
+    font-size: 1.9em;
+  }
+  .ice-h2 {
+    font-size: 8.5em;
+  }
+  .ice-h2--big {
+    font-size: 9.5em;
+  }
+  .ice-h3 {
+    font-size: 3.8em;
+  }
+  .ice-h4 {
+    font-size: 3.4em;
+  }
+  .ice-btn {
+    font-size: 2.1em;
+    width: 100%;
+  }
+  .ice-link-btn {
+    font-size: 2.1em;
+  }
+  .ice-list li,
+  .ice-expect li {
+    font-size: 2.2em;
+  }
+  .ice-list--two {
+    grid-template-columns: 1fr;
+  }
+  .ice-chip {
+    font-size: 1.7em;
+  }
+  body.iceland .airplane_middle.ice-pill {
+    min-width: 22em;
+    height: 7em;
+  }
+  .ice-pill-txt {
+    font-size: 1.9em;
+  }
+  .ice-pill-flag {
+    font-size: 3em;
+  }
+  body.iceland .fixed_calculator.ice-panel {
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+  .ice-hero .h1_interaction {
+    font-size: 10em;
+  }
+  .ice-hero .h1_interaction.second_part {
+    font-size: 8em;
+  }
+  .ice-hero .box_in._01,
+  .ice-hero .box_in._02,
+  .ice-hero .box_in._03 {
+    width: 100%;
+    max-width: 100%;
+  }
+  .ice-hero .h1_interaction,
+  .ice-hero .h1_interaction.second_part {
+    max-width: none;
+  }
+  .ice-hero .description {
+    width: 100%;
+  }
+  .ice-hero .b_txt.white {
+    font-size: 2.2em;
+  }
+  .ice-hero-sub {
+    font-size: 4.2em;
+  }
+  .ice-stats {
+    font-size: 1.9em;
+  }
+  .ice-countdown-value {
+    font-size: 6.5em;
+  }
+  .ice-countdown-unit {
+    font-size: 1.5em;
+  }
+  .ice-hero .button_base.invert {
+    font-size: 2em;
+  }
+  .ice-hero-bottom {
+    margin-top: 4em;
+  }
+  body.iceland .ice-day-side.l_side_tall {
+    width: 100%;
+    position: static;
+    padding-right: 0;
+  }
+  .ice-day-body,
+  .ice-side-main,
+  .ice-panel-card {
+    width: 100%;
+    margin-top: 3em;
+  }
+  body.iceland .img_blog.r_side.ice-day-img {
+    height: 70em;
+    margin-top: 0;
+  }
+  .ice-day-num {
+    font-size: 10em;
+  }
+  .ice-day-date {
+    font-size: 2em;
+  }
+  .ice-day-title {
+    font-size: 5.5em;
+  }
+  .ice-day-sub {
+    font-size: 2.2em;
+  }
+  .ice-tagline {
+    font-size: 3.4em;
+  }
+  .ice-timeline li {
+    grid-template-columns: 1fr;
+    gap: 0.4em;
+    font-size: 2.2em;
+  }
+  .ice-activity-grid,
+  .ice-addon-grid,
+  .ice-desk-grid,
+  .ice-ext-grid,
+  .ice-keytimes,
+  .ice-contacts {
+    grid-template-columns: 1fr;
+  }
+  body.iceland .featured_cards.ice-activity-card,
+  body.iceland .featured_cards.ice-ext-card {
+    height: 54em;
+  }
+  .ice-activity-card .destination_name,
+  .ice-ext-card .destination_name,
+  .ice-stay .destination_name {
+    font-size: 3.6em;
+  }
+  .ice-spec dt,
+  .ice-record dt,
+  .ice-field span,
+  .ice-steps li,
+  .ice-addon-num,
+  .ice-addon-cta,
+  .ice-count-label,
+  .ice-wall-name {
+    font-size: 1.7em;
+  }
+  .ice-spec dd,
+  .ice-record dd,
+  .ice-deadlines li,
+  .ice-addon-text {
+    font-size: 2.2em;
+  }
+  .ice-record-row {
+    grid-template-columns: 1fr;
+    gap: 0.3em;
+  }
+  .ice-side-copy .ice-h2 {
+    font-size: 6.5em;
+  }
+  .ice-login-title,
+  .is-compact .ice-login-title {
+    font-size: 4.6em;
+  }
+  .ice-field input {
+    font-size: 2.2em;
+  }
+  .ice-keytime-value {
+    font-size: 3.8em;
+  }
+  .ice-phone {
+    font-size: 4.2em;
+  }
+  .ice-table {
+    font-size: 2.1em;
+  }
+  .ice-table caption {
+    font-size: 1.8em;
+  }
+  .ice-addon-name {
+    font-size: 3.6em;
+  }
+  .ice-family-head,
+  .ice-faq {
+    max-width: 100%;
+  }
+  .ice-counts {
+    gap: 2.4em;
+  }
+  .ice-count-value {
+    font-size: 8em;
+  }
+  .ice-wall {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .ice-wall-mono {
+    font-size: 4.6em;
+  }
+  .ice-announcements strong,
+  .ice-faq-item summary,
+  .ice-contact-name {
+    font-size: 3.6em;
+  }
+  .ice-download {
+    font-size: 2.2em;
+  }
+  .ice-footer .h3.white {
+    font-size: 6em;
+  }
+  .ice-footer .h3.white.grey {
+    font-size: 2.8em;
+  }
+  .ice-last-line {
+    margin-top: 16em;
+  }
+}
+
+/* =====================================================================================
+   Mobile portrait ≤ 479px  (1em ≈ 3.9px on a 390px phone)
+   ===================================================================================== */
+@media screen and (max-width: 479px) {
+  .ice-eyebrow,
+  .ice-countdown-label {
+    font-size: 3.2em;
+  }
+  .ice-p,
+  .ice-section .left_part .ice-p {
+    font-size: 4.2em;
+  }
+  .ice-small {
+    font-size: 3.6em;
+  }
+  .ice-h2 {
+    font-size: 12em;
+  }
+  .ice-h2--big {
+    font-size: 13.5em;
+  }
+  .ice-h3 {
+    font-size: 6.5em;
+  }
+  .ice-h4 {
+    font-size: 6em;
+  }
+  .ice-btn {
+    font-size: 3.8em;
+    padding: 1.2em 1.6em 1em;
+  }
+  .ice-link-btn {
+    font-size: 3.8em;
+  }
+  .ice-list li,
+  .ice-expect li {
+    font-size: 4.1em;
+  }
+  .ice-chip {
+    font-size: 3.1em;
+  }
+  body.iceland .airplane_middle.ice-pill {
+    min-width: 40em;
+    height: 11em;
+  }
+  .ice-pill-txt {
+    font-size: 3.4em;
+  }
+  .ice-pill-flag {
+    font-size: 5.5em;
+  }
+  body.iceland .fixed_calculator.ice-panel {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+  .ice-hero .h1_interaction {
+    font-size: 14em;
+  }
+  .ice-hero .h1_interaction.second_part {
+    font-size: 11em;
+  }
+  .ice-hero .b_txt.white {
+    font-size: 4.2em;
+  }
+  .ice-hero-sub {
+    font-size: 6.5em;
+  }
+  .ice-stats {
+    font-size: 3.4em;
+    gap: 0.5em;
+  }
+  .ice-countdown-grid {
+    gap: 2.6em;
+  }
+  .ice-countdown-value {
+    font-size: 11em;
+  }
+  .ice-countdown-unit {
+    font-size: 2.8em;
+  }
+  .ice-hero .button_base.invert {
+    font-size: 4em;
+  }
+  .ice-hero-card .title_txt {
+    font-size: 4.4em;
+  }
+  .ice-hero-card .info_small {
+    font-size: 3.4em;
+  }
+  body.iceland .img_blog.r_side.ice-day-img {
+    height: 90em;
+  }
+  .ice-day-num {
+    font-size: 16em;
+  }
+  .ice-day-date {
+    font-size: 3.6em;
+  }
+  .ice-day-title {
+    font-size: 9em;
+  }
+  .ice-day-sub {
+    font-size: 4em;
+  }
+  .ice-tagline {
+    font-size: 6em;
+  }
+  .ice-timeline li {
+    font-size: 4.1em;
+  }
+  body.iceland .featured_cards.ice-activity-card,
+  body.iceland .featured_cards.ice-ext-card {
+    height: 76em;
+  }
+  .ice-activity-card .destination_name,
+  .ice-ext-card .destination_name,
+  .ice-stay .destination_name {
+    font-size: 6.5em;
+  }
+  .ice-spec dt,
+  .ice-record dt,
+  .ice-field span,
+  .ice-steps li,
+  .ice-addon-num,
+  .ice-addon-cta,
+  .ice-count-label,
+  .ice-wall-name {
+    font-size: 3.2em;
+  }
+  .ice-spec dd,
+  .ice-record dd,
+  .ice-deadlines li,
+  .ice-addon-text {
+    font-size: 4.1em;
+  }
+  .ice-side-copy .ice-h2 {
+    font-size: 10em;
+  }
+  .ice-login-title,
+  .is-compact .ice-login-title {
+    font-size: 8em;
+  }
+  .ice-field input {
+    font-size: 4.2em;
+  }
+  .ice-keytime-value {
+    font-size: 6.5em;
+  }
+  .ice-phone {
+    font-size: 8em;
+  }
+  .ice-table {
+    font-size: 3.9em;
+  }
+  .ice-table caption {
+    font-size: 1.6em;
+  }
+  .ice-addon-name {
+    font-size: 6.5em;
+  }
+  .ice-counts {
+    gap: 4em;
+    flex-wrap: wrap;
+  }
+  .ice-count-value {
+    font-size: 14em;
+  }
+  .ice-count-label {
+    font-size: 2.8em;
+  }
+  .ice-wall {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .ice-wall-mono {
+    font-size: 8em;
+  }
+  .ice-announcements strong,
+  .ice-faq-item summary,
+  .ice-contact-name {
+    font-size: 6.2em;
+  }
+  .ice-download {
+    font-size: 4.1em;
+  }
+  .ice-footer .h3.white {
+    font-size: 10em;
+  }
+  .ice-footer .h3.white.grey {
+    font-size: 4.6em;
+  }
+  .ice-last-line {
+    margin-top: 24em;
+  }
+}
+
+/* =====================================================================================
+   Specificity overrides (the base system's 3-class rules outrank plain media queries)
+   ===================================================================================== */
+body.iceland .h2.spec_p.ice-h2 {
+  font-size: 6.2em;
+}
+body.iceland .menu_txt {
+  white-space: nowrap;
+  font-family: var(--sans);
+}
+@media screen and (max-width: 991px) {
+  body.iceland .h2.spec_p.ice-h2 {
+    font-size: 7em;
+  }
+  body.iceland .logotype {
+    font-size: 2em;
+  }
+}
+@media screen and (max-width: 767px) {
+  body.iceland .h2.spec_p.ice-h2 {
+    font-size: 8.5em;
+  }
+  body.iceland .logotype {
+    font-size: 2.8em;
+  }
+  body.iceland .l_l_side {
+    width: auto;
+    flex: 0 1 auto;
+  }
+  body.iceland .menu_box {
+    width: auto;
+    flex: 0 0 auto;
+    position: relative;
+    z-index: 2;
+    margin-left: auto;
+  }
+}
+@media screen and (max-width: 479px) {
+  body.iceland .h2.spec_p.ice-h2 {
+    font-size: 12em;
+  }
+  body.iceland .logotype {
+    font-size: 5.2em;
+  }
+  body.iceland .menu_txt.open,
+  body.iceland .menu_txt.close {
+    font-size: 4em;
+  }
+}
+
+/* =====================================================================================
+   Internal pages — the reference site's partnership-page blocks, themed.
+   (hero with kicker headings, full-bleed .l_section statements, numbered .points_grid,
+   .flexbox.partnerships steps split, ruled .line_test list, split-lines statement + icon
+   grid, FAQ accordion, the apply form) + the home-page teaser helpers.
+   ===================================================================================== */
+
+/* ---------- buttons ---------- */
+body.iceland .button_base {
+  color: var(--black);
+  background-color: var(--white);
+  text-decoration: none;
+  display: inline-block;
+}
+body.iceland .button_base.black {
+  color: var(--white);
+  background-color: var(--black);
+}
+.ice-btn-reset {
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
+  line-height: inherit;
+}
+.ice-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8em;
+  align-items: center;
+}
+.ice-btn-row .desktop_base {
+  margin-bottom: 0;
+}
+.ice-teaser-cta {
+  display: flex;
+  justify-content: center;
+  padding: 3.2em 32px 1.5em;
+}
+.ice-teaser-cta .desktop_base {
+  margin-bottom: 0;
+}
+.ice-teaser .l_section + .ice-teaser-cta {
+  padding-top: 3.2em;
+}
+
+/* ---------- page hero ---------- */
+body.iceland .ice-page-hero {
+  background-color: var(--black);
+  color: var(--white);
+}
+.ice-page-hero .background_video .video {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+}
+.ice-hero-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ice-page-hero .background_video .overlay {
+  z-index: 3;
+  background-color: rgba(4, 14, 30, 0.42);
+}
+body.iceland .hd {
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.22em;
+}
+body.iceland .h1_partnerships {
+  line-height: 1.02;
+  margin: 0;
+}
+.ice-page-hero .partner_heading .desktop_base {
+  margin-top: 0.8em;
+  margin-bottom: 0;
+}
+.ice-page-hero .partner_heading .button_base {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8em;
+}
+
+/* ---------- full-bleed statements ---------- */
+body.iceland .l_section {
+  color: var(--white);
+}
+body.iceland .ice-lsection .overlay {
+  background-color: rgba(6, 18, 36, 0.48);
+}
+.ice-lsection--short {
+  height: 88vh;
+}
+body.iceland .tag_caption.white {
+  color: var(--gold);
+  letter-spacing: 0.16em;
+  font-weight: 600;
+}
+.ice-lsection .heading_partner.last .desktop_base {
+  margin-bottom: 0;
+}
+.ice-lsection .fullsize_image img {
+  transform: scale(1.12);
+}
+
+/* ---------- numbered points ---------- */
+body.iceland .points_grid {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+body.iceland .item_point {
+  border-right: 1px solid var(--line);
+}
+body.iceland .item_point:last-child {
+  border-right: 0;
+}
+@media screen and (min-width: 992px) {
+  .ice-points--3 .points_grid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  .ice-points--2 .points_grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+body.iceland .bullet_circle {
+  background-color: var(--black);
+  color: var(--white);
+}
+body.iceland .headline_bullet {
+  font-family: var(--serif);
+}
+.ice-point-extra {
+  margin-top: 0.9em;
+  font-size: 0.78em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+}
+.ice-point-extra .ice-link-btn {
+  font-size: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  font-weight: inherit;
+}
+
+/* ---------- steps split ---------- */
+.ice-split .left_side {
+  height: auto;
+  min-height: 100vh;
+}
+.ice-split .right_side {
+  position: sticky;
+  top: 0;
+}
+.ice-split .right_side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.1);
+}
+.ice-split--reverse .flexbox.partnerships {
+  flex-direction: row-reverse;
+}
+.ice-right-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  min-height: 100vh;
+  padding: 6em 3em;
+  background-color: var(--cream-2);
+  overflow: visible;
+}
+.ice-right-content .ice-panel-card {
+  width: 100%;
+  margin: 0;
+  background: var(--white);
+}
+@media screen and (min-width: 992px) {
+  .ice-right-content .ice-panel-card {
+    max-width: 42em;
+  }
+}
+.ice-tag {
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  margin-bottom: 0.9em;
+}
+.ice-headline-how--slim {
+  margin-bottom: 1.6em;
+}
+body.iceland .list_steps {
+  border-top-color: var(--black);
+}
+body.iceland .splitter_list {
+  background-color: var(--line);
+}
+body.iceland .letter_title {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+body.iceland .letter_title > div:first-child {
+  color: var(--gold);
+  min-width: 2.6em;
+}
+body.iceland .desc_step {
+  width: 68%;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+body.iceland .ice-stay {
+  overflow-x: clip;
+}
+body.iceland .button_base:not(.black) {
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+.ice-split .cta_box {
+  padding-top: 2.5em;
+}
+.ice-split .cta_box .m_cta .medium_txt {
+  font-size: 2em;
+}
+.ice-expect-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  align-items: center;
+}
+.ice-expect-label {
+  font-size: 0.72em;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  width: 100%;
+  margin-bottom: 0.3em;
+}
+.ice-expect-chip {
+  font-size: 0.78em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  padding: 0.6em 0.8em 0.4em;
+}
+.ice-download {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 0.2em;
+}
+
+/* ---------- ruled line list ---------- */
+body.iceland .influencers_list {
+  border-top-color: var(--line);
+}
+body.iceland .splitter_infl {
+  background-color: var(--line);
+}
+body.iceland .testimonial_txt {
+  font-family: var(--serif);
+  line-height: 1.15;
+}
+.ice-line-detail {
+  font-family: var(--sans);
+  font-size: 0.45em;
+  line-height: 1.5;
+  letter-spacing: 0;
+  margin: 0.7em 0 0;
+  opacity: 0.78;
+  max-width: 48ch;
+}
+.ice-line-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 0.16em;
+}
+.ice-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--black);
+  color: var(--gold);
+  font-size: 1.6em;
+}
+body.iceland .top_info > div:first-child {
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8em;
+  color: var(--gold);
+}
+body.iceland .top_info > div + div {
+  font-size: 0.95em;
+}
+body.iceland .payout_money > div:first-child {
+  opacity: 0.55;
+  font-size: 0.85em;
+}
+body.iceland .desc_ch .b_txt {
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+/* ---------- statement + icon grid ---------- */
+body.iceland .icon_circle.ice-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 1.8em;
+  line-height: 1;
+  background-color: var(--black);
+}
+body.iceland .title_icons {
+  color: rgba(11, 31, 58, 0.55);
+  font-size: 0.85em;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+body.iceland .desc_icon {
+  font-size: 1.1em;
+}
+.ice-statement-cta {
+  margin-top: 3.2em;
+}
+.ice-notes {
+  display: grid;
+  gap: 1.2em;
+  max-width: 70ch;
+}
+body.iceland .m_txt.split-lines {
+  font-family: var(--serif);
+}
+body.iceland .line-mask {
+  background-color: var(--white);
+}
+
+/* ---------- FAQ accordion ---------- */
+body.iceland .accordion-item.is--first {
+  border-color: var(--black);
+}
+body.iceland .accordion-item .icon_wrapper {
+  position: relative;
+}
+body.iceland .accordion-item .icon_line {
+  background-color: var(--black);
+  transition: transform 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+body.iceland .accordion-item.is-open .icon_line.is--2 {
+  transform: rotate(90deg);
+}
+body.iceland .accordion-item .item_content-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+body.iceland .accordion-item.is-open .item_content-wrapper {
+  grid-template-rows: 1fr;
+}
+body.iceland .accordion-item .accordion_paragraph {
+  min-height: 0;
+  overflow: hidden;
+  margin-top: 0;
+}
+body.iceland .accordion-item .item_paragraph {
+  padding: 0.6em 0 0.9em;
+  letter-spacing: 0;
+}
+body.iceland .item_title {
+  font-family: var(--serif);
+}
+body.iceland .q_number .item_title {
+  color: var(--gold);
+}
+
+/* ---------- form ---------- */
+body.iceland .input_box {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--cream-2);
+  border: 1px solid var(--line);
+  color: var(--black);
+  font-size: 0.95em;
+  letter-spacing: 0;
+}
+body.iceland .input_box:hover,
+body.iceland .input_box:focus {
+  background-color: #fff;
+  border-color: var(--black);
+  outline: 0;
+}
+body.iceland .input_box::placeholder {
+  color: rgba(11, 31, 58, 0.45);
+}
+body.iceland .field_txt {
+  display: block;
+}
+.ice-field-wide {
+  grid-column: 1 / -1;
+}
+body.iceland .submit_form {
+  background-color: var(--black);
+  color: var(--white);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  transition: opacity 0.4s;
+}
+body.iceland .submit_form:hover {
+  opacity: 0.85;
+}
+body.iceland .tag_form {
+  color: var(--gold);
+  letter-spacing: 0.16em;
+  font-weight: 600;
+}
+.ice-form-done {
+  background-color: var(--cream-2);
+  border-radius: 4px;
+  padding: 2em;
+  font-size: 1.3em;
+  font-family: var(--serif);
+}
+
+/* ---------- wardrobe / wall sections on the internal pages ---------- */
+.ice-wardrobe .ice-table-wrap,
+.ice-wall-section .ice-wall {
+  margin-top: 3.5em;
+}
+
+/* ---------- breakpoints ---------- */
+@media screen and (max-width: 991px) {
+  .ice-tag,
+  body.iceland .tag_caption.white {
+    font-size: 1.6em;
+  }
+  .ice-split .right_side {
+    position: static;
+    height: 72em;
+  }
+  .ice-split .left_side {
+    min-height: 0;
+  }
+  .ice-split--reverse .flexbox.partnerships {
+    flex-direction: column;
+  }
+  .ice-right-content {
+    min-height: 0;
+    height: auto;
+    padding: 5em 24px;
+  }
+  .ice-lsection--short {
+    height: 80vh;
+  }
+  .ice-page-hero .partner_heading .button_base {
+    font-size: 1.5em;
+  }
+  .ice-line-detail {
+    font-size: 0.4em;
+  }
+  .ice-expect-chip {
+    font-size: 1.5em;
+  }
+  .ice-expect-label {
+    font-size: 1.4em;
+  }
+  .ice-point-extra {
+    font-size: 1.5em;
+  }
+  body.iceland .desc_icon {
+    font-size: 2em;
+  }
+  .ice-split .cta_box .m_cta .medium_txt {
+    font-size: 2.8em;
+  }
+  .ice-form-done {
+    font-size: 2.2em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .ice-tag,
+  body.iceland .tag_caption.white {
+    font-size: 2.2em;
+  }
+  .ice-split .right_side {
+    height: 60vh;
+  }
+  .ice-lsection--short {
+    height: 72vh;
+  }
+  .ice-page-hero .partner_heading .button_base {
+    font-size: 2.1em;
+  }
+  .ice-expect-chip,
+  .ice-expect-label,
+  .ice-point-extra {
+    font-size: 2em;
+  }
+  .ice-split .cta_box .m_cta .medium_txt {
+    font-size: 3.2em;
+  }
+  .ice-teaser-cta {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  body.iceland .input_box {
+    font-size: 2.15em;
+    height: auto;
+  }
+  .ice-form-done {
+    font-size: 2.6em;
+  }
+}
+@media screen and (max-width: 479px) {
+  .ice-tag,
+  body.iceland .tag_caption.white {
+    font-size: 3.6em;
+  }
+  .ice-split .right_side {
+    height: 46vh;
+  }
+  .ice-lsection--short {
+    height: 70vh;
+  }
+  .ice-page-hero .partner_heading .button_base {
+    font-size: 4.15em;
+  }
+  .ice-expect-chip,
+  .ice-expect-label,
+  .ice-point-extra {
+    font-size: 4em;
+  }
+  .ice-split .cta_box .m_cta .medium_txt {
+    font-size: 5.5em;
+  }
+  .ice-btn-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ice-btn-row .button_base {
+    width: 100%;
+    text-align: center;
+  }
+  .ice-line-detail {
+    font-size: 0.55em;
+  }
+  body.iceland .input_box {
+    font-size: 4em;
+  }
+  body.iceland .desc_icon {
+    font-size: 4.2em;
+  }
+  .ice-form-done {
+    font-size: 5em;
+  }
+  .ice-teaser-cta {
+    padding: 3em 16px 0.5em;
+  }
+  .ice-teaser-cta .button_base {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* =====================================================================================
+   Mobile pass — fixes for overlap / clutter found in the phone audit.
+   (Later rules win at equal specificity; em sizes are relative to the 1vw body scale.)
+   ===================================================================================== */
+.ice-point-extra,
+.ice-point-extra .ice-link-btn {
+  font-size: 0.8em;
+}
+.ice-doc-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 0.2em;
+}
+.ice-notes {
+  max-width: none;
+}
+@media screen and (min-width: 992px) {
+  .ice-notes {
+    max-width: 70ch;
+  }
+}
+
+@media screen and (max-width: 991px) {
+  body.iceland .title_icons {
+    font-size: 1.9em;
+  }
+  body.iceland .icon_circle.ice-icon {
+    font-size: 3em;
+  }
+  .ice-line-detail {
+    max-width: none;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  /* hero: keep the stats and the countdown from stacking on top of each other */
+  .ice-hero .box_in._01 {
+    height: auto;
+    min-height: 0;
+  }
+  .ice-hero .txt_side {
+    justify-content: flex-start;
+    gap: 3em;
+  }
+  .ice-hero .bottom_side.ice-hero-bottom {
+    margin-top: 0;
+    position: static;
+  }
+  .ice-stats {
+    margin-bottom: 0;
+  }
+
+  /* full-bleed statements grow with their content instead of clipping it */
+  body.iceland .ice-lsection,
+  body.iceland .ice-lsection.ice-lsection--short {
+    height: auto;
+    min-height: 70vh;
+  }
+  body.iceland .ice-lsection .above_part {
+    height: auto;
+    min-height: 70vh;
+    padding-top: 26em;
+  }
+  body.iceland .ice-lsection .above_part.cta_sec {
+    padding-top: 12em;
+  }
+  body.iceland .ice-lsection .txt_bottom {
+    margin-top: 6em;
+  }
+
+  /* numbered points: no more fixed 78em-tall cells */
+  body.iceland .item_point {
+    height: auto;
+    min-height: 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  body.iceland .wrapper_point {
+    gap: 3.5em;
+    padding: 6em 20px 7em;
+  }
+  body.iceland .headline_bullet {
+    width: auto;
+  }
+  body.iceland .description_point {
+    width: auto;
+  }
+
+  /* steps split */
+  body.iceland .desc_step {
+    width: 62%;
+  }
+  body.iceland .letter_title {
+    width: 34%;
+    flex-shrink: 0;
+  }
+  body.iceland .letter_title > div:first-child {
+    min-width: 2.2em;
+  }
+
+  /* icon grid */
+  body.iceland .title_icons {
+    font-size: 2.4em;
+  }
+  body.iceland .icon_circle.ice-icon {
+    font-size: 4em;
+  }
+
+  /* wardrobe planner becomes stacked cards */
+  .ice-table-wrap {
+    overflow: visible;
+  }
+  .ice-table,
+  .ice-table tbody,
+  .ice-table tr,
+  .ice-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ice-table thead {
+    display: none;
+  }
+  .ice-table tr {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 4em 4em 5em;
+    margin-bottom: 4em;
+    background: var(--cream-2);
+  }
+  .ice-table td {
+    border: 0;
+    padding: 0 0 3.5em;
+  }
+  .ice-table td:last-child {
+    padding-bottom: 0;
+  }
+  .ice-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.7em;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 0.6em;
+  }
+  .ice-table td:first-child {
+    font-family: var(--serif);
+    font-size: 1.35em;
+  }
+
+  /* footer link columns */
+  body.iceland .div-block-2,
+  body.iceland .div-block-3 {
+    width: 100%;
+    min-width: 0;
+  }
+  body.iceland .footer_link div {
+    white-space: nowrap;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .ice-point-extra,
+  .ice-point-extra .ice-link-btn {
+    font-size: 0.8em;
+  }
+  body.iceland .title_icons {
+    font-size: 4em;
+  }
+  body.iceland .icon_circle.ice-icon {
+    font-size: 6em;
+  }
+  body.iceland .ice-lsection .above_part {
+    padding-top: 30em;
+  }
+  body.iceland .wrapper_point {
+    padding: 6em 16px 7em;
+  }
+  body.iceland .ice-page-hero .middle_headline {
+    height: auto;
+    margin-bottom: 10em;
+  }
+  body.iceland .ice-page-hero .flex_middle.spec_partners {
+    height: auto;
+    align-items: flex-start;
+    gap: 3em;
+  }
+  body.iceland .ice-page-hero .wrapper_hero.partnerships {
+    padding-top: 30em;
+    justify-content: flex-end;
+  }
+  .ice-hero .txt_side {
+    gap: 5em;
+  }
+  body.iceland .headline_bullet {
+    font-size: 5.5em;
+  }
+  body.iceland .description_point {
+    font-size: 4.2em;
+  }
+  body.iceland .line_test {
+    gap: 3em;
+  }
+  body.iceland .profile_flex {
+    height: auto;
+  }
+  body.iceland .ice-lines .payout_list:empty {
+    display: none;
+  }
+}
+
+/* ---------- photo strips ---------- */
+.ice-strip {
+  padding: 0 32px 6em;
+}
+.ice-strip--tight {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.ice-strip-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.ice-strip--4 .ice-strip-grid {
+  grid-template-columns: repeat(4, 1fr);
+}
+.ice-strip--2 .ice-strip-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.ice-strip-card {
+  margin: 0;
+  height: 30em;
+}
+.ice-strip--4 .ice-strip-card {
+  height: 26em;
+}
+.ice-strip-card .destination_name {
+  font-size: 1.5em;
+}
+.ice-strip-card .city_km {
+  opacity: 0.85;
+}
+.ice-split + .ice-strip {
+  padding-top: 16px;
+}
+@media screen and (max-width: 991px) {
+  .ice-strip {
+    padding: 0 24px 8em;
+  }
+  .ice-strip-grid,
+  .ice-strip--4 .ice-strip-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ice-strip-card,
+  .ice-strip--4 .ice-strip-card {
+    height: 40em;
+  }
+  .ice-strip-card .destination_name {
+    font-size: 2.4em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .ice-strip {
+    padding: 0 20px 8em;
+  }
+  .ice-strip-card,
+  .ice-strip--4 .ice-strip-card {
+    height: 44em;
+  }
+  .ice-strip-card .destination_name {
+    font-size: 3em;
+  }
+}
+@media screen and (max-width: 479px) {
+  .ice-strip {
+    padding: 0 16px 8em;
+  }
+  .ice-strip-grid,
+  .ice-strip--4 .ice-strip-grid,
+  .ice-strip--2 .ice-strip-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .ice-strip-card,
+  .ice-strip--4 .ice-strip-card {
+    height: 62em;
+  }
+  .ice-strip-card .destination_name {
+    font-size: 5.5em;
+  }
+}
+.ice-strip-card .overlay_continent {
+  background: linear-gradient(180deg, rgba(6, 18, 36, 0.62) 0%, rgba(6, 18, 36, 0.05) 48%, rgba(6, 18, 36, 0) 100%);
+}
+
+/* =====================================================================================
+   Redesign pass — header, type scale minimums, enquiry pill + form, real icons, teaser split.
+   ===================================================================================== */
+
+/* ---------- type scale: nothing below a readable size on desktop ---------- */
+@media screen and (min-width: 992px) {
+  .ice-eyebrow,
+  .ice-tag,
+  body.iceland .tag_caption,
+  body.iceland .caption_txt,
+  body.iceland .letter_title,
+  .ice-chip,
+  .ice-expect-chip,
+  .ice-expect-label,
+  .ice-point-extra,
+  .ice-point-extra .ice-link-btn,
+  body.iceland .title_icons,
+  body.iceland .top_info > div:first-child,
+  body.iceland .field_txt,
+  body.iceland .tag_form,
+  .ice-countdown-label,
+  .ice-countdown-unit,
+  body.iceland .info_small,
+  body.iceland .city_km,
+  .ice-field span,
+  body.iceland .payout_money > div:first-child {
+    font-size: max(0.85em, 13px);
+  }
+  body.iceland .desc_step,
+  body.iceland .description_point,
+  body.iceland .item_paragraph,
+  .ice-p,
+  body.iceland .b_txt,
+  body.iceland .desc_icon,
+  body.iceland .input_box,
+  .ice-field input,
+  .ice-field select,
+  .ice-field textarea,
+  body.iceland .footer_link,
+  body.iceland .top_info > div + div,
+  .ice-line-detail,
+  body.iceland .accordion_paragraph,
+  .ice-table,
+  .ice-small,
+  .ice-link-btn,
+  .ice-doc-link,
+  body.iceland .explore_link,
+  body.iceland .title_txt {
+    font-size: max(1.05em, 15px);
+  }
+  body.iceland .b_txt.white {
+    font-size: max(1.05em, 15px);
+  }
+  body.iceland .medium_txt.white {
+    font-size: max(2.4em, 26px);
+  }
+  body.iceland .headline_bullet {
+    font-size: max(1.6em, 20px);
+  }
+  body.iceland .item_title {
+    font-size: max(1.4em, 18px);
+  }
+  body.iceland .caption_line {
+    font-size: max(1.2em, 16px);
+  }
+  body.iceland .button_base,
+  .ice-btn {
+    font-size: max(0.9em, 13px);
+  }
+  .ice-stats {
+    font-size: max(0.82em, 13px);
+  }
+  body.iceland .bullet_circle {
+    font-size: max(1.3em, 16px);
+  }
+  .ice-strip-card .destination_name {
+    font-size: max(1.5em, 18px);
+  }
+}
+
+/* ---------- header ---------- */
+body.iceland .header.ice-header {
+  padding: 0;
+}
+body.iceland .ice-header .wrapper_header {
+  display: none;
+}
+.ice-header-bar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  padding: 1.4em 32px;
+  gap: 2em;
+}
+.ice-header-left,
+.ice-header-right {
+  display: flex;
+  align-items: center;
+  gap: 2.4em;
+  min-width: 0;
+}
+.ice-header-right {
+  justify-content: flex-end;
+}
+.ice-header-centre {
+  width: 15em;
+  min-width: 190px;
+}
+.ice-wordmark {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  text-decoration: none;
+  color: var(--white);
+  font-family: var(--serif);
+  white-space: nowrap;
+}
+.ice-wordmark-top {
+  font-size: max(1.15em, 16px);
+  letter-spacing: 0.02em;
+}
+.ice-wordmark-sub {
+  font-size: max(0.72em, 11px);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 0.35em;
+}
+.ice-nav {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+.ice-nav-link {
+  position: relative;
+  color: var(--white);
+  text-decoration: none;
+  font-size: max(0.82em, 13px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.3em 0;
+  white-space: nowrap;
+}
+.ice-nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.1em;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.ice-nav-link:hover::after,
+.ice-nav-link.is-current::after {
+  transform: scaleX(1);
+}
+.ice-nav-cta {
+  border: 1px solid rgba(244, 239, 230, 0.7);
+  background: transparent;
+  color: var(--white);
+  border-radius: 999px;
+  padding: 0.75em 1.5em 0.6em;
+  font: inherit;
+  font-size: max(0.8em, 13px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, color 0.3s;
+  white-space: nowrap;
+}
+.ice-nav-cta:hover {
+  background: var(--white);
+  color: var(--black);
+}
+.ice-menu-btn {
+  display: none;
+  background: none;
+  border: 0;
+  color: var(--white);
+  font: inherit;
+  font-size: max(0.85em, 14px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+/* ---------- pill + panel ---------- */
+body.iceland .airplane_middle.ice-pill {
+  min-width: 13em;
+  padding: 0 1.6em;
+}
+.ice-pill-txt {
+  font-size: max(0.78em, 12px);
+  letter-spacing: 0.24em;
+  font-weight: 600;
+}
+.ice-panel-box {
+  padding: 2.4em;
+}
+
+/* ---------- enquiry form ---------- */
+.ice-enquiry {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2em;
+}
+.ice-enquiry-title {
+  font-family: var(--serif);
+  font-size: max(2.2em, 26px);
+  line-height: 1.1;
+  margin: 0;
+  font-weight: 500;
+}
+.is-compact .ice-enquiry-title {
+  font-size: max(1.7em, 22px);
+}
+.ice-enquiry-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1em 1.2em;
+}
+.ice-field--wide {
+  grid-column: 1 / -1;
+}
+.ice-field select {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.85em 0.9em 0.7em;
+  font: inherit;
+  color: var(--black);
+}
+.ice-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  padding: 0.85em 0.9em 0.7em;
+  font: inherit;
+  color: var(--black);
+  resize: vertical;
+}
+.ice-field textarea:focus,
+.ice-field select:focus {
+  outline: 0;
+  border-color: var(--black);
+}
+.ice-enquiry .ice-btn {
+  align-self: flex-start;
+}
+.ice-enquiry--done {
+  align-items: flex-start;
+}
+.ice-enquiry-check {
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background: var(--aurora);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.is-compact .ice-enquiry-grid {
+  gap: 0.8em 1em;
+}
+
+/* ---------- icons ---------- */
+body.iceland .icon_circle.ice-icon {
+  color: var(--white);
+  font-size: 1em;
+  width: 62px;
+  height: 62px;
+}
+body.iceland .icon_circle.ice-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- hero text a little further left ---------- */
+body.iceland .ice-hero .txt_side {
+  margin-left: 4%;
+}
+body.iceland .ice-hero .box_in._03 {
+  margin-left: 12%;
+}
+body.iceland .ice-hero .div-block-7 {
+  position: relative;
+  z-index: 3;
+}
+
+/* ---------- home teaser split: image matches the text column's height ---------- */
+.ice-split--teaser .flexbox.partnerships {
+  align-items: stretch;
+}
+.ice-split--teaser .left_side {
+  min-height: 0;
+}
+.ice-split--teaser .right_side {
+  position: relative;
+  top: auto;
+  height: auto;
+  align-self: stretch;
+  min-height: 34em;
+}
+.ice-split--teaser .right_side img {
+  position: absolute;
+  inset: 0;
+  transform: none;
+}
+.ice-split--teaser .wrapper_left {
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+@media screen and (max-width: 991px) {
+  .ice-header-bar {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.6em 24px;
+  }
+  .ice-header-centre,
+  .ice-nav,
+  .ice-nav-cta {
+    display: none;
+  }
+  .ice-menu-btn {
+    display: block;
+  }
+  .ice-wordmark-top {
+    font-size: 2.1em;
+  }
+  .ice-wordmark-sub {
+    font-size: 1.4em;
+  }
+  .ice-menu-btn {
+    font-size: 1.9em;
+  }
+  .ice-pill-txt {
+    font-size: 1.5em;
+  }
+  body.iceland .ice-hero .txt_side {
+    margin-left: 0;
+  }
+  body.iceland .ice-hero .box_in._03 {
+    margin-left: 0;
+  }
+  .ice-enquiry-title {
+    font-size: 3.6em;
+  }
+  .is-compact .ice-enquiry-title {
+    font-size: 3em;
+  }
+  .ice-enquiry-grid {
+    grid-template-columns: 1fr;
+    gap: 1.6em;
+  }
+  .ice-field select,
+  .ice-field textarea {
+    font-size: 2.15em;
+  }
+  body.iceland .icon_circle.ice-icon {
+    width: 58px;
+    height: 58px;
+  }
+  .ice-split--teaser .right_side {
+    min-height: 0;
+    height: 72em;
+  }
+  .ice-split--teaser .right_side img {
+    position: static;
+  }
+}
+@media screen and (max-width: 767px) {
+  .ice-wordmark-top {
+    font-size: 2.8em;
+  }
+  .ice-wordmark-sub {
+    font-size: 1.8em;
+  }
+  .ice-menu-btn {
+    font-size: 2.6em;
+  }
+  .ice-pill-txt {
+    font-size: 2em;
+  }
+  .ice-enquiry-title {
+    font-size: 4.6em;
+  }
+  .is-compact .ice-enquiry-title {
+    font-size: 3.8em;
+  }
+  .ice-split--teaser .right_side {
+    height: 60vh;
+  }
+  /* hero copy legible over the footage on phones */
+  .ice-hero-shade {
+    background: linear-gradient(180deg, rgba(4, 14, 30, 0.55) 0%, rgba(4, 14, 30, 0.15) 45%, rgba(4, 14, 30, 0.6) 100%);
+  }
+}
+@media screen and (max-width: 479px) {
+  .ice-header-bar {
+    padding: 4em 16px;
+  }
+  .ice-wordmark-top {
+    font-size: 4.4em;
+  }
+  .ice-wordmark-sub {
+    font-size: 2.8em;
+  }
+  .ice-menu-btn {
+    font-size: 3.8em;
+  }
+  .ice-pill-txt {
+    font-size: 3em;
+    letter-spacing: 0.2em;
+  }
+  body.iceland .airplane_middle.ice-pill {
+    min-width: 0;
+    padding: 0 3em;
+  }
+  .ice-enquiry-title {
+    font-size: 7em;
+  }
+  .is-compact .ice-enquiry-title {
+    font-size: 5.5em;
+  }
+  .ice-field select,
+  .ice-field textarea {
+    font-size: 4em;
+  }
+  .ice-enquiry {
+    gap: 3em;
+  }
+  .ice-enquiry-grid {
+    gap: 3em;
+  }
+  .ice-split--teaser .right_side {
+    height: 46vh;
+  }
+}
+@media screen and (max-width: 991px) {
+  .ice-split .right_side.ice-right-content {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+    position: static;
+    padding: 6em 20px 8em;
+  }
+}
+@media screen and (max-width: 479px) {
+  .ice-split .right_side.ice-right-content {
+    padding: 8em 16px 10em;
+  }
+}
+
+/* ---------- step rows: one grid, one text size, aligned columns ---------- */
+body.iceland .list_steps .flexbox_line.spec_part {
+  display: grid;
+  grid-template-columns: 3.4em minmax(0, 1fr) minmax(0, 1.55fr);
+  column-gap: 1.6em;
+  align-items: start;
+  padding: 0.35em 0;
+}
+body.iceland .list_steps .letter_title {
+  display: contents;
+}
+body.iceland .list_steps .letter_title > div,
+body.iceland .list_steps .desc_step {
+  font-size: max(1.05em, 15px);
+  line-height: 1.4;
+  letter-spacing: 0;
+  width: auto;
+  margin: 0;
+  min-width: 0;
+}
+body.iceland .list_steps .letter_title > div:first-child {
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+body.iceland .list_steps .letter_title > div:nth-child(2) {
+  font-weight: 600;
+}
+body.iceland .list_steps .letter_title > div:nth-child(2):empty {
+  display: none;
+}
+body.iceland .list_steps .letter_title > div:nth-child(2):empty + .desc_step,
+body.iceland .list_steps .letter_title > div:nth-child(2):empty ~ .desc_step {
+  grid-column: 2 / -1;
+}
+body.iceland .splitter_list {
+  margin-top: 0.9em;
+  margin-bottom: 0.9em;
+}
+body.iceland .caption_line {
+  font-size: max(1.25em, 17px);
+  margin-bottom: 1em;
+}
+@media screen and (max-width: 991px) {
+  body.iceland .list_steps .flexbox_line.spec_part {
+    grid-template-columns: 4em minmax(0, 1fr);
+    column-gap: 1.2em;
+    row-gap: 0.4em;
+  }
+  body.iceland .list_steps .letter_title > div,
+  body.iceland .list_steps .desc_step {
+    font-size: 1.9em;
+  }
+  body.iceland .list_steps .desc_step {
+    grid-column: 2;
+  }
+  body.iceland .list_steps .letter_title > div:nth-child(2):empty ~ .desc_step {
+    grid-column: 2;
+  }
+  body.iceland .caption_line {
+    font-size: 2.4em;
+  }
+}
+@media screen and (max-width: 767px) {
+  body.iceland .list_steps .letter_title > div,
+  body.iceland .list_steps .desc_step {
+    font-size: 2.3em;
+  }
+  body.iceland .caption_line {
+    font-size: 2.9em;
+  }
+}
+@media screen and (max-width: 479px) {
+  body.iceland .list_steps .flexbox_line.spec_part {
+    grid-template-columns: 7em minmax(0, 1fr);
+    column-gap: 2em;
+    row-gap: 1em;
+    padding: 1em 0;
+  }
+  body.iceland .list_steps .letter_title > div,
+  body.iceland .list_steps .desc_step {
+    font-size: 4.1em;
+  }
+  body.iceland .caption_line {
+    font-size: 5em;
+  }
+}
+body.iceland .list_steps .letter_title,
+body.iceland .list_steps .letter_title:lang(en-us) {
+  font-size: 1em;
+  width: auto;
+}
+.ice-doc-link {
+  display: inline-block;
+}
+
+/* ---------- enquiry drawer (slides in from the right; full width on phones) ---------- */
+.ice-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1190;
+  background: rgba(6, 18, 36, 0.5);
+  opacity: 0;
+  visibility: hidden;
+}
+.ice-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1200;
+  width: min(520px, 100vw);
+  height: 100dvh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--white);
+  color: var(--black);
+  padding: 28px 36px 48px;
+  box-sizing: border-box;
+  box-shadow: -24px 0 60px rgba(6, 18, 36, 0.25);
+  visibility: hidden;
+}
+.ice-drawer.is-ready {
+  visibility: visible;
+}
+.ice-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+.ice-drawer-brand {
+  font-family: var(--serif);
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+.ice-drawer-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.ice-drawer-close:hover {
+  background: var(--cream-2);
+}
+/* px-based sizes inside the drawer so it reads the same on every screen */
+.ice-drawer .ice-enquiry {
+  gap: 18px;
+}
+.ice-drawer .ice-eyebrow {
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+.ice-drawer .ice-enquiry-title {
+  font-size: 26px;
+}
+.ice-drawer .ice-enquiry-grid {
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 14px;
+}
+.ice-drawer .ice-field span {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+  font-weight: 600;
+}
+.ice-drawer .ice-field input,
+.ice-drawer .ice-field select,
+.ice-drawer .ice-field textarea {
+  font-size: 15px;
+  padding: 12px 14px 10px;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: #fff;
+}
+.ice-drawer .ice-btn {
+  font-size: 13px;
+  padding: 16px 28px 14px;
+}
+.ice-drawer .ice-p {
+  font-size: 15px;
+}
+.ice-drawer .ice-link-btn {
+  font-size: 14px;
+}
+.ice-drawer .ice-enquiry-check {
+  width: 44px;
+  height: 44px;
+}
+body.iceland .fixed_calculator.ice-panel {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  .ice-drawer {
+    width: 100vw;
+    padding: 22px 20px 40px;
+    box-shadow: none;
+  }
+  .ice-drawer .ice-enquiry-grid {
+    grid-template-columns: 1fr;
+  }
+  .ice-drawer .ice-field input,
+  .ice-drawer .ice-field select,
+  .ice-drawer .ice-field textarea {
+    font-size: 16px;
+  }
+  .ice-drawer .ice-btn {
+    width: 100%;
+    font-size: 14px;
+  }
+}
+
+/* ---------- phone / tablet menu (px sizes, one column, no overlapping lines) ---------- */
+@media screen and (max-width: 991px) {
+  body.iceland .mobile_menu.ice-mobile-menu {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 890;
+    width: 100vw;
+    height: 100dvh;
+    background-color: var(--black);
+    padding: 0;
+  }
+  body.iceland .ice-mobile-menu .menu_wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 96px 0 0;
+    box-sizing: border-box;
+  }
+  body.iceland .ice-mobile-menu .mobile_links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0 24px;
+  }
+  body.iceland .ice-mobile-menu .mobile_link {
+    font-size: clamp(24px, 6.4vw, 40px);
+    line-height: 1.1;
+    padding: 4px 0;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--white);
+    text-decoration: none;
+  }
+  body.iceland .ice-mobile-menu .mobile_link.w--current {
+    color: var(--gold);
+    opacity: 1;
+  }
+  body.iceland .ice-mobile-menu .socials_mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: auto 24px 20px;
+  }
+  body.iceland .ice-mobile-menu .socials_title {
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    padding: 0;
+    color: var(--gold);
+    opacity: 1;
+  }
+  body.iceland .ice-mobile-menu .list_links {
+    margin: 0;
+  }
+  body.iceland .ice-mobile-menu .social_link {
+    font-size: 18px;
+    padding: 0;
+    font-family: var(--serif);
+  }
+  body.iceland .ice-mobile-menu .search_link {
+    border-top: 1px solid rgba(244, 239, 230, 0.25);
+  }
+  body.iceland .ice-mobile-menu .search_box.ice-mobile-my {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 22px 24px;
+    background: none;
+    border: 0;
+    color: var(--white);
+    text-align: left;
+    cursor: pointer;
+    font-size: 16px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  body.iceland .ice-mobile-menu .flexbox_link,
+  body.iceland .ice-mobile-menu .search_align,
+  body.iceland .ice-mobile-menu .search_txt {
+    width: auto;
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+  }
+}
+@media screen and (max-width: 767px) {
+  body.iceland .ice-mobile-menu .menu_wrapper {
+    padding-top: 90px;
+  }
+}
+
+/* ---------- topic chips (replaces the native dropdown) ---------- */
+.ice-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.ice-topic {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--black);
+  border-radius: 999px;
+  padding: 9px 14px 7px;
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+.ice-topic:hover {
+  border-color: var(--black);
+}
+.ice-topic.is-active {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+@media screen and (min-width: 992px) {
+  .ice-enquiry:not(.is-compact) .ice-topic {
+    font-size: max(0.9em, 14px);
+  }
+}
+@media screen and (max-width: 991px) {
+  body.iceland .ice-mobile-menu .list_links,
+  body.iceland .ice-mobile-menu .social_link,
+  body.iceland .ice-mobile-menu .socials_mobile {
+    display: flex;
+  }
+}
+
+/* =====================================================================================
+   Phone density pass — use the width: two-up grids and swipeable rows instead of one long column.
+   ===================================================================================== */
+@media screen and (max-width: 767px) {
+  /* numbered points: two columns, compact cells */
+  body.iceland .points_grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  body.iceland .item_point {
+    border-right: 1px solid var(--line);
+  }
+  body.iceland .item_point:nth-child(2n) {
+    border-right: 0;
+  }
+  body.iceland .wrapper_point {
+    gap: 14px;
+    padding: 22px 16px 24px;
+  }
+  body.iceland .bullet_circle {
+    width: 36px;
+    height: 36px;
+    font-size: 14px;
+    padding-top: 0.15em;
+  }
+  body.iceland .headline_bullet {
+    font-size: 18px;
+    line-height: 1.15;
+  }
+  body.iceland .description_point {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .ice-point-extra,
+  .ice-point-extra .ice-link-btn {
+    font-size: 12px;
+  }
+  .ice-points--3 .item_point:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    border-right: 0;
+  }
+
+  /* photo strips: one swipeable row */
+  .ice-strip {
+    padding: 0 0 40px;
+  }
+  .ice-strip-grid,
+  .ice-strip--4 .ice-strip-grid,
+  .ice-strip--2 .ice-strip-grid {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding: 0 20px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .ice-strip-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .ice-strip-card,
+  .ice-strip--4 .ice-strip-card {
+    flex: 0 0 72vw;
+    height: 60vw;
+    scroll-snap-align: start;
+  }
+  .ice-strip-card .destination_name {
+    font-size: 18px;
+  }
+  .ice-strip-card .city_km {
+    font-size: 13px;
+  }
+
+  /* wardrobe planner: swipeable cards */
+  .ice-table tbody {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding-bottom: 8px;
+    margin: 0 -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .ice-table tbody::-webkit-scrollbar {
+    display: none;
+  }
+  .ice-table tr {
+    flex: 0 0 80vw;
+    scroll-snap-align: start;
+    margin-bottom: 0;
+    padding: 18px 18px 22px;
+  }
+  .ice-table td {
+    padding: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  .ice-table td::before {
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  .ice-table td:first-child {
+    font-size: 18px;
+  }
+
+  /* full-bleed statements: shorter */
+  body.iceland .ice-lsection,
+  body.iceland .ice-lsection.ice-lsection--short {
+    min-height: 58vh;
+  }
+  body.iceland .ice-lsection .above_part {
+    min-height: 58vh;
+    padding-top: 16em;
+    padding-bottom: 24px;
+  }
+  body.iceland .ice-lsection .above_part.cta_sec {
+    padding-top: 10em;
+  }
+  body.iceland .ice-lsection .txt_bottom {
+    margin-top: 4em;
+  }
+  #stays .ice-lsection {
+    min-height: 50vh;
+  }
+  #stays .ice-lsection .above_part {
+    min-height: 50vh;
+    padding-top: 12em;
+  }
+
+  /* split image */
+  .ice-split .right_side {
+    height: 42vh;
+  }
+
+  /* icon grid: tighter */
+  body.iceland .grid_icons {
+    grid-row-gap: 22px;
+    grid-column-gap: 16px;
+  }
+  body.iceland .icon_circle.ice-icon {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 10px;
+  }
+  body.iceland .icon_circle.ice-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  body.iceland .title_icons {
+    font-size: 12px;
+  }
+  body.iceland .desc_icon {
+    font-size: 15px;
+  }
+  body.iceland .cms_icons {
+    margin-top: 28px;
+  }
+
+  /* section spacing */
+  body.iceland .wrapper_base {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  body.iceland .ice-teaser .wrapper_base.spec_cms {
+    padding-bottom: 20px;
+  }
+  .ice-teaser-cta {
+    padding-top: 24px;
+    padding-bottom: 8px;
+  }
+  body.iceland .list_influencers {
+    margin-top: 24px;
+  }
+  body.iceland .splitter_infl {
+    margin: 12px 0;
+  }
+  body.iceland .r_side_bg .desc_ch {
+    margin-top: 10px;
+  }
+}
+@media screen and (max-width: 479px) {
+  body.iceland .points_grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  body.iceland .item_point {
+    height: auto;
+    border-right: 1px solid var(--line);
+  }
+  body.iceland .item_point:nth-child(2n) {
+    border-right: 0;
+  }
+  body.iceland .headline_bullet {
+    font-size: 17px;
+    width: auto;
+  }
+  body.iceland .description_point {
+    font-size: 13.5px;
+  }
+  body.iceland .bullet_circle {
+    font-size: 13px;
+  }
+  body.iceland .ice-lsection .above_part {
+    padding-top: 18em;
+  }
+  #stays .ice-lsection .above_part {
+    padding-top: 14em;
+  }
+  .ice-split .right_side {
+    height: 40vh;
+  }
+  .ice-strip-grid,
+  .ice-strip--4 .ice-strip-grid,
+  .ice-strip--2 .ice-strip-grid {
+    padding: 0 16px;
+  }
+  .ice-strip-card,
+  .ice-strip--4 .ice-strip-card {
+    flex: 0 0 76vw;
+    height: 64vw;
+  }
+  .ice-table tbody {
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+/* ---------- phones: nothing scrolls sideways; strips and wardrobe become two-up grids ---------- */
+@media screen and (max-width: 991px) {
+  /* clip (not hidden): hidden would make body a scroll container and break the sticky hero canvas */
+  html,
+  body.iceland {
+    overflow-x: clip;
+  }
+  body.iceland .ice-stay,
+  body.iceland .destinations_slider {
+    overflow: hidden;
+  }
+}
+@media screen and (max-width: 767px) {
+  .ice-strip-grid,
+  .ice-strip--4 .ice-strip-grid,
+  .ice-strip--2 .ice-strip-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    overflow: visible;
+    padding: 0 20px;
+    scroll-snap-type: none;
+  }
+  .ice-strip-card,
+  .ice-strip--4 .ice-strip-card {
+    flex: none;
+    width: auto;
+    height: 50vw;
+  }
+  .ice-strip-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    height: 54vw;
+  }
+  .ice-strip-card .destination_name {
+    font-size: 16px;
+  }
+  .ice-strip-card .city_km {
+    font-size: 12px;
+  }
+  .ice-table tbody {
+    display: block;
+    overflow: visible;
+    margin: 0;
+    padding: 0;
+    scroll-snap-type: none;
+  }
+  .ice-table tr {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    flex: none;
+    margin-bottom: 10px;
+    padding: 16px 16px 18px;
+  }
+  .ice-table td {
+    padding: 0 0 10px;
+  }
+  .ice-table td:last-child {
+    padding-bottom: 0;
+  }
+}
+@media screen and (max-width: 479px) {
+  .ice-strip-grid,
+  .ice-strip--4 .ice-strip-grid,
+  .ice-strip--2 .ice-strip-grid {
+    padding: 0 16px;
+    gap: 8px;
+  }
+  .ice-strip-card,
+  .ice-strip--4 .ice-strip-card {
+    height: 52vw;
+  }
+  .ice-strip-card:last-child:nth-child(odd) {
+    height: 56vw;
+  }
+}
+.ice-stay-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 20px;
+}
+.ice-stay-grid .ice-strip-card {
+  height: 50vw;
+}
+@media screen and (max-width: 479px) {
+  .ice-stay-grid {
+    padding: 0 16px;
+    gap: 8px;
+  }
+  .ice-stay-grid .ice-strip-card {
+    height: 52vw;
+  }
+}

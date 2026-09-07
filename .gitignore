@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+.vercel
+# raw source material (original video / PDFs / poster PNGs) and the old public copy — not part of the site
+source/
+public copy/

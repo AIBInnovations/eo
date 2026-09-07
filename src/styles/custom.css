@@ -1,0 +1,116 @@
+/* Custom-code styles that were embedded in the Webflow page (scrollbar, split-lines mask,
+   Splide overrides, hero canvas, custom cursor). Values are verbatim from the source. */
+
+::-webkit-scrollbar-button {
+  transition: 0ms !important;
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  background: transparent;
+  opacity: 0;
+}
+::-webkit-resizer {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.cont-link .ex-text {
+  pointer-events: none;
+}
+
+/* --- SplitType line reveal --- */
+.line {
+  position: relative;
+}
+.interaction_door canvas {
+  background-color: #000 !important;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+}
+.line-mask {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #f1f1f1;
+  opacity: 0.65;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+}
+
+/* --- Splide overrides --- */
+.splide__track {
+  overflow: visible;
+}
+.splide__arrows {
+  display: none !important;
+}
+.splide__pagination {
+  display: none !important;
+}
+
+/* --- Custom Cursor Styles --- */
+#cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  transition: transform 0.2s cubic-bezier(0.19, 1, 0.22, 1), width 0.3s ease, height 0.3s ease;
+}
+#cursor-outline {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  z-index: 9998;
+  transition: all 0.1s ease-out;
+}
+#cursor-dot.hover {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  mix-blend-mode: difference;
+}
+#cursor-outline.hover {
+  mix-blend-mode: difference;
+  border: 2px solid white;
+}
+
+/* Memberstack-gated elements that never render for logged-out visitors */
+[data-ms-content='members'] {
+  display: none !important;
+}
+
+/* Lenis (0.2.x) */
+html.lenis {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
