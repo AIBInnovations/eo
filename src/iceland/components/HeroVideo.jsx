@@ -3,7 +3,17 @@ import useDoorComposite from '../hooks/useDoorComposite.js';
 import Countdown from './Countdown.jsx';
 import { hero, heroFrames, doorFrames, heroFramesSm, doorFramesSm } from '../data/retreat.js';
 import { LOW_POWER } from '../perf.js';
-import { scrollToHash } from '../router.jsx';
+
+/** Nudge the page down by a little over half a screen (enough to start the door opening). */
+const nudgeDown = () => {
+  const target = scrollTop() + window.innerHeight * 0.6;
+  const lenis = window.__lenis;
+  const scroller = getScroller();
+  if (lenis && lenis.scrollTo && !scroller) lenis.scrollTo(target);
+  else (scroller || window).scrollTo({ top: target, behavior: 'smooth' });
+};
+import { ArrowDown } from 'lucide-react';
+import { getScroller, scrollTop } from '../perf.js';
 
 /**
  * Same architecture as the reference hero: three full-viewport story panels (100vh / 200vh / 100vh)
@@ -52,9 +62,10 @@ export default function HeroVideo() {
               </div>
               <div className="bottom_side ice-hero-bottom">
                 <Countdown target={hero.startsAt} />
-                <a href="#journey" className="button_base invert color-inversion-target w-inline-block" onClick={(e) => scrollToHash(e, '#journey')}>
-                  <div>Explore the Journey</div>
-                </a>
+                <button type="button" className="ice-scroll-cue color-inversion-target" onClick={nudgeDown} aria-label="Scroll down to explore">
+                  <span className="ice-scroll-cue-txt">Explore</span>
+                  <ArrowDown className="ice-scroll-cue-arrow" size={18} strokeWidth={1.8} aria-hidden="true" />
+                </button>
               </div>
             </div>
           </div>

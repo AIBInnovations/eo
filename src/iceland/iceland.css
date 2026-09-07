@@ -4154,9 +4154,7 @@ body.iceland .fixed_calculator.ice-panel {
     order: 2;
     margin-top: 5em;
   }
-  .ice-hero .ice-hero-bottom .button_base {
-    order: 1;
-  }
+
 }
 @media screen and (max-width: 767px) {
   /* countdown at the very bottom of the first panel, just above the card */
@@ -4199,5 +4197,79 @@ body.iceland .fixed_calculator.ice-panel {
   body.iceland .ice-hero-card .wrapper_destination {
     width: 100%;
     padding-right: 0;
+  }
+}
+
+/* ---------- hero scroll cue (replaces the big button) ---------- */
+.ice-hero .ice-hero-bottom {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 4em;
+}
+.ice-scroll-cue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  border: 1px solid rgba(244, 239, 230, 0.7);
+  background: rgba(244, 239, 230, 0.06);
+  color: var(--white);
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background 0.3s, border-color 0.3s;
+}
+.ice-scroll-cue:hover {
+  background: rgba(244, 239, 230, 0.16);
+  border-color: var(--white);
+}
+.ice-scroll-cue-txt {
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding-top: 2px;
+}
+.ice-scroll-cue-arrow {
+  animation: ice-bob 1.6s ease-in-out infinite;
+}
+@keyframes ice-bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ice-scroll-cue-arrow {
+    animation: none;
+  }
+}
+@media screen and (max-width: 767px) {
+  .ice-hero .ice-hero-bottom {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .ice-hero .ice-hero-bottom .ice-countdown {
+    order: 0;
+    margin-top: 0;
+  }
+  .ice-scroll-cue {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 4px;
+  }
+  .ice-scroll-cue-txt {
+    font-size: 9px;
   }
 }
