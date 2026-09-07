@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /?page=travel
+Sitemap: https://eo-delta-henna.vercel.app/sitemap.xml

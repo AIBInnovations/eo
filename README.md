@@ -25,6 +25,9 @@ the deep links.
 | `/adventure` | Choose Your Adventure | The four Day 4 breakouts with duration, level, wear, age and "Select My Activity" |
 | `/stay` | Stay & Experiences | Full-bleed photograph per place (EDITION, Aurora Basecamp, Langjökull, Sky Lagoon, Harpa, Golden Circle) + add-ons |
 | `/enquire` | Enquire | The enquiry form (name, mobile, e-mail, topic, message), how it works, who answers |
+| `/privacy`, `/terms` | Legal | Plain-language privacy policy and terms (`data/legal.js`, fill in the chapter's registered address) |
+| `/thank-you` | Thank you | Shown after the enquiry form is sent |
+| anything else | 404 | Custom not-found page (Vercel rewrites every path to `index.html`, so the app renders it) |
 | `/travel-desk` | Travel Desk | Key times, EaseMyTrip contact, the nine topics, Iceland Essentials, wardrobe planner, add-ons, the three extensions with PDFs |
 | `/family` | The EO Punjab Family | "112 People. One Iceland Adventure.", counts, the member wall, photo form |
 | `/updates` | Updates & Help | Announcements, deadlines, downloads, full FAQ, contacts, President and Retreat Chairs, help form |
@@ -74,6 +77,17 @@ source/                     (git-ignored) original video, PDFs and poster PNGs
   `iceland.css` holds the phone-specific fixes (stacked wardrobe planner, auto-height points grid, full-bleed sections).
 - Forms are front-end previews; connect `EnquiryForm.jsx` (and the Updates/Family forms) to the retreat desk's inbox or WhatsApp.
 - Deploy: `vercel.json` rewrites every path to `index.html` (client-side routing) and caches the frame / lottie / video folders for a year.
+- Launch checklist in place: per-page title/description/canonical + Open Graph/Twitter tags (`data/meta.js`, `public/og.jpg`),
+  favicon set + `site.webmanifest`, `robots.txt`, `sitemap.xml`, custom 404, thank-you page, privacy + terms pages,
+  cookie/consent bar (Vercel Web Analytics only loads after "Accept"), sticky phone CTA, form validation + sending state,
+  and a first-load preloader that waits for the fonts and the door frames. `SITE_URL` in `data/meta.js`, `robots.txt`
+  and `sitemap.xml` all carry the production URL: change all three when a custom domain is added.
+- Performance: photographs are 1600 px masters + 800 px variants (`assets/iceland/sm`, served through `blocks/Pic.jsx`
+  with `srcset`); phones and low-power devices (`perf.js`) get half-rate 720 px hero frames and 960 px door frames,
+  a DPR-capped canvas, no SVG glass distortion, no split-line scrubbing and no custom cursor. Frames stream through a
+  small download queue (door first, reporting progress to the preloader).
+- Phones and tablets scroll inside a fixed container (`#ice-scroller`, see `perf.js`) so the browser's address bar
+  never collapses and shifts the layout; Lenis and every ScrollTrigger measure against that container there.
 
 ---
 

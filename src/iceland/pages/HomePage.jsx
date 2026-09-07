@@ -6,12 +6,10 @@ import SectionHead from '../blocks/SectionHead.jsx';
 import StepsSplit from '../blocks/StepsSplit.jsx';
 import PointsGrid from '../blocks/PointsGrid.jsx';
 import LSection from '../blocks/LSection.jsx';
-import Statement from '../blocks/Statement.jsx';
 import LineList from '../blocks/LineList.jsx';
 import Btn from '../blocks/Btn.jsx';
 import { days, activities, keyTimes, flightDesk, family, announcements } from '../data/retreat.js';
-import { deskIcons, pageImages } from '../data/pages.js';
-import { useEnquiry } from '../EnquiryContext.jsx';
+import { pageImages } from '../data/pages.js';
 
 /**
  * Home: the scrubbed door → Iceland hero, then one short, design-led teaser per section of the brief.
@@ -19,7 +17,6 @@ import { useEnquiry } from '../EnquiryContext.jsx';
  */
 export default function HomePage() {
   useSplitLines(null);
-  const { openPanel } = useEnquiry();
 
   return (
     <>
@@ -67,20 +64,16 @@ export default function HomePage() {
           <SectionHead text="The answers to everything members ask, in one place." title="Travel Desk" caption="Plan · Pack · Arrive" />
         </div>
         <PointsGrid columns={3} items={keyTimes.map((k) => ({ title: k.value, text: k.label }))} />
-        <Statement
-          title="Before you fly."
-          icons={deskIcons}
-          cta={
-            <div className="ice-btn-row">
-              <Btn to="/travel-desk" dark>
-                Open the Travel Desk
-              </Btn>
-              <Btn href={flightDesk.tel}>
-                {flightDesk.agency} · {flightDesk.phone}
-              </Btn>
-            </div>
-          }
-        />
+        <div className="ice-teaser-cta">
+          <div className="ice-btn-row">
+            <Btn to="/travel-desk" dark>
+              Open the Travel Desk
+            </Btn>
+            <Btn href={flightDesk.tel}>
+              {flightDesk.agency} · {flightDesk.phone}
+            </Btn>
+          </div>
+        </div>
       </section>
 
       {/* 5 · The EO Punjab Family */}
@@ -114,23 +107,6 @@ export default function HomePage() {
         />
       </section>
 
-      {/* 7 · Enquire */}
-      <section className="ice-section ice-teaser" id="enquire">
-        <LSection
-          title="Questions? Ask the retreat desk."
-          text="Flights, rooms, breakouts, extensions or anything else about Iceland 2027. One form, one reply."
-          cta={
-            <div className="ice-btn-row">
-              <Btn onClick={() => openPanel('')}>Enquire now</Btn>
-              <Btn to="/enquire" dark>
-                Enquiry page
-              </Btn>
-            </div>
-          }
-          image={pageImages.reykjavikCity}
-          alt="Reykjavík street with Hallgrímskirkja"
-        />
-      </section>
     </>
   );
 }

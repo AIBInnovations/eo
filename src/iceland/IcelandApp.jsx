@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { inject } from '@vercel/analytics';
 import useLenis from '../hooks/useLenis.js';
 import CustomCursor from '../components/CustomCursor.jsx';
 import { EnquiryProvider } from './EnquiryContext.jsx';
@@ -7,6 +9,11 @@ import IcelandHeader from './components/IcelandHeader.jsx';
 import IcelandMobileMenu from './components/IcelandMobileMenu.jsx';
 import EnquirySwitcher from './components/EnquirySwitcher.jsx';
 import IcelandFooter from './components/IcelandFooter.jsx';
+import Preloader from './components/Preloader.jsx';
+import CookieBanner, { readConsent } from './components/CookieBanner.jsx';
+import MobileCta from './components/MobileCta.jsx';
+import { USE_SCROLLER, SCROLLER_SELECTOR, LOW_POWER } from './perf.js';
+import { pageMeta, SITE_URL, OG_IMAGE } from './data/meta.js';
 import HomePage from './pages/HomePage.jsx';
 import JourneyPage from './pages/JourneyPage.jsx';
 import AdventurePage from './pages/AdventurePage.jsx';
@@ -15,17 +22,46 @@ import EnquiryPage from './pages/EnquiryPage.jsx';
 import TravelDeskPage from './pages/TravelDeskPage.jsx';
 import FamilyPage from './pages/FamilyPage.jsx';
 import UpdatesPage from './pages/UpdatesPage.jsx';
+import LegalPage from './pages/LegalPage.jsx';
+import NotFoundPage from './pages/NotFoundPage.jsx';
+import ThankYouPage from './pages/ThankYouPage.jsx';
 import './iceland.css';
 
+// Phones/tablets scroll inside a fixed container (see perf.js); every ScrollTrigger must measure against it.
+if (USE_SCROLLER) ScrollTrigger.defaults({ scroller: SCROLLER_SELECTOR });
+
 const PAGES = {
-  home: { component: HomePage, title: 'Iceland 2027 · EO Punjab Retreat' },
-  journey: { component: JourneyPage, title: 'The Journey · Iceland 2027' },
-  adventure: { component: AdventurePage, title: 'Choose Your Adventure · Iceland 2027' },
-  stay: { component: StayPage, title: 'Stay & Experiences · Iceland 2027' },
-  enquire: { component: EnquiryPage, title: 'Enquire · Iceland 2027' },
-  'travel-desk': { component: TravelDeskPage, title: 'Travel Desk · Iceland 2027' },
-  family: { component: FamilyPage, title: 'The EO Punjab Family · Iceland 2027' },
-  updates: { component: UpdatesPage, title: 'Updates & Help · Iceland 2027' },
+  home: HomePage,
+  journey: JourneyPage,
+  adventure: AdventurePage,
+  stay: StayPage,
+  enquire: EnquiryPage,
+  'travel-desk': TravelDeskPage,
+  family: FamilyPage,
+  updates: UpdatesPage,
+  privacy: () => <LegalPage kind="privacy" />,
+  terms: () => <LegalPage kind="terms" />,
+  'thank-you': ThankYouPage,
+  'not-found': NotFoundPage,
+};
+
+const setMeta = (attr, key, content) => {
+  let el = document.head.querySelector(`meta[${attr}="${key}"]`);
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute(attr, key);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
+};
+const setCanonical = (href) => {
+  let el = document.head.querySelector('link[rel="canonical"]');
+  if (!el) {
+    el = document.createElement('link');
+    el.setAttribute('rel', 'canonical');
+    document.head.appendChild(el);
+  }
+  el.setAttribute('href', href);
 };
 
 function Shell() {
@@ -33,24 +69,56 @@ function Shell() {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = useCallback(() => setMenuOpen((v) => !v), []);
   const closeMenu = useCallback(() => setMenuOpen(false), []);
-  const entry = PAGES[page] || PAGES.home;
-  const Page = entry.component;
+  const Page = PAGES[page] || NotFoundPage;
+  const [loading, setLoading] = useState(true);
+  const onLoaded = useCallback(() => setLoading(false), []);
+  const [consent, setConsent] = useState(readConsent);
 
+  // per-page <title>, description, canonical and Open Graph / Twitter tags
   useEffect(() => {
-    document.title = entry.title;
+    const m = pageMeta[page] || pageMeta['not-found'];
+    const url = SITE_URL + (path === '/' ? '/' : path);
+    document.title = m.title;
     document.body.dataset.page = page;
-  }, [entry, page]);
+    setMeta('name', 'description', m.description);
+    setMeta('property', 'og:title', m.title);
+    setMeta('property', 'og:description', m.description);
+    setMeta('property', 'og:url', url);
+    setMeta('property', 'og:image', OG_IMAGE);
+    setMeta('property', 'og:type', 'website');
+    setMeta('name', 'twitter:card', 'summary_large_image');
+    setMeta('name', 'twitter:title', m.title);
+    setMeta('name', 'twitter:description', m.description);
+    setMeta('name', 'twitter:image', OG_IMAGE);
+    setMeta('name', 'robots', page === 'not-found' || page === 'thank-you' ? 'noindex' : 'index,follow');
+    setCanonical(url);
+  }, [page, path]);
+
+  // analytics only after consent (cookieless, but we still ask)
+  useEffect(() => {
+    if (consent === 'accepted' && !window.__iceAnalytics) {
+      window.__iceAnalytics = true;
+      inject({ mode: import.meta.env.PROD ? 'production' : 'development' });
+    }
+  }, [consent]);
 
   return (
     <>
-      <CustomCursor />
+      {loading && <Preloader onDone={onLoaded} />}
+      {!LOW_POWER && <CustomCursor />}
       <IcelandMobileMenu open={menuOpen} onClose={closeMenu} />
       <EnquirySwitcher />
       <IcelandHeader menuOpen={menuOpen} onToggleMenu={toggleMenu} />
-      <main className={`ice-main ice-main--${page}`} key={path}>
-        <Page />
-      </main>
-      <IcelandFooter />
+      <MobileCta hidden={menuOpen || loading} />
+      {!loading && <CookieBanner onChange={setConsent} />}
+      <div id="ice-scroller" className={USE_SCROLLER ? 'ice-scroller' : undefined}>
+        <div className="ice-scroller-inner">
+          <main className={`ice-main ice-main--${page}`} key={path}>
+            <Page />
+          </main>
+          <IcelandFooter />
+        </div>
+      </div>
     </>
   );
 }
@@ -62,7 +130,7 @@ function Shell() {
  * themed in cream + deep navy + restrained gold.
  */
 export default function IcelandApp() {
-  useLenis();
+  useLenis({ wrapper: USE_SCROLLER ? SCROLLER_SELECTOR : null });
 
   useEffect(() => {
     document.body.classList.add('iceland');

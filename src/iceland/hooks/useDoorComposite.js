@@ -18,7 +18,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function useDoorComposite(
   containerRef,
   triggerRef,
-  { doorFrames, videoFrames, start = 'top top', end = 'bottom top', doorEnd = 0.42, fade = 0.06, doorLastFrame = 230, smoothing = 0.16, poster }
+  { doorFrames, videoFrames, start = 'top top', end = 'bottom top', doorEnd = 0.42, fade = 0.06, doorLastFrame = 230, smoothing = 0.16, poster, dprCap = 2, concurrency = 8 }
 ) {
   const stateRef = useRef({ target: 0, current: 0 });
 
@@ -41,7 +41,7 @@ export default function useDoorComposite(
     let lastKey = '';
 
     const size = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
       const { width, height } = container.getBoundingClientRect();
       canvas.width = Math.round(width * dpr);
       canvas.height = Math.round(height * dpr);
@@ -94,19 +94,46 @@ export default function useDoorComposite(
       dirty = false;
     };
 
-    const load = (arr, urls, i, priority) => {
+    // Frames stream in through a small queue (instead of ~1000 simultaneous requests): the door first,
+    // reporting progress for the preloader, then the footage.
+    const queue = [];
+    let inflight = 0;
+    let doorLoaded = 0;
+    const doorTotal = Math.min(doorLastFrame, doorFrames.length - 1) + 1;
+    const report = () => window.dispatchEvent(new CustomEvent('ice:hero-progress', { detail: { loaded: doorLoaded, total: doorTotal } }));
+    const pump = () => {
+      while (inflight < concurrency && queue.length) {
+        const job = queue.shift();
+        inflight += 1;
+        job(() => {
+          inflight -= 1;
+          pump();
+        });
+      }
+    };
+    const load = (arr, urls, i, isDoor) => {
       if (arr[i]) return;
       const img = new Image();
       img.decoding = 'async';
-      if (priority) img.fetchPriority = 'high';
-      img.src = urls[i];
-      img.onload = () => {
-        if (!destroyed) {
-          dirty = true;
-          draw();
-        }
-      };
       arr[i] = img;
+      queue.push((done) => {
+        if (destroyed) return done();
+        const finish = () => {
+          if (!destroyed) {
+            dirty = true;
+            draw();
+            if (isDoor) {
+              doorLoaded += 1;
+              report();
+            }
+          }
+          done();
+        };
+        img.onload = finish;
+        img.onerror = finish;
+        img.src = urls[i];
+        return undefined;
+      });
     };
 
     if (poster) {
@@ -118,8 +145,10 @@ export default function useDoorComposite(
       };
     }
     // the door first (it is what the visitor sees first), then the footage
-    for (let i = 0; i <= lastDoor; i += 1) load(door, doorFrames, i, i < 3);
+    for (let i = 0; i <= lastDoor; i += 1) load(door, doorFrames, i, true);
     for (let i = 0; i < videoFrames.length; i += 1) load(video, videoFrames, i, false);
+    report();
+    pump();
 
     size();
     draw();
@@ -157,5 +186,5 @@ export default function useDoorComposite(
       st.kill();
       canvas.remove();
     };
-  }, [containerRef, triggerRef, doorFrames, videoFrames, start, end, doorEnd, fade, doorLastFrame, smoothing, poster]);
+  }, [containerRef, triggerRef, doorFrames, videoFrames, start, end, doorEnd, fade, doorLastFrame, smoothing, poster, dprCap, concurrency]);
 }

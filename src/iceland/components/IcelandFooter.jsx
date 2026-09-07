@@ -1,5 +1,6 @@
 import React from 'react';
-import { leadership, hero, navigation } from '../data/retreat.js';
+import { leadership, hero, navigation, contacts } from '../data/retreat.js';
+import { legalEntity } from '../data/legal.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { Link } from '../router.jsx';
 
@@ -91,10 +92,20 @@ export default function IcelandFooter() {
                 </div>
               </div>
               <div className="div-block-3">
-                <div className="title_footer color-inversion-target">Brand</div>
+                <div className="title_footer color-inversion-target">Contact</div>
                 <div className="links_flex">
-                  <div className="footer_link color-inversion-target">EO Punjab</div>
-                  <div className="footer_link color-inversion-target">Amplify</div>
+                  <div className="footer_link color-inversion-target">{legalEntity.name}</div>
+                  <div className="footer_link color-inversion-target">{legalEntity.address}</div>
+                  {contacts
+                    .filter((c) => c.href && c.href.startsWith('tel:') && c.value !== '112')
+                    .map((c) => (
+                      <a key={c.value} href={c.href} className="footer_link color-inversion-target w-inline-block">
+                        <div>
+                          {c.name} · {c.value}
+                        </div>
+                      </a>
+                    ))}
+                  <div className="footer_link color-inversion-target">Retreat desk · members’ WhatsApp group</div>
                 </div>
               </div>
             </div>
@@ -104,7 +115,12 @@ export default function IcelandFooter() {
                   <div className="footer_link just_rights color-inversion-target">© 2027 EO Punjab · Iceland Retreat</div>
                 </div>
                 <div className="privacy_box">
-                  <div className="footer_link color-inversion-target">Land of Fire & Ice. An EO Experience Like No Other.</div>
+                  <Link to="/privacy" className="footer_link color-inversion-target w-inline-block">
+                    <div>Privacy policy</div>
+                  </Link>
+                  <Link to="/terms" className="footer_link color-inversion-target w-inline-block">
+                    <div>Terms of use</div>
+                  </Link>
                 </div>
                 <div className="website_by">
                   <div className="footer_link web_by color-inversion-target">EO Punjab × Amplify</div>

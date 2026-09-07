@@ -10,9 +10,11 @@ gsap.registerPlugin(ScrollTrigger);
  * driven from the GSAP ticker so there is a single rAF loop and ScrollTrigger stays in sync.
  * The instance is exposed on window.__lenis so the mobile menu can lock/unlock scrolling.
  */
-export default function useLenis() {
+export default function useLenis({ wrapper = null } = {}) {
   useEffect(() => {
+    const wrapperEl = wrapper ? document.querySelector(wrapper) : null;
     const lenis = new Lenis({
+      ...(wrapperEl ? { wrapper: wrapperEl, content: wrapperEl.firstElementChild } : {}),
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       direction: 'vertical',
@@ -38,5 +40,5 @@ export default function useLenis() {
       lenis.destroy();
       if (window.__lenis === lenis) window.__lenis = null;
     };
-  }, []);
+  }, [wrapper]);
 }

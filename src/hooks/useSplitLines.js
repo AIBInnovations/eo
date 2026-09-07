@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
+import { LOW_POWER } from '../iceland/perf.js';
 
 /**
  * Port of the page's split-lines script:
@@ -15,6 +16,7 @@ gsap.registerPlugin(ScrollTrigger);
  */
 export default function useSplitLines(rootRef) {
   useLayoutEffect(() => {
+    if (LOW_POWER) return undefined;
     const root = rootRef?.current || document;
     let instances = [];
     let triggers = [];

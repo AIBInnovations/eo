@@ -1,4 +1,5 @@
 import React from 'react';
+import Pic from './Pic.jsx';
 
 /**
  * A row of photographs in the reference site's `featured_cards` style (cover image, dark gradient,
@@ -18,7 +19,7 @@ export default function PhotoStrip({ photos, columns = 3, tight = false, id, cla
             </div>
             <div className="overlay_continent" />
             <div className="cover_continent">
-              <img src={p.image} alt={p.alt || p.name || ''} loading="lazy" className="image" />
+              <Pic src={p.image} alt={p.alt || p.name || ''} className="image" sizes="(max-width: 767px) 50vw, 25vw" />
             </div>
           </figure>
         ))}

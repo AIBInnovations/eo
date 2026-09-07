@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import useParallax from '../../hooks/useParallax.js';
+import Pic from './Pic.jsx';
 
 /**
  * `.l_section` — a 120vh full-bleed photograph with the dark overlay. Two layouts from the partnership page:
@@ -43,7 +44,7 @@ export default function LSection({ tag, title, text, cta = null, image, alt = ''
       </div>
       <div className="overlay" />
       <div className="fullsize_image partnerships_b">
-        <img ref={imgRef} src={image} alt={alt} className="image" loading="lazy" />
+        <Pic ref={imgRef} src={image} alt={alt} className="image" sizes="100vw" />
       </div>
     </section>
   );

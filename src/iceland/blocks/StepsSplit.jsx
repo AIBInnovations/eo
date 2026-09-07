@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import useParallax from '../../hooks/useParallax.js';
+import Pic from './Pic.jsx';
 
 /**
  * `.flexbox.partnerships` — the "How it works" split: headline, caption line, a ruled list of steps
@@ -63,7 +64,7 @@ export default function StepsSplit({ eyebrow, title, caption, steps = [], ctaTex
           </div>
         </div>
         <div className={`right_side${children ? ' ice-right-content' : ''}`} ref={rightRef}>
-          {children || <img ref={imgRef} src={image} alt={alt} className="image" loading="lazy" />}
+          {children || <Pic ref={imgRef} src={image} alt={alt} className="image" sizes="(max-width: 991px) 100vw, 50vw" />}
         </div>
       </div>
     </section>

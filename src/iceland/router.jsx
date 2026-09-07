@@ -1,5 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { getScroller } from './perf.js';
 
 /**
  * Tiny pathname router for the retreat site: `/` (home) plus one page per section.
@@ -15,6 +16,9 @@ export const ROUTES = {
   '/travel-desk': 'travel-desk',
   '/family': 'family',
   '/updates': 'updates',
+  '/privacy': 'privacy',
+  '/terms': 'terms',
+  '/thank-you': 'thank-you',
 };
 
 export const normalizePath = (pathname) => {
@@ -32,7 +36,9 @@ export function scrollToHash(e, href, { offset = 0 } = {}) {
   if (e && e.preventDefault) e.preventDefault();
   const lenis = window.__lenis;
   if (href === '#top') {
+    const scroller = getScroller();
     if (lenis && lenis.scrollTo) lenis.scrollTo(0);
+    else if (scroller) scroller.scrollTo({ top: 0, behavior: 'smooth' });
     else window.scrollTo({ top: 0, behavior: 'smooth' });
     return true;
   }
@@ -60,6 +66,8 @@ export function RouterProvider({ children }) {
     }
     const lenis = window.__lenis;
     window.scrollTo(0, 0);
+    const scroller = getScroller();
+    if (scroller) scroller.scrollTop = 0;
     if (lenis && lenis.scrollTo) lenis.scrollTo(0, { immediate: true });
     const hash = pendingHash.current;
     pendingHash.current = null;
@@ -91,7 +99,7 @@ export function RouterProvider({ children }) {
     [path]
   );
 
-  const value = useMemo(() => ({ path, page: ROUTES[path] || 'home', navigate }), [path, navigate]);
+  const value = useMemo(() => ({ path, page: ROUTES[path] || 'not-found', navigate }), [path, navigate]);
   return <RouterContext.Provider value={value}>{children}</RouterContext.Provider>;
 }
 

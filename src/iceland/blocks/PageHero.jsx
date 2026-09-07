@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import useLazyVideo from '../../hooks/useLazyVideo.js';
+import Pic from './Pic.jsx';
 
 /**
  * Internal-page hero (partnership page): two underlined kicker headings sit in the vertical middle,
@@ -35,7 +36,7 @@ export default function PageHero({ kicker = [], title, cta = null, image, video,
           </div>
         ) : (
           <div className="fullsize_image partnerships_b">
-            <img src={image} alt={alt} className="image" />
+            <Pic src={image} alt={alt} className="image" sizes="100vw" loading="eager" fetchpriority="high" />
           </div>
         )}
         <div className="overlay" />

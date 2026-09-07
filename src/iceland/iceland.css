@@ -3737,3 +3737,385 @@ body.iceland .fixed_calculator.ice-panel {
     height: 52vw;
   }
 }
+
+/* =====================================================================================
+   Launch pass — preloader, mobile scroller, slim hero card, sticky CTA, cookie bar, legal / 404,
+   low-power fallbacks, lazy sections.
+   ===================================================================================== */
+
+/* ---------- preloader ---------- */
+.ice-preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: var(--black);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ice-preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: min(320px, 70vw);
+}
+.ice-preloader-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--serif);
+  line-height: 1;
+}
+.ice-preloader-top {
+  font-size: 28px;
+  letter-spacing: 0.02em;
+}
+.ice-preloader-sub {
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.ice-preloader-bar {
+  width: 100%;
+  height: 2px;
+  background: rgba(244, 239, 230, 0.18);
+  overflow: hidden;
+}
+.ice-preloader-fill {
+  height: 100%;
+  background: var(--gold);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.25s linear;
+}
+.ice-preloader-hint {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+/* ---------- phones / tablets scroll inside a fixed container (browser chrome stays put) ---------- */
+@media screen and (max-width: 991px) {
+  html,
+  body.iceland {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+  .ice-scroller {
+    position: fixed;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: contain;
+  }
+  .ice-scroller-inner {
+    min-height: 100%;
+  }
+}
+
+/* ---------- slim retreat card on phones ---------- */
+@media screen and (max-width: 767px) {
+  body.iceland .recent_destination.ice-hero-card {
+    width: auto;
+    margin: 0 12px;
+    padding-bottom: 10px;
+  }
+  body.iceland .ice-hero-card .flexbox_destination {
+    width: 100%;
+  }
+  body.iceland .ice-hero-card .destination_cover {
+    display: none;
+  }
+  body.iceland .ice-hero-card .destination_box {
+    width: 100%;
+    border-radius: 6px;
+  }
+  body.iceland .ice-hero-card .wrapper_destination {
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  body.iceland .ice-hero-card .title_link {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 10px;
+  }
+  body.iceland .ice-hero-card .info_small {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    width: 100%;
+    margin: 0;
+  }
+  body.iceland .ice-hero-card .title_txt {
+    font-size: 14px;
+    margin: 0;
+  }
+  body.iceland .ice-hero-card .explore_link {
+    font-size: 12px;
+    text-decoration: underline;
+    margin: 0;
+  }
+  body.iceland .ice-hero-card .flex_info {
+    display: none;
+  }
+}
+
+/* ---------- sticky phone CTA ---------- */
+.ice-mobile-cta {
+  display: none;
+}
+@media screen and (max-width: 767px) {
+  .ice-mobile-cta {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
+    z-index: 880;
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 12px;
+    background: rgba(11, 31, 58, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 10px 30px rgba(6, 18, 36, 0.35);
+    transform: translateY(120%);
+    opacity: 0;
+    transition: transform 0.35s ease, opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .ice-mobile-cta.is-visible {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .ice-mobile-cta-link,
+  .ice-mobile-cta-btn {
+    flex: 1;
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 13px 10px 11px;
+    border-radius: 8px;
+    text-decoration: none;
+    border: 1px solid rgba(244, 239, 230, 0.35);
+    color: var(--white);
+    background: transparent;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .ice-mobile-cta-btn {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+    font-weight: 600;
+  }
+}
+
+/* ---------- cookie bar ---------- */
+.ice-cookie {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 1500;
+  width: min(420px, calc(100vw - 32px));
+  background: var(--white);
+  color: var(--black);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px 18px;
+  box-shadow: 0 16px 40px rgba(6, 18, 36, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ice-cookie-txt {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.ice-cookie-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+}
+.ice-cookie-actions {
+  display: flex;
+  gap: 8px;
+}
+.ice-cookie-btn {
+  font: inherit;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 10px 16px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--black);
+  cursor: pointer;
+}
+.ice-cookie-btn.is-primary {
+  background: var(--black);
+  color: var(--white);
+  border-color: var(--black);
+}
+@media screen and (max-width: 767px) {
+  .ice-cookie {
+    left: 12px;
+    right: 12px;
+    bottom: calc(76px + env(safe-area-inset-bottom));
+    width: auto;
+  }
+}
+
+/* ---------- form errors + sending ---------- */
+.ice-field-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 12.5px;
+  color: #b3261e;
+  letter-spacing: 0.02em;
+}
+.ice-field [aria-invalid='true'] {
+  border-color: #b3261e;
+}
+.ice-btn.is-sending {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+/* ---------- legal pages, 404, thank-you ---------- */
+.ice-legal {
+  background: var(--cream);
+  color: var(--black);
+  padding-top: 8em;
+}
+.ice-legal .wrapper_base {
+  max-width: 72ch;
+}
+.ice-legal-title {
+  margin: 0.2em 0 0.5em;
+}
+.ice-legal-intro {
+  font-size: max(1.15em, 17px);
+  margin-bottom: 2.5em;
+}
+.ice-legal-section {
+  margin-bottom: 2.4em;
+}
+.ice-legal-h {
+  font-family: var(--serif);
+  font-size: max(1.6em, 22px);
+  font-weight: 500;
+  margin: 0 0 0.5em;
+}
+.ice-legal .ice-p + .ice-p {
+  margin-top: 0.8em;
+}
+.ice-legal .ice-btn-row {
+  margin-top: 3em;
+}
+.ice-404 {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-end;
+  color: var(--white);
+  overflow: hidden;
+}
+.ice-404-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ice-404-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(6, 18, 36, 0.45), rgba(6, 18, 36, 0.85));
+}
+.ice-404-inner {
+  position: relative;
+  padding: 12em 32px 6em;
+  max-width: 60ch;
+}
+.ice-404-txt {
+  margin: 1.2em 0 2em;
+  color: var(--white);
+  opacity: 0.85;
+  font-size: max(1.1em, 16px);
+}
+.ice-thanks-check {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--aurora);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5em;
+}
+@media screen and (max-width: 767px) {
+  .ice-404-inner {
+    padding: 10em 20px 5em;
+  }
+  .ice-legal {
+    padding-top: 10em;
+  }
+}
+
+/* ---------- low-power fallbacks + lazy sections ---------- */
+@media screen and (max-width: 991px) {
+  .navbar-glass-effect {
+    filter: none;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .navbar-glass-effect {
+    filter: none;
+  }
+}
+.ice-strip,
+.ice-lines,
+.ice-faq,
+.ice-wardrobe,
+.ice-split--teaser {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 600px;
+}
+.ice-frames canvas {
+  will-change: transform;
+}
+.ice-404-inner {
+  max-width: 760px;
+}
+.ice-404 .h1_partnerships {
+  width: 100%;
+  max-width: 100%;
+}
+.ice-404 .ice-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.ice-404 .ice-btn-row .button_base,
+.ice-404 .ice-btn-row .ice-btn {
+  width: auto;
+}

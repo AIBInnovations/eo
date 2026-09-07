@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { navigation, leadership } from '../data/retreat.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { useRouter } from '../router.jsx';
+import { lockScroll } from '../perf.js';
 
 /** Full-screen navy menu (≤991px) — same slide/scale-in motion as the reference site's menu. */
 export default function IcelandMobileMenu({ open, onClose }) {
@@ -20,13 +21,10 @@ export default function IcelandMobileMenu({ open, onClose }) {
     } else {
       tween = gsap.to(el, { xPercent: open ? 0 : 100, scale: open ? 1 : 0.9, duration: 0.6, ease: 'power3.inOut', overwrite: 'auto' });
     }
-    const lenis = window.__lenis;
-    document.body.style.overflow = open ? 'hidden' : '';
-    if (lenis) (open ? lenis.stop : lenis.start).call(lenis);
+    if (open) lockScroll(true);
     return () => {
       if (tween) tween.kill();
-      document.body.style.overflow = '';
-      if (lenis && lenis.start) lenis.start();
+      if (open) lockScroll(false);
     };
   }, [open]);
 

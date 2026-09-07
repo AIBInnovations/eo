@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import useDoorComposite from '../hooks/useDoorComposite.js';
 import Countdown from './Countdown.jsx';
-import { hero, heroFrames, doorFrames } from '../data/retreat.js';
+import { hero, heroFrames, doorFrames, heroFramesSm, doorFramesSm } from '../data/retreat.js';
+import { LOW_POWER } from '../perf.js';
 import { scrollToHash } from '../router.jsx';
 
 /**
@@ -13,7 +14,18 @@ import { scrollToHash } from '../router.jsx';
 export default function HeroVideo() {
   const storyRef = useRef(null);
   const canvasHostRef = useRef(null);
-  useDoorComposite(canvasHostRef, storyRef, { doorFrames, videoFrames: heroFrames, start: 'top top', end: 'bottom top', doorEnd: 0.42, fade: 0.06, doorLastFrame: 230, poster: hero.poster });
+  useDoorComposite(canvasHostRef, storyRef, {
+    doorFrames: LOW_POWER ? doorFramesSm : doorFrames,
+    videoFrames: LOW_POWER ? heroFramesSm : heroFrames,
+    start: 'top top',
+    end: 'bottom top',
+    doorEnd: 0.42,
+    fade: 0.06,
+    doorLastFrame: 230,
+    poster: hero.poster,
+    dprCap: LOW_POWER ? 1 : 2,
+    smoothing: LOW_POWER ? 0.22 : 0.16,
+  });
 
   return (
     <section className="threed_story ice-hero" id="top" ref={storyRef}>
@@ -69,7 +81,7 @@ export default function HeroVideo() {
           <div className="div-block">
             <div className="flexbox_destination">
               <div className="destination_cover">
-                <img src={hero.card.image} alt={hero.card.alt} className="image color-inversion-target" />
+                <img src={hero.card.image} alt={hero.card.alt} className="image color-inversion-target" width="200" height="300" decoding="async" />
               </div>
               <a href={hero.card.href} target="_blank" rel="noreferrer" className="destination_box w-inline-block">
                 <div className="wrapper_destination color-inversion-target">

@@ -3,6 +3,7 @@ import HorizontalCarousel from '../../components/Carousel/HorizontalCarousel.jsx
 import { stays } from '../data/retreat.js';
 import Btn from '../blocks/Btn.jsx';
 import useMediaQuery from '../../hooks/useMediaQuery.js';
+import Pic from '../blocks/Pic.jsx';
 
 /** "Stay & Experiences" — lots of imagery, very little text, in the reference site's draggable card carousel. */
 export default function Stay({ teaser = false }) {
@@ -36,7 +37,7 @@ export default function Stay({ teaser = false }) {
               </div>
               <div className="overlay_continent" />
               <div className="cover_continent">
-                <img src={s.image} alt={s.alt} loading={i > 1 ? 'lazy' : undefined} className="image" />
+                <Pic src={s.image} alt={s.alt} className="image" sizes="50vw" />
               </div>
             </figure>
           ))}
@@ -60,7 +61,7 @@ export default function Stay({ teaser = false }) {
                     </div>
                     <div className="overlay_continent" />
                     <div className="cover_continent">
-                      <img src={s.image} alt={s.alt} loading={i > 2 ? 'lazy' : undefined} className="image" />
+                      <Pic src={s.image} alt={s.alt} className="image" sizes="(max-width: 991px) 60vw, 28vw" loading={i > 2 ? 'lazy' : 'eager'} />
                     </div>
                   </div>
                 </div>

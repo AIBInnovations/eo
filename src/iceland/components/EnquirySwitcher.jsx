@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 import GlassLayers from '../../components/Header/GlassLayers.jsx';
 import EnquiryForm from './EnquiryForm.jsx';
 import { useEnquiry } from '../EnquiryContext.jsx';
+import { LOW_POWER, lockScroll } from '../perf.js';
 
 /**
  * The glass pill fixed at the top-centre of every page ("EO IN ICELAND") and the enquiry drawer it
@@ -35,29 +36,21 @@ export default function EnquirySwitcher() {
 
   // Lock page scrolling while the drawer is open (the drawer scrolls on its own).
   useEffect(() => {
-    const lenis = window.__lenis;
-    if (open) {
-      document.body.style.overflow = 'hidden';
-      if (lenis && lenis.stop) lenis.stop();
-    } else {
-      document.body.style.overflow = '';
-      if (lenis && lenis.start) lenis.start();
-    }
+    if (open) lockScroll(true);
     const onKey = (e) => {
       if (e.key === 'Escape') closePanel();
     };
     window.addEventListener('keydown', onKey);
     return () => {
       window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = '';
-      if (lenis && lenis.start) lenis.start();
+      if (open) lockScroll(false);
     };
   }, [open, closePanel]);
 
   return (
     <>
       <div className="airplane_middle ice-pill" onClick={() => openPanel('')} role="button" aria-expanded={open} aria-label="Enquire">
-        <GlassLayers withFilter />
+        <GlassLayers withFilter={!LOW_POWER} />
         <div className="fixed-icons-container ice-pill-inner">
           <span className="ice-pill-txt">EO IN ICELAND</span>
         </div>
