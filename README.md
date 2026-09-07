@@ -79,7 +79,7 @@ source/                     (git-ignored) original video, PDFs and poster PNGs
 - Deploy: `vercel.json` rewrites every path to `index.html` (client-side routing) and caches the frame / lottie / video folders for a year.
 - Launch checklist in place: per-page title/description/canonical + Open Graph/Twitter tags (`data/meta.js`, `public/og.jpg`),
   favicon set + `site.webmanifest`, `robots.txt`, `sitemap.xml`, custom 404, thank-you page, privacy + terms pages,
-  cookie/consent bar (Vercel Web Analytics only loads after "Accept"), sticky phone CTA, form validation + sending state,
+  cookie/consent bar (Vercel Web Analytics only loads after "Accept"), form validation + sending state,
   and a first-load preloader that waits for the fonts and the door frames. `SITE_URL` in `data/meta.js`, `robots.txt`
   and `sitemap.xml` all carry the production URL: change all three when a custom domain is added.
 - Performance: photographs are 1600 px masters + 800 px variants (`assets/iceland/sm`, served through `blocks/Pic.jsx`

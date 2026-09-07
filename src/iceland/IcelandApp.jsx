@@ -11,7 +11,6 @@ import EnquirySwitcher from './components/EnquirySwitcher.jsx';
 import IcelandFooter from './components/IcelandFooter.jsx';
 import Preloader from './components/Preloader.jsx';
 import CookieBanner, { readConsent } from './components/CookieBanner.jsx';
-import MobileCta from './components/MobileCta.jsx';
 import { USE_SCROLLER, SCROLLER_SELECTOR, LOW_POWER } from './perf.js';
 import { pageMeta, SITE_URL, OG_IMAGE } from './data/meta.js';
 import HomePage from './pages/HomePage.jsx';
@@ -109,7 +108,6 @@ function Shell() {
       <IcelandMobileMenu open={menuOpen} onClose={closeMenu} />
       <EnquirySwitcher />
       <IcelandHeader menuOpen={menuOpen} onToggleMenu={toggleMenu} />
-      <MobileCta hidden={menuOpen || loading} />
       {!loading && <CookieBanner onChange={setConsent} />}
       <div id="ice-scroller" className={USE_SCROLLER ? 'ice-scroller' : undefined}>
         <div className="ice-scroller-inner">
