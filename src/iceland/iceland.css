@@ -5008,3 +5008,211 @@ body.iceland .ice-wd-chips {
   flex-direction: row;
   align-items: center;
 }
+
+/* ---------- room gallery (main image + arrows + thumbnails) ---------- */
+.ice-rg-main {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  background: var(--navy);
+  overflow: hidden;
+}
+.ice-rg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.ice-rg-img.is-active {
+  opacity: 1;
+}
+.ice-rg-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 0;
+  background: rgba(244, 239, 230, 0.92);
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.ice-rg-arrow:hover {
+  opacity: 1;
+}
+.ice-rg-arrow--prev {
+  left: 12px;
+}
+.ice-rg-arrow--next {
+  right: 12px;
+}
+.ice-rg-count {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 5px 9px 4px;
+  border-radius: 999px;
+  background: rgba(11, 31, 58, 0.8);
+  color: var(--white);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+.ice-rg-thumbs {
+  display: flex;
+  gap: 6px;
+  padding: 8px 10px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.ice-rg-thumbs::-webkit-scrollbar {
+  display: none;
+}
+.ice-rg-thumb {
+  flex: 0 0 64px;
+  height: 44px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  background: none;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s, border-color 0.2s;
+}
+.ice-rg-thumb.is-active,
+.ice-rg-thumb:hover {
+  opacity: 1;
+  border-color: var(--gold);
+}
+.ice-rg-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ---------- every room type ---------- */
+.ice-allrooms {
+  margin-top: 4em;
+  padding-top: 3em;
+  border-top: 1px solid var(--line);
+}
+.ice-allrooms-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2em;
+  margin-bottom: 1.8em;
+}
+.ice-allrooms-title {
+  margin: 0.2em 0 0;
+}
+.ice-allrooms-sub {
+  margin: 0;
+  max-width: 520px;
+}
+.ice-allrooms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.ice-rt-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--cream-2);
+  display: flex;
+  flex-direction: column;
+}
+.ice-rt-body {
+  padding: 16px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.ice-rt-group {
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+}
+.ice-rt-name {
+  margin: -2px 0 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: max(1.35em, 19px);
+  line-height: 1.15;
+}
+.ice-rt-facts {
+  list-style: none;
+  margin: 2px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+.ice-rt-facts li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: auto;
+  margin: 0;
+}
+.ice-rt-facts svg {
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.ice-rt-extra {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  opacity: 0.75;
+}
+body.iceland .ice-rt-facts {
+  flex-direction: row;
+  align-items: center;
+}
+@media screen and (max-width: 991px) {
+  .ice-allrooms-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ice-allrooms-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8em;
+  }
+}
+@media screen and (max-width: 767px) {
+  .ice-allrooms {
+    margin-top: 36px;
+    padding-top: 28px;
+  }
+  .ice-allrooms-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .ice-rg-thumb {
+    flex-basis: 56px;
+    height: 40px;
+  }
+  .ice-rg-arrow {
+    width: 34px;
+    height: 34px;
+  }
+}
+/* base `li` gets 4.35em on phones; the room fact rows carry their own size */
+body.iceland .ice-rt-facts li,
+body.iceland .ice-rt-facts li span {
+  font-size: 13.5px;
+}

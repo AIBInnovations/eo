@@ -1,10 +1,13 @@
 import React from 'react';
-import Pic from '../blocks/Pic.jsx';
 import Icon from '../icons.jsx';
-import { hotelIntro, roomUpgrades } from '../data/rooms.js';
+import RoomGallery from './RoomGallery.jsx';
+import { hotelIntro, roomUpgrades, allRooms } from '../data/rooms.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
 
-/** Room upgrades and extra nights at the EDITION: photograph, key facts, enquire. No prices. */
+/**
+ * Rooms at the EDITION: the four upgrade / extra-night cards (photographs, facts, enquire — no prices),
+ * then every room type the hotel has, each with its full set of photographs.
+ */
 export default function RoomUpgrades({ id }) {
   const { openPanel } = useEnquiry();
   return (
@@ -23,10 +26,7 @@ export default function RoomUpgrades({ id }) {
         <div className="ice-room-grid">
           {roomUpgrades.map((r) => (
             <article className="ice-room-card" key={r.id}>
-              <div className="ice-room-media">
-                <Pic src={r.image} alt={r.alt} className="ice-room-img" sizes="(max-width: 767px) 100vw, 50vw" />
-                <span className="ice-room-kicker">{r.kicker}</span>
-              </div>
+              <RoomGallery images={r.images} alt={r.alt} kicker={r.kicker} />
               <div className="ice-room-body">
                 <div className="ice-room-type">{r.room}</div>
                 <h3 className="ice-room-name">{r.name}</h3>
@@ -46,6 +46,42 @@ export default function RoomUpgrades({ id }) {
               </div>
             </article>
           ))}
+        </div>
+
+        <div className="ice-allrooms" id="all-rooms">
+          <div className="ice-allrooms-head">
+            <div>
+              <div className="ice-eyebrow">Every room type</div>
+              <h3 className="h2 ice-allrooms-title">All the rooms at the EDITION.</h3>
+            </div>
+            <p className="ice-p ice-allrooms-sub">Eleven room types, from the Guest King to the Penthouse. Use the arrows to see every photograph the hotel publishes for each.</p>
+          </div>
+          <div className="ice-allrooms-grid">
+            {allRooms.map((r) => (
+              <article className="ice-rt-card" key={r.id}>
+                <RoomGallery images={r.images} alt={r.alt} sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 33vw" />
+                <div className="ice-rt-body">
+                  <div className="ice-rt-group">{r.group}</div>
+                  <h4 className="ice-rt-name">{r.name}</h4>
+                  <ul className="ice-rt-facts">
+                    <li>
+                      <Icon name="Maximize2" size={14} strokeWidth={1.8} />
+                      <span>{r.size}</span>
+                    </li>
+                    <li>
+                      <Icon name="BedDouble" size={14} strokeWidth={1.8} />
+                      <span>{r.bed}</span>
+                    </li>
+                    <li>
+                      <Icon name="Eye" size={14} strokeWidth={1.8} />
+                      <span>{r.view}</span>
+                    </li>
+                  </ul>
+                  {r.extra && <p className="ice-rt-extra">{r.extra}</p>}
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
         <p className="ice-room-credit">Photographs: The Reykjavik EDITION.</p>
       </div>
