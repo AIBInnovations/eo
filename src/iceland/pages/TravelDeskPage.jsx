@@ -7,8 +7,10 @@ import StepsSplit from '../blocks/StepsSplit.jsx';
 import Statement from '../blocks/Statement.jsx';
 import PhotoStrip from '../blocks/PhotoStrip.jsx';
 import PartnerCards from '../components/PartnerCards.jsx';
+import WardrobeCards from '../components/WardrobeCards.jsx';
+import RoomUpgrades from '../components/RoomUpgrades.jsx';
 import Btn from '../blocks/Btn.jsx';
-import { keyTimes, travelDesk, essentials, wardrobe, addOns, extensions } from '../data/retreat.js';
+import { keyTimes, travelDesk, essentials } from '../data/retreat.js';
 import { pageHeroes, pageImages, essentialIcons } from '../data/pages.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { scrollToHash } from '../router.jsx';
@@ -41,38 +43,7 @@ export default function TravelDeskPage() {
 
       <Statement id="essentials" title={essentials.title} text="Warm + waterproof + windproof. Every traveller should ideally carry these thirteen things." icons={essentialIcons} />
 
-      <section className="ice-wardrobe" id="wardrobe">
-        <div className="wrapper_base">
-          <div className="r_side_bg">
-            <div className="inside_rg">
-              <h2 className="h2">What to wear, day by day.</h2>
-              <div className="desc_ch">
-                <p className="b_txt spec_partner">{essentials.notes[0]}</p>
-              </div>
-            </div>
-          </div>
-          <div className="ice-table-wrap">
-            <table className="ice-table">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Plan</th>
-                  <th>Suggested look</th>
-                </tr>
-              </thead>
-              <tbody>
-                {wardrobe.map((row) => (
-                  <tr key={row.date}>
-                    <td data-label="Date">{row.date}</td>
-                    <td data-label="Plan">{row.plan}</td>
-                    <td data-label="Suggested look">{row.look}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
+      <WardrobeCards id="wardrobe" />
 
       <PhotoStrip
         photos={[
@@ -82,40 +53,17 @@ export default function TravelDeskPage() {
         ]}
       />
 
-      <PointsGrid
-        id="add-ons"
-        items={addOns.map((a) => ({
-          title: a.name,
-          text: a.text,
-          extra: (
-            <button type="button" className="ice-link-btn" onClick={() => openPanel(`Room upgrade or extra night: ${a.name}`)}>
-              Enquire →
-            </button>
-          ),
-        }))}
-      />
+      <RoomUpgrades id="add-ons" />
 
-      <div id="extensions">
-        {extensions.map((x, i) => (
-          <StepsSplit
-            key={x.name}
-            eyebrow={`Extension · ${x.length}`}
-            title={x.name}
-            steps={x.highlights.map((hl, j) => ({ key: String(j + 1).padStart(2, '0'), title: '', text: hl }))}
-            cta={
-              <div className="ice-btn-row">
-                <Btn href={x.href} dark>
-                  Download itinerary (PDF)
-                </Btn>
-                <Btn onClick={() => openPanel(`Trip extension: ${x.name}`)}>Enquire</Btn>
-              </div>
-            }
-            image={x.image}
-            alt={x.alt}
-            reverse={i % 2 === 1}
-          />
-        ))}
-      </div>
+      <LSection
+        short
+        tag="Extensions"
+        title="Stay longer, somewhere else."
+        text="South Coast Iceland, Amsterdam or Copenhagen: three curated extensions, each booked separately before or after the retreat."
+        cta={<Btn to="/extensions">See the extensions</Btn>}
+        image={pageImages.glacierLagoon}
+        alt="Iceberg on the Jökulsárlón glacier lagoon"
+      />
 
       <LSection
         title="Anything else? Ask the retreat desk."

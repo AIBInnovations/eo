@@ -12,6 +12,7 @@ export const ROUTES = {
   '/journey': 'journey',
   '/adventure': 'adventure',
   '/stay': 'stay',
+  '/extensions': 'extensions',
   '/enquire': 'enquire',
   '/travel-desk': 'travel-desk',
   '/family': 'family',

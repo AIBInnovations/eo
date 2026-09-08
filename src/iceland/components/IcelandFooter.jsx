@@ -64,7 +64,7 @@ export default function IcelandFooter() {
                   <Link to="/" className="footer_link color-inversion-target w-inline-block">
                     <div>Home</div>
                   </Link>
-                  {navigation.slice(0, 3).map((l) => (
+                  {navigation.slice(0, 4).map((l) => (
                     <Link key={l.href} to={l.href} className="footer_link color-inversion-target w-inline-block">
                       <div>{l.label}</div>
                     </Link>
@@ -74,7 +74,7 @@ export default function IcelandFooter() {
               <div className="div-block-3">
                 <div className="title_footer color-inversion-target">Members</div>
                 <div className="links_flex">
-                  {navigation.slice(3).map((l) => (
+                  {navigation.slice(4).map((l) => (
                     <Link key={l.href} to={l.href} className="footer_link color-inversion-target w-inline-block">
                       <div>{l.label}</div>
                     </Link>
@@ -128,6 +128,9 @@ export default function IcelandFooter() {
                   <Link to="/terms" className="footer_link color-inversion-target w-inline-block">
                     <div>Terms of use</div>
                   </Link>
+                  <a href="/logout" className="footer_link color-inversion-target w-inline-block">
+                    <div>Sign out</div>
+                  </a>
                 </div>
                 <div className="website_by">
                   <div className="footer_link web_by color-inversion-target">EO Punjab × Amplify</div>

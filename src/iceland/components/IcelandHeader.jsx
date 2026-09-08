@@ -18,8 +18,8 @@ export default function IcelandHeader({ menuOpen, onToggleMenu }) {
   useHeaderScroll(headerRef, { key: path });
 
   const main = navigation.filter((l) => !l.cta);
-  const left = main.slice(0, 3);
-  const right = main.slice(3);
+  const left = main.slice(0, 4);
+  const right = main.slice(4);
 
   const link = (l) => (
     <Link key={l.href} to={l.href} className={`ice-nav-link color-inversion-target${path === l.href ? ' is-current' : ''}`}>

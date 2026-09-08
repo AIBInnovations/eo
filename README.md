@@ -29,6 +29,7 @@ the deep links.
 | `/privacy`, `/terms` | Legal | Plain-language privacy policy and terms (`data/legal.js`, fill in the chapter's registered address) |
 | `/thank-you` | Thank you | Shown after the enquiry form is sent |
 | anything else | 404 | Custom not-found page (Vercel rewrites every path to `index.html`, so the app renders it) |
+| `/extensions` | Extensions | South Coast Iceland, Amsterdam and Copenhagen on their own page, each booked separately |
 | `/travel-desk` | Travel Desk | Key times, EaseMyTrip contact, the nine topics, Iceland Essentials, wardrobe planner, add-ons, the three extensions with PDFs |
 | `/family` | The EO Punjab Family | "112 People. One Iceland Adventure.", counts, the member wall, photo form |
 | `/updates` | Updates & Help | Announcements, deadlines, downloads, full FAQ, contacts, President and Retreat Chairs, help form |
@@ -83,7 +84,15 @@ source/                     (git-ignored) original video, PDFs and poster PNGs
   toggles an `ice-inverted` class so the logo can swap polarity and counter-invert to keep the brand colours true.
 - The itinerary PDF (`public/downloads/EO-Punjab-Iceland-2027-Itinerary.pdf`) is EO Punjab branded and generated from
   the site's own typography — rebuild it with `node scripts/make-itinerary-pdf.cjs` after editing the copy in `docs/itinerary-source.json`.
-- Payment structure lives in `src/iceland/data/accounts.js`; partner desks in `partners` in `data/retreat.js`.
+- Payment structure lives in `src/iceland/data/accounts.js`; partner desks in `partners` in `data/retreat.js`;
+  room upgrades (photographs and facts from The Reykjavik EDITION's room pages, no prices) in `data/rooms.js`; the
+  wardrobe planner in `data/wardrobe.js`.
+- **Members-only gate** — `middleware.js` (Vercel Edge Middleware) puts the whole site behind one shared login:
+  `EO_LOGIN_NUMBER` (the official login number, digits compared), `EO_LOGIN_PASSWORD`, and `EO_SESSION_SECRET`
+  (any long random string) as Production environment variables on the Vercel project. A correct login sets a signed
+  30-day cookie; `/logout` clears it (the footer's "Sign out"). Changing the number or password signs everyone out.
+  If the number or password is unset the gate stays open (so previews and `vite dev` are never locked). Search engines
+  are told to stay out via `robots.txt`.
 - Deploy: `vercel.json` rewrites every path to `index.html` (client-side routing) and caches the frame / lottie / video folders for a year.
 - Launch checklist in place: per-page title/description/canonical + Open Graph/Twitter tags (`data/meta.js`, `public/og.jpg`),
   favicon set + `site.webmanifest`, `robots.txt`, `sitemap.xml`, custom 404, thank-you page, privacy + terms pages,

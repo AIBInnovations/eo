@@ -35,8 +35,15 @@ export default function StayPage() {
 
       <LSection
         title="Stay longer."
-        text="Room upgrades, extra nights, and three curated extensions: South Coast Iceland, Amsterdam or Copenhagen."
-        cta={<Btn to="/travel-desk#add-ons">Add-ons & extensions</Btn>}
+        text="Room upgrades and extra nights at the EDITION, or three curated extensions: South Coast Iceland, Amsterdam or Copenhagen."
+        cta={
+          <div className="ice-btn-row">
+            <Btn to="/travel-desk#add-ons">Rooms & upgrades</Btn>
+            <Btn to="/extensions" dark>
+              Extensions
+            </Btn>
+          </div>
+        }
         image={pageImages.glacierLagoon}
         alt="Iceberg on the Jökulsárlón glacier lagoon"
       />

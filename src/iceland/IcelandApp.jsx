@@ -22,6 +22,7 @@ import TravelDeskPage from './pages/TravelDeskPage.jsx';
 import FamilyPage from './pages/FamilyPage.jsx';
 import UpdatesPage from './pages/UpdatesPage.jsx';
 import AccountsPage from './pages/AccountsPage.jsx';
+import ExtensionsPage from './pages/ExtensionsPage.jsx';
 import LegalPage from './pages/LegalPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 import ThankYouPage from './pages/ThankYouPage.jsx';
@@ -35,6 +36,7 @@ const PAGES = {
   journey: JourneyPage,
   adventure: AdventurePage,
   stay: StayPage,
+  extensions: ExtensionsPage,
   enquire: EnquiryPage,
   'travel-desk': TravelDeskPage,
   family: FamilyPage,

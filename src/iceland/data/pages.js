@@ -32,6 +32,11 @@ export const pageHeroes = {
     title: 'Stay & Experiences. The places that build the anticipation.',
     image: images.auroraSky,
   },
+  extensions: {
+    kicker: ['Extensions', 'Before or after'],
+    title: 'Stay longer. Three curated extensions, booked separately.',
+    image: diamondBeach,
+  },
   enquire: {
     kicker: ['Enquire', 'One form, one reply'],
     title: 'Ask the retreat desk anything about Iceland 2027.',

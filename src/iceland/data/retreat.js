@@ -316,7 +316,9 @@ export const addOns = [
 
 export const extensions = [
   {
+    id: 'south-coast',
     name: 'South Coast Iceland',
+    caption: 'Waterfalls, black sand, the glacier lagoon and an ice cave, with three nights in Vík.',
     length: '4 days · from Reykjavík',
     image: glacierLagoon,
     alt: 'Iceberg on the Jökulsárlón glacier lagoon',
@@ -324,7 +326,9 @@ export const extensions = [
     highlights: ['Seljalandsfoss and Skógafoss waterfalls', 'Reynisfjara black sand beach', 'Jökulsárlón glacier lagoon and Diamond Beach', 'Katla Ice Cave by superjeep, ATV to the Sólheimasandur plane wreck', 'Three nights in Vík'],
   },
   {
+    id: 'amsterdam',
     name: 'Amsterdam',
+    caption: 'Canals, museums and the Nine Streets, with a day out to Giethoorn.',
     length: '4 days · 3 nights',
     image: amsterdam,
     alt: 'Amsterdam canal houses at sunset',
@@ -332,7 +336,9 @@ export const extensions = [
     highlights: ['Evening cocktail cruise on the UNESCO-listed canals', 'Private walking tour, Rijksmuseum or Van Gogh Museum, Heineken Experience', 'Jordaan, the Nine Streets and Amsterdam’s clubs', 'Day trip to Giethoorn, the Dutch Venice', 'Farewell dinner'],
   },
   {
+    id: 'copenhagen',
     name: 'Copenhagen',
+    caption: 'Harbour, palaces and Tivoli, with a day across the Øresund to Malmö and Lund.',
     length: '4 days · 3 nights',
     image: copenhagen,
     alt: 'Nyhavn harbourfront in Copenhagen',
@@ -402,6 +408,7 @@ export const navigation = [
   { href: '/journey', label: 'The Journey', short: 'Journey', anchor: '#journey' },
   { href: '/adventure', label: 'Choose Your Adventure', short: 'Adventure', anchor: '#adventure' },
   { href: '/stay', label: 'Stay & Experiences', short: 'Stay', anchor: '#stay' },
+  { href: '/extensions', label: 'Extensions', short: 'Extensions', anchor: '#extensions' },
   { href: '/travel-desk', label: 'Travel Desk', short: 'Travel Desk', anchor: '#travel-desk' },
   { href: '/family', label: 'The EO Punjab Family', short: 'Family', anchor: '#family' },
   { href: '/accounts', label: 'Accounts & Payments', short: 'Accounts', anchor: '#accounts' },
