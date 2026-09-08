@@ -4,6 +4,8 @@
  * with GST and TCS charged extra as applicable.
  */
 export const paymentColumns = ['Travelling without kids', 'Travelling with 1 kid', 'Travelling with 2 kids'];
+/** Short forms used on phones, where the three amounts sit side by side. */
+export const paymentColumnsShort = ['No kids', '1 kid', '2 kids'];
 
 export const paymentRows = [
   {

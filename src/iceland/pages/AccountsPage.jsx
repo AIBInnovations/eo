@@ -3,7 +3,7 @@ import useSplitLines from '../../hooks/useSplitLines.js';
 import PageHero from '../blocks/PageHero.jsx';
 import LSection from '../blocks/LSection.jsx';
 import Btn from '../blocks/Btn.jsx';
-import { paymentColumns, paymentRows, accountsNotes, accountsActions } from '../data/accounts.js';
+import { paymentColumns, paymentColumnsShort, paymentRows, accountsNotes, accountsActions } from '../data/accounts.js';
 import { pageHeroes, pageImages } from '../data/pages.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { scrollToHash } from '../router.jsx';
@@ -48,7 +48,7 @@ export default function AccountsPage() {
                       <span className="ice-pay-date">{r.date}</span>
                     </td>
                     {r.amounts.map((a, i) => (
-                      <td data-label={paymentColumns[i]} key={paymentColumns[i]}>
+                      <td data-label={paymentColumns[i]} data-short={paymentColumnsShort[i]} key={paymentColumns[i]}>
                         <span className="ice-pay-amount">{a}</span>
                       </td>
                     ))}

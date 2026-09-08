@@ -4623,3 +4623,98 @@ body.iceland .div-block-3:last-child .footer_link {
 .ice-header.ice-inverted .ice-wordmark-sub {
   filter: invert(1);
 }
+
+/* =====================================================================================
+   Phone reading-width fix.
+   The body font scales with the viewport (1vw), so a `ch` unit is only meaningful on
+   desktop — below 992px, 72ch resolves to ~79px and squeezes paragraphs into a single
+   vertical column of words. Every measure-based constraint is released on small screens,
+   where the wrapper padding already sets the line length.
+   ===================================================================================== */
+@media screen and (max-width: 991px) {
+  .ice-legal .wrapper_base,
+  .ice-404-inner,
+  .ice-accounts-intro,
+  .ice-accounts-notes,
+  .ice-family-text,
+  .ice-faq-item p,
+  .ice-line-detail,
+  .ice-pay-sub,
+  .ice-notes {
+    max-width: none;
+  }
+  .ice-hero .description {
+    width: auto;
+    max-width: none;
+  }
+}
+
+/* ---------- header backdrop once the page has scrolled (phones and tablets) ---------- */
+@media screen and (max-width: 991px) {
+  .ice-header .ice-header-bar {
+    transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+  }
+  /* over dark sections the header is not inverted: a navy scrim */
+  .ice-header.is-scrolled:not(.ice-inverted) .ice-header-bar {
+    background-color: rgba(11, 31, 58, 0.86);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  /* over light sections the whole header is inverted, so the colour is pre-inverted to land on cream */
+  .ice-header.is-scrolled.ice-inverted .ice-header-bar {
+    background-color: rgba(11, 16, 25, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* ---------- pages that open with copy must clear the fixed header ---------- */
+.ice-legal {
+  padding-top: 132px;
+}
+@media screen and (max-width: 991px) {
+  .ice-legal {
+    padding-top: 104px;
+  }
+  body.iceland .ice-legal .wrapper_base {
+    padding-top: 0;
+  }
+}
+
+/* ---------- payment cards: the three amounts sit side by side on phones ---------- */
+@media screen and (max-width: 767px) {
+  .ice-pay-table tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 10px;
+    row-gap: 14px;
+    padding: 16px 16px 18px;
+  }
+  .ice-pay-table td {
+    padding: 0;
+  }
+  .ice-pay-table td:nth-child(1),
+  .ice-pay-table td:nth-child(2) {
+    grid-column: 1 / -1;
+  }
+  .ice-pay-table td:nth-child(2) {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .ice-pay-table td:nth-child(2)::before {
+    margin-bottom: 0;
+  }
+  /* short column labels so three amounts fit across a phone */
+  .ice-pay-table td[data-short]::before {
+    content: attr(data-short);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+  .ice-pay-table td[data-short] .ice-pay-amount {
+    font-size: 14px;
+    white-space: normal;
+  }
+}

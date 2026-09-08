@@ -5,8 +5,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const DESKTOP = '(min-width: 992px)';
-const INVERT_ON_HERO = '(min-width: 480px)';
-const INVERT_ON_FOOTER = '(min-width: 768px)';
+// The reference site swapped to `mix-blend-mode: difference` on the smallest screens; this build keeps
+// the blend off (it would wreck the colour logo), so the invert interaction has to run at every width.
+const INVERT_ON_HERO = '(min-width: 0px)';
+const INVERT_ON_FOOTER = '(min-width: 0px)';
 
 /**
  * The header's two Webflow scroll interactions, calibrated against the live page:
@@ -25,6 +27,7 @@ export default function useHeaderScroll(headerRef, { hideThreshold = 50, key = n
     if (!header) return undefined;
 
     const mm = gsap.matchMedia();
+    const cleanups = [];
 
     // --- 1. invert -------------------------------------------------------
     // The measured live behaviour: the hero un-inverts the header while any part of it is above
@@ -72,6 +75,20 @@ export default function useHeaderScroll(headerRef, { hideThreshold = 50, key = n
       }
     );
 
+    // --- 1b. scrolled state, so the header can carry a backdrop over content --------
+    {
+      const scroller = document.querySelector('#ice-scroller');
+      const target = scroller || window;
+      const read = () => (scroller ? scroller.scrollTop : window.scrollY);
+      const onAny = () => header.classList.toggle('is-scrolled', read() > 12);
+      onAny();
+      target.addEventListener('scroll', onAny, { passive: true });
+      cleanups.push(() => {
+        target.removeEventListener('scroll', onAny);
+        header.classList.remove('is-scrolled');
+      });
+    }
+
     // --- 2. hide / show by scroll direction ----------------------------
     mm.add(DESKTOP, () => {
       let hidden = false;
@@ -95,6 +112,9 @@ export default function useHeaderScroll(headerRef, { hideThreshold = 50, key = n
       };
     });
 
-    return () => mm.revert();
+    return () => {
+      cleanups.forEach((fn) => fn());
+      mm.revert();
+    };
   }, [headerRef, hideThreshold, key]);
 }
