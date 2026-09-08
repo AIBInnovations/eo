@@ -13,6 +13,9 @@ import { next } from '@vercel/edge';
  * A successful login sets a signed, HttpOnly cookie for 30 days. Changing the password or the
  * number signs everyone out. /logout clears the cookie.
  */
+/** Gate switch — false keeps the site open for now; set to true to put it behind the shared login again. */
+const GATE_ENABLED = false;
+
 export const config = {
   matcher: ['/((?!_vercel|brand/|favicon|apple-touch-icon|icon-|site\\.webmanifest|robots\\.txt).*)'],
 };
@@ -89,6 +92,7 @@ function loginPage({ error = false, next: nextPath = '/' } = {}) {
 }
 
 export default async function middleware(req) {
+  if (!GATE_ENABLED) return next(); // login switched off for now (see GATE_ENABLED above)
   const url = new URL(req.url);
   const number = digits(process.env.EO_LOGIN_NUMBER);
   const password = process.env.EO_LOGIN_PASSWORD || '';

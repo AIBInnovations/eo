@@ -128,9 +128,10 @@ export default function IcelandFooter() {
                   <Link to="/terms" className="footer_link color-inversion-target w-inline-block">
                     <div>Terms of use</div>
                   </Link>
+                  {/* Sign out — restore when the login gate (GATE_ENABLED in middleware.js) is switched on again
                   <a href="/logout" className="footer_link color-inversion-target w-inline-block">
                     <div>Sign out</div>
-                  </a>
+                  </a> */}
                 </div>
                 <div className="website_by">
                   <div className="footer_link web_by color-inversion-target">EO Punjab × Amplify</div>

@@ -87,7 +87,8 @@ source/                     (git-ignored) original video, PDFs and poster PNGs
 - Payment structure lives in `src/iceland/data/accounts.js`; partner desks in `partners` in `data/retreat.js`;
   room upgrades (photographs and facts from The Reykjavik EDITION's room pages, no prices) in `data/rooms.js`; the
   wardrobe planner in `data/wardrobe.js`.
-- **Members-only gate** — `middleware.js` (Vercel Edge Middleware) puts the whole site behind one shared login:
+- **Members-only gate (currently switched off)** — `middleware.js` (Vercel Edge Middleware) can put the whole site
+  behind one shared login; flip `GATE_ENABLED` to `true` there (and restore the footer's "Sign out" link) to turn it on:
   `EO_LOGIN_NUMBER` (the official login number, digits compared), `EO_LOGIN_PASSWORD`, and `EO_SESSION_SECRET`
   (any long random string) as Production environment variables on the Vercel project. A correct login sets a signed
   30-day cookie; `/logout` clears it (the footer's "Sign out"). Changing the number or password signs everyone out.
