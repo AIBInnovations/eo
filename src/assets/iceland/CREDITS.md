@@ -34,3 +34,11 @@ Attribution (file → source file, author, licence):
 - `thingvellir.webp` — File:Roca de la Ley, Parque Nacional de Þingvellir, Suðurland, Islandia, 2014-08-16, DD 019.jpg · Diego Delso · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Roca_de_la_Ley,_Parque_Nacional_de_Þingvellir,_Suðurland,_Islandia,_2014-08-16,_DD_019.jpg
 - `vik-village.webp` — File:Reynisfjara, Suðurland, Islandia, 2014-08-17, DD 164.JPG · Diego Delso · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Reynisfjara,_Suðurland,_Islandia,_2014-08-17,_DD_164.JPG
 - `poster-cover.webp`, `hero-poster.webp` — EO Punjab retreat poster (own material)
+
+## Logos
+
+The files in `src/assets/logos/` are EO Punjab brand assets supplied by the client, not Creative Commons material:
+
+- `eo-amplify-light.png`, `eo-amplify-dark.png` — the EO Punjab × Amplify lockup (backgrounds removed for the two polarities).
+- `sponsors.png` — the full sponsor lockup: EaseMyTrip (annual travel partner), Nuvama Private (annual sponsor), MyEO, EO Punjab × Amplify.
+- `easemytrip.png` — the EaseMyTrip mark, cropped from the same supplied lockup and used to identify the retreat's flight-booking partner.

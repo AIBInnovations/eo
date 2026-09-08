@@ -15,6 +15,7 @@ export const ROUTES = {
   '/enquire': 'enquire',
   '/travel-desk': 'travel-desk',
   '/family': 'family',
+  '/accounts': 'accounts',
   '/updates': 'updates',
   '/privacy': 'privacy',
   '/terms': 'terms',

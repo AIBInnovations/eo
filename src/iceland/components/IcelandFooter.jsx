@@ -1,6 +1,7 @@
 import React from 'react';
 import { leadership, hero, navigation, contacts } from '../data/retreat.js';
 import { legalEntity } from '../data/legal.js';
+import sponsors from '../../assets/logos/sponsors.png';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { Link } from '../router.jsx';
 
@@ -45,6 +46,12 @@ export default function IcelandFooter() {
                 </a>
               </div>
             </div>
+          </div>
+        </div>
+
+        <div className="ice-sponsor-strip">
+          <div className="ice-sponsor-panel">
+            <img src={sponsors} alt="EaseMyTrip, annual travel partner · Nuvama Private, annual sponsor · MyEO · EO Punjab × Amplify" className="ice-sponsor-img" />
           </div>
         </div>
 

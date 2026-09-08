@@ -25,6 +25,7 @@ the deep links.
 | `/adventure` | Choose Your Adventure | The four Day 4 breakouts with duration, level, wear, age and "Select My Activity" |
 | `/stay` | Stay & Experiences | Full-bleed photograph per place (EDITION, Aurora Basecamp, Langjökull, Sky Lagoon, Harpa, Golden Circle) + add-ons |
 | `/enquire` | Enquire | The enquiry form (name, mobile, e-mail, topic, message), how it works, who answers |
+| `/accounts` | Accounts & Payments | The payment structure (advance, three tranches, refund of the advance), and requests for invoices and statements |
 | `/privacy`, `/terms` | Legal | Plain-language privacy policy and terms (`data/legal.js`, fill in the chapter's registered address) |
 | `/thank-you` | Thank you | Shown after the enquiry form is sent |
 | anything else | 404 | Custom not-found page (Vercel rewrites every path to `index.html`, so the app renders it) |
@@ -76,6 +77,13 @@ source/                     (git-ignored) original video, PDFs and poster PNGs
 - Responsive: the em scale plus the 991 / 767 / 479 px breakpoints; the "mobile pass" block at the end of
   `iceland.css` holds the phone-specific fixes (stacked wardrobe planner, auto-height points grid, full-bleed sections).
 - Forms are front-end previews; connect `EnquiryForm.jsx` (and the Updates/Family forms) to the retreat desk's inbox or WhatsApp.
+- Branding: `src/assets/logos/` holds the EO Punjab × Amplify lockup in both polarities, the sponsor lockup and the
+  EaseMyTrip mark (client-supplied assets — see `src/assets/iceland/CREDITS.md`). The header renders the lockup through
+  `components/Logo.jsx`; because the header animates `filter: invert(1)` over light sections, `useHeaderScroll` also
+  toggles an `ice-inverted` class so the logo can swap polarity and counter-invert to keep the brand colours true.
+- The itinerary PDF (`public/downloads/EO-Punjab-Iceland-2027-Itinerary.pdf`) is EO Punjab branded and generated from
+  the site's own typography — rebuild it with `node scripts/make-itinerary-pdf.cjs` after editing the copy in `docs/itinerary-source.json`.
+- Payment structure lives in `src/iceland/data/accounts.js`; partner desks in `partners` in `data/retreat.js`.
 - Deploy: `vercel.json` rewrites every path to `index.html` (client-side routing) and caches the frame / lottie / video folders for a year.
 - Launch checklist in place: per-page title/description/canonical + Open Graph/Twitter tags (`data/meta.js`, `public/og.jpg`),
   favicon set + `site.webmanifest`, `robots.txt`, `sitemap.xml`, custom 404, thank-you page, privacy + terms pages,

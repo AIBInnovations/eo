@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { lockScroll } from '../perf.js';
+import logo from '../../assets/logos/eo-amplify-light.png';
 
 const MIN_MS = 700;
 const MAX_MS = 6000;
@@ -90,7 +91,7 @@ export default function Preloader({ onDone }) {
     <div className="ice-preloader" ref={rootRef} role="status" aria-label="Loading">
       <div className="ice-preloader-inner">
         <div className="ice-preloader-mark">
-          <span className="ice-preloader-top">EO Punjab</span>
+          <img src={logo} alt="EO Punjab × Amplify" className="ice-preloader-logo" />
           <span className="ice-preloader-sub">Iceland 2027</span>
         </div>
         <div className="ice-preloader-bar">

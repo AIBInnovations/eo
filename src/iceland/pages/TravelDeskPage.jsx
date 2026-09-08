@@ -6,10 +6,12 @@ import PointsGrid from '../blocks/PointsGrid.jsx';
 import StepsSplit from '../blocks/StepsSplit.jsx';
 import Statement from '../blocks/Statement.jsx';
 import PhotoStrip from '../blocks/PhotoStrip.jsx';
+import PartnerCards from '../components/PartnerCards.jsx';
 import Btn from '../blocks/Btn.jsx';
-import { keyTimes, flightDesk, travelDesk, essentials, wardrobe, addOns, extensions } from '../data/retreat.js';
+import { keyTimes, travelDesk, essentials, wardrobe, addOns, extensions } from '../data/retreat.js';
 import { pageHeroes, pageImages, essentialIcons } from '../data/pages.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
+import { scrollToHash } from '../router.jsx';
 
 const LETTERS = 'abcdefghijklmnop'.split('').map((l) => `(${l})`);
 
@@ -21,22 +23,11 @@ export default function TravelDeskPage() {
 
   return (
     <>
-      <PageHero kicker={h.kicker} title={h.title} image={h.image} cta={<Btn href={flightDesk.tel}>Call the flight desk · {flightDesk.phone}</Btn>} />
+      <PageHero kicker={h.kicker} title={h.title} image={h.image} cta={<Btn onClick={() => scrollToHash(null, '#contacts')}>Who to call</Btn>} />
 
-      <PointsGrid
-        items={[
-          ...keyTimes.map((k) => ({ title: k.value, text: k.label })),
-          {
-            title: `${flightDesk.agency} · ${flightDesk.contact}`,
-            text: 'Flight assistance for every traveller.',
-            extra: (
-              <a href={flightDesk.tel} className="ice-link-btn">
-                {flightDesk.phone}
-              </a>
-            ),
-          },
-        ]}
-      />
+      <PointsGrid columns={3} items={keyTimes.map((k) => ({ title: k.value, text: k.label }))} />
+
+      <PartnerCards id="contacts" />
 
       <StepsSplit
         id="topics"

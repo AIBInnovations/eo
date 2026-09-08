@@ -1,0 +1,45 @@
+{
+  "days": [
+    { "n": "01", "date": "31 March 2027", "title": "Arrival in Reykjavík",
+      "blocks": [
+        {"p": "On arrival in Iceland, head to your hotel and check in. The drive will take approximately 50 minutes."},
+        {"p": "Relax and unwind before getting ready for the evening."},
+        {"t": "19:30", "p": "Depart from the hotel for the Aurora Basecamp, located approximately 30 minutes away. Enjoy a private dinner in the unique Arctic setting, followed by an exclusive after-party with music, drinks and entertainment, creating a fun and memorable evening beneath the Icelandic skies."},
+        {"p": "Overnight in Reykjavík.", "muted": true}
+      ]},
+    { "n": "02", "date": "1 April 2027", "title": "The Golden Circle & the Glacier",
+      "blocks": [
+        {"p": "After breakfast, enjoy a full-day excursion exploring the highlights of Iceland’s Golden Circle."},
+        {"p": "Begin with a visit to Thingvellir National Park, where you can literally walk from North America to Europe, across the crevasses created as Iceland’s tectonic plates slowly drift apart."},
+        {"t": "12:00", "p": "Enjoy lunch at Friðheimar Tomato Farm, with a feast of tomato soup served with freshly baked bread, cucumber salsa and an array of other delicious tomato-based dishes."},
+        {"p": "After lunch, head to the meeting point to board a Monster Truck and make your way to the top of the glacier for an exhilarating snowmobiling experience. Don your thermal overalls, gloves and helmet and get ready to zip across the vast, icy glacier."},
+        {"p": "Following the activity, make a quick stop at Gullfoss Falls before continuing to the Geysir thermal area, home to Strokkur, a powerful hot spring that shoots superheated water and steam more than 20 metres into the air every few minutes."},
+        {"p": "Dinner tonight will be at a private venue, located just a short walk from the hotel."},
+        {"p": "Overnight in Reykjavík.", "muted": true}
+      ]},
+    { "n": "03", "date": "2 April 2027", "title": "Sky Lagoon & Harpa",
+      "blocks": [
+        {"t": "11:30", "p": "Enjoy breakfast at the hotel before heading to Sky Lagoon. Spend the morning relaxing in the warm geothermal waters, surrounded by dramatic coastal scenery, and experience Iceland’s unique bathing culture in a beautiful setting."},
+        {"t": "14:00", "p": "Head to Pósthús Food Hall, located in the heart of Reykjavík. Enjoy lunch with a choice of cuisines from its collection of food stalls, including sushi, Italian, Mexican and more."},
+        {"p": "Take your time over lunch before enjoying the afternoon at leisure, with the opportunity to explore the city’s charming streets, browse local boutiques or simply relax at the hotel."},
+        {"t": "20:00", "p": "Head to Harpa Concert Hall for dinner. Enjoy an evening in one of Reykjavík’s most iconic landmarks, known for its striking glass architecture and beautiful harbour setting, before returning to the hotel."},
+        {"p": "Overnight in Reykjavík.", "muted": true}
+      ]},
+    { "n": "04", "date": "3 April 2027", "title": "Choose Your Adventure & Farewell",
+      "blocks": [
+        {"p": "After breakfast, members get ready for the breakout activities. Members can opt for one of the following activities or simply spend the morning exploring the sights of Reykjavík."},
+        {"h": "Snorkelling", "p": "Snorkelling in Silfra, located in Thingvellir National Park, has become a popular activity in Iceland. This unique rift lies between the North American and European tectonic plates, offering the chance to snorkel between continents. The water is exceptionally clear, with visibility reaching up to 100 metres.", "d": "Approximately 5 hours, including transfers to the meeting point."},
+        {"h": "Lava Tunnel", "p": "A journey into Raufarhólshellir offers a unique opportunity to explore the inner workings of a volcanic eruption while walking through the path of lava that flowed during the Leitahraun eruption approximately 5,200 years ago.", "d": "Approximately 3 hours, including transfers."},
+        {"h": "Horse Riding", "p": "Ride through Iceland’s dramatic volcanic landscapes on the back of the country’s iconic and sure-footed Icelandic horses.", "d": "Approximately 3 hours, including transfers to the meeting point."},
+        {"h": "ATV Adventure", "p": "Set out on an exhilarating ATV ride across Iceland’s rugged terrain, taking in spectacular landscapes along the way.", "d": "Approximately 3.5 hours, including transfers to the meeting point."},
+        {"p": "After the selected activities, meet in Reykjavík for lunch at a local restaurant, enjoying a relaxed meal and a taste of Icelandic flavours."},
+        {"p": "After lunch, embark on an exciting treasure hunt through the heart of Reykjavík. Follow a trail of clues, uncover hidden corners and discover some of the city’s most interesting landmarks while working together to solve challenges, with a little friendly competition along the way."},
+        {"p": "In the evening, come together for a special farewell dinner and after-party at a private venue, located just a short walk from the hotel. Enjoy a relaxed evening of great food, music and celebration as you bring the Iceland adventure to a memorable close."},
+        {"p": "Overnight in Reykjavík.", "muted": true}
+      ]},
+    { "n": "05", "date": "4 April 2027", "title": "Departure",
+      "blocks": [
+        {"p": "Enjoy breakfast at the hotel and check out. Based on your departure flight, a private transfer will be arranged for you from your hotel to Keflavík International Airport for your onward flight."}
+      ]}
+  ]
+}

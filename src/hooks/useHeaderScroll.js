@@ -40,6 +40,8 @@ export default function useHeaderScroll(headerRef, { hideThreshold = 50, key = n
           const shouldInvert = active.size === 0;
           if (shouldInvert === inverted) return;
           inverted = shouldInvert;
+          // the class lets the logo counter-invert so the brand colours stay true
+          header.classList.toggle('ice-inverted', shouldInvert);
           gsap.to(header, { filter: `invert(${shouldInvert ? 1 : 0})`, duration: 0.3, ease: 'power1.out', overwrite: 'auto' });
         };
         const sync = (self, el) => {
@@ -64,6 +66,7 @@ export default function useHeaderScroll(headerRef, { hideThreshold = 50, key = n
         apply();
         return () => {
           triggers.forEach((t) => t.kill());
+          header.classList.remove('ice-inverted');
           gsap.set(header, { clearProps: 'filter' });
         };
       }

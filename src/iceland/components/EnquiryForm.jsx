@@ -3,7 +3,7 @@ import { Check } from 'lucide-react';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { useRouter } from '../router.jsx';
 
-export const ENQUIRY_TOPICS = ['Joining the retreat', 'Day 4 breakout activity', 'Room upgrade or extra night', 'Trip extension', 'Flights and transfers', 'Something else'];
+export const ENQUIRY_TOPICS = ['Joining the retreat', 'Day 4 breakout activity', 'Room upgrade or extra night', 'Trip extension', 'Flights and transfers', 'Invoices and payments', 'Something else'];
 
 /**
  * The enquiry form used in the glass panel (compact) and on the Enquire page (full).
@@ -19,7 +19,8 @@ export default function EnquiryForm({ compact = false }) {
 
   useEffect(() => {
     if (subject) {
-      const match = ENQUIRY_TOPICS.find((t) => subject.toLowerCase().includes(t.split(' ')[0].toLowerCase()));
+      const s = subject.toLowerCase();
+      const match = s.startsWith('accounts') ? 'Invoices and payments' : ENQUIRY_TOPICS.find((t) => s.includes(t.split(' ')[0].toLowerCase()));
       setTopic(match || 'Something else');
     }
   }, [subject]);

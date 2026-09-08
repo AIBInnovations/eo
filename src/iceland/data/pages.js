@@ -47,6 +47,11 @@ export const pageHeroes = {
     title: '112 People. One Iceland Adventure.',
     image: images.kirkjufell,
   },
+  accounts: {
+    kicker: ['Accounts', 'Invoices · Payments'],
+    title: 'Accounts & Payments. What is due, when, and how to get your invoice.',
+    image: images.harpa,
+  },
   updates: {
     kicker: ['Announcements', 'Deadlines · Help'],
     title: 'Updates & Help. Stay in the loop.',

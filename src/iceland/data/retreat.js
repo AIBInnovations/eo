@@ -244,6 +244,30 @@ export const keyTimes = [
   { label: 'Retreat ends', value: 'Breakfast, 4 April' },
 ];
 
+/** The two desks members deal with: the retreat planner and the flight agent. */
+export const partners = [
+  {
+    id: 'villa-escape',
+    role: 'Retreat Planner',
+    org: 'The Villa Escape',
+    contact: 'Mallika Iyyer',
+    phone: '+91 98200 43566',
+    tel: 'tel:+919820043566',
+    text: 'Plans and runs the retreat on the ground: hotels, transfers, activities and the day-by-day programme.',
+  },
+  {
+    id: 'easemytrip',
+    role: 'Flight Bookings',
+    org: 'EaseMyTrip',
+    contact: 'Rishita',
+    phone: '+91 6200 150 904',
+    tel: 'tel:+916200150904',
+    logo: true,
+    text: 'EO Punjab’s annual travel partner, available to book your flights into Keflavík (KEF) and hold the group fares.',
+    note: 'Booking your flights through EaseMyTrip is not compulsory. You are free to book your own tickets — just share the final itinerary with the retreat desk so your airport transfer can be arranged.',
+  },
+];
+
 export const flightDesk = {
   title: 'Flight assistance',
   agency: 'EaseMyTrip',
@@ -341,10 +365,10 @@ export const announcements = [
 ];
 
 export const deadlines = [
+  { label: 'Tranche 2 payment', when: '30 Nov 2026' },
+  { label: 'Tranche 3 payment (balance)', when: '05 Feb 2026' },
   { label: 'Breakout activity selection', when: 'To be announced' },
-  { label: 'Flight details submitted', when: 'To be announced' },
-  { label: 'Passport copies and insurance', when: 'To be announced' },
-  { label: 'Room upgrades and add-ons', when: 'To be announced' },
+  { label: 'Flight details, passport copies and insurance', when: 'To be announced' },
 ];
 
 export const downloads = [
@@ -380,6 +404,7 @@ export const navigation = [
   { href: '/stay', label: 'Stay & Experiences', short: 'Stay', anchor: '#stay' },
   { href: '/travel-desk', label: 'Travel Desk', short: 'Travel Desk', anchor: '#travel-desk' },
   { href: '/family', label: 'The EO Punjab Family', short: 'Family', anchor: '#family' },
+  { href: '/accounts', label: 'Accounts & Payments', short: 'Accounts', anchor: '#accounts' },
   { href: '/updates', label: 'Updates & Help', short: 'Updates', anchor: '#updates' },
   { href: '/enquire', label: 'Enquire', short: 'Enquire', anchor: '#enquire', cta: true },
 ];

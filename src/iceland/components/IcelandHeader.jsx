@@ -3,6 +3,7 @@ import useHeaderScroll from '../../hooks/useHeaderScroll.js';
 import { navigation } from '../data/retreat.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { Link, useRouter, scrollToHash } from '../router.jsx';
+import Logo from './Logo.jsx';
 
 export { scrollToHash };
 
@@ -30,9 +31,9 @@ export default function IcelandHeader({ menuOpen, onToggleMenu }) {
     <div className="header ice-header" ref={headerRef}>
       <div className="ice-header-bar">
         <div className="ice-header-left">
-          <Link to="/" className={`ice-wordmark color-inversion-target${path === '/' ? ' is-current' : ''}`}>
-            <span className="ice-wordmark-top">EO Punjab</span>
-            <span className="ice-wordmark-sub">Iceland 2027</span>
+          <Link to="/" className={`ice-wordmark${path === '/' ? ' is-current' : ''}`} aria-label="EO Punjab · Iceland 2027, home">
+            <Logo className="ice-logo--header" />
+            <span className="ice-wordmark-sub color-inversion-target">Iceland 2027</span>
           </Link>
           <nav className="ice-nav ice-nav--left" aria-label="Primary">
             {left.map(link)}
