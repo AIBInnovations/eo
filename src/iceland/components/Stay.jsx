@@ -7,7 +7,7 @@ import Pic from '../blocks/Pic.jsx';
 
 /** "Stay & Experiences" — lots of imagery, very little text, in the reference site's draggable card carousel. */
 export default function Stay({ teaser = false }) {
-  const phone = useMediaQuery('(max-width: 767px)');
+  const phone = useMediaQuery('(max-width: 991px)');
   return (
     <section className="destinations ice-section ice-stay" id="stay">
       <div className="wrapper_base spec_cms">

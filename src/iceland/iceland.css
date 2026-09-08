@@ -2604,8 +2604,8 @@ body.iceland .tag_form {
    Redesign pass — header, type scale minimums, enquiry pill + form, real icons, teaser split.
    ===================================================================================== */
 
-/* ---------- type scale: nothing below a readable size on desktop ---------- */
-@media screen and (min-width: 992px) {
+/* ---------- type scale: nothing below a readable size on tablets and desktop ---------- */
+@media screen and (min-width: 768px) {
   .ice-eyebrow,
   .ice-tag,
   body.iceland .tag_caption,
@@ -2640,7 +2640,6 @@ body.iceland .tag_form {
   .ice-field textarea,
   body.iceland .footer_link,
   body.iceland .top_info > div + div,
-  .ice-line-detail,
   body.iceland .accordion_paragraph,
   .ice-table,
   .ice-small,
@@ -5215,4 +5214,121 @@ body.iceland .ice-rt-facts {
 body.iceland .ice-rt-facts li,
 body.iceland .ice-rt-facts li span {
   font-size: 13.5px;
+}
+
+/* ---------- tablet + phone tidy-ups from the responsive audit ---------- */
+/* gallery thumbnails wrap instead of scrolling sideways on phones */
+@media screen and (max-width: 767px) {
+  .ice-rg-thumbs {
+    flex-wrap: wrap;
+    overflow: visible;
+  }
+}
+/* the Stay teaser is a static grid on tablets too (three across) */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .ice-stay-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 0 24px;
+  }
+  .ice-stay-grid .ice-strip-card {
+    height: 30vw;
+  }
+}
+/* hero card and stats on tablets */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .ice-hero-card .info_small {
+    font-size: 12px;
+  }
+  .ice-hero-card .title_txt {
+    font-size: 15px;
+  }
+  .ice-hero-card .explore_link {
+    font-size: 13px;
+  }
+  .ice-stats {
+    font-size: 12px;
+  }
+  .ice-countdown-label {
+    font-size: 12px;
+  }
+  .ice-field span {
+    font-size: 12px;
+  }
+  body.iceland .payout_money > div:first-child {
+    font-size: 12px;
+  }
+}
+
+/* announcement detail sits inside the large statement style: its own floor, not 1.05em of the parent */
+@media screen and (min-width: 768px) {
+  .ice-line-detail {
+    font-size: max(0.55em, 15px);
+  }
+}
+
+/* payment table: stacked cards on tablets as well as phones (five columns do not fit at 768px) */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .ice-pay-table,
+  .ice-pay-table tbody,
+  .ice-pay-table tr,
+  .ice-pay-table td {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .ice-pay-table thead {
+    display: none;
+  }
+  .ice-pay-table tr {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 14px;
+    row-gap: 14px;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: var(--cream-2);
+    padding: 20px 20px 22px;
+    margin-bottom: 14px;
+  }
+  .ice-pay-table td {
+    border: 0;
+    padding: 0;
+  }
+  .ice-pay-table td:nth-child(1),
+  .ice-pay-table td:nth-child(2) {
+    grid-column: 1 / -1;
+  }
+  .ice-pay-table td:nth-child(2) {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+  }
+  .ice-pay-table td::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .ice-pay-table td:nth-child(1)::before {
+    display: none;
+  }
+  .ice-pay-table td:nth-child(2)::before {
+    margin-bottom: 0;
+  }
+  .ice-pay-table td[data-short]::before {
+    content: attr(data-short);
+  }
+  .ice-pay-sub {
+    max-width: none;
+  }
+  .ice-table-wrap {
+    overflow: visible;
+  }
 }
