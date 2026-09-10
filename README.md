@@ -29,9 +29,10 @@ the deep links.
 | `/privacy`, `/terms` | Legal | Plain-language privacy policy and terms (`data/legal.js`, fill in the chapter's registered address) |
 | `/thank-you` | Thank you | Shown after the enquiry form is sent |
 | anything else | 404 | Custom not-found page (Vercel rewrites every path to `index.html`, so the app renders it) |
+| `/essentials` | Iceland Essentials | The thirteen-item packing list drawn as colour lineart (`components/Garments.jsx`), plus the day-by-day wardrobe planner |
 | `/extensions` | Extensions | South Coast Iceland, Amsterdam and Copenhagen on their own page, each booked separately |
 | `/travel-desk` | Travel Desk | Key times, EaseMyTrip contact, the nine topics, Iceland Essentials, wardrobe planner, add-ons, the three extensions with PDFs |
-| `/family` | The EO Punjab Family | "112 People. One Iceland Adventure.", counts, the member wall, photo form |
+| `/family` | The EO Punjab Family | "114 People. One Iceland Adventure.", counts, photo strip, the people to recognise |
 | `/updates` | Updates & Help | Announcements, deadlines, downloads, full FAQ, contacts, President and Retreat Chairs, help form |
 
 The internal pages use the reference site's *partnership* page design (the second HTML/CSS export placed in
@@ -84,6 +85,10 @@ source/                     (git-ignored) original video, PDFs and poster PNGs
   toggles an `ice-inverted` class so the logo can swap polarity and counter-invert to keep the brand colours true.
 - The itinerary PDF (`public/downloads/EO-Punjab-Iceland-2027-Itinerary.pdf`) is EO Punjab branded and generated from
   the site's own typography — rebuild it with `node scripts/make-itinerary-pdf.cjs` after editing the copy in `docs/itinerary-source.json`.
+- "Who to contact" is one table in `contactTable` (`data/retreat.js`), rendered by `components/ContactTable.jsx` on the
+  Travel Desk and Updates pages and reproduced on the last page of the itinerary PDF — edit it in one place.
+- The three people to recognise are `leaders` in `data/retreat.js`; each shows initials until a portrait is added
+  (drop a file into `assets/iceland/people/` and set `photo`).
 - Payment structure lives in `src/iceland/data/accounts.js`; partner desks in `partners` in `data/retreat.js`;
   room upgrades (photographs and facts from The Reykjavik EDITION's room pages, no prices) in `data/rooms.js`; the
   wardrobe planner in `data/wardrobe.js`.

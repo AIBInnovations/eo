@@ -3,6 +3,7 @@ import useSplitLines from '../../hooks/useSplitLines.js';
 import PageHero from '../blocks/PageHero.jsx';
 import LSection from '../blocks/LSection.jsx';
 import PhotoStrip from '../blocks/PhotoStrip.jsx';
+import RoomUpgrades from '../components/RoomUpgrades.jsx';
 import Btn from '../blocks/Btn.jsx';
 import { stays } from '../data/retreat.js';
 import { pageHeroes, pageImages } from '../data/pages.js';
@@ -15,13 +16,27 @@ export default function StayPage() {
 
   return (
     <>
-      <PageHero kicker={h.kicker} title={h.title} image={h.image} cta={<Btn onClick={() => scrollToHash(null, '#stays')}>Start with the hotel</Btn>} />
+      <PageHero
+        kicker={h.kicker}
+        title={h.title}
+        image={h.image}
+        cta={
+          <div className="ice-btn-row">
+            <Btn onClick={() => scrollToHash(null, '#stays')}>Start with the hotel</Btn>
+            <Btn dark onClick={() => scrollToHash(null, '#upgrades')}>
+              Room upgrades
+            </Btn>
+          </div>
+        }
+      />
 
       <div id="stays">
         {stays.map((s, i) => (
           <LSection key={s.name} short tag={`${String(i + 1).padStart(2, '0')} / ${String(stays.length).padStart(2, '0')}`} title={s.name} text={s.caption} image={s.image} alt={s.alt} />
         ))}
       </div>
+
+      <RoomUpgrades id="upgrades" />
 
       <PhotoStrip
         photos={[
@@ -35,15 +50,8 @@ export default function StayPage() {
 
       <LSection
         title="Stay longer."
-        text="Room upgrades and extra nights at the EDITION, or three curated extensions: South Coast Iceland, Amsterdam or Copenhagen."
-        cta={
-          <div className="ice-btn-row">
-            <Btn to="/travel-desk#add-ons">Rooms & upgrades</Btn>
-            <Btn to="/extensions" dark>
-              Extensions
-            </Btn>
-          </div>
-        }
+        text="Three curated extensions before or after the retreat: South Coast Iceland, Amsterdam or Copenhagen."
+        cta={<Btn to="/extensions">See the extensions</Btn>}
         image={pageImages.glacierLagoon}
         alt="Iceberg on the Jökulsárlón glacier lagoon"
       />

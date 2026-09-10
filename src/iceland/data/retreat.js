@@ -30,6 +30,7 @@ import keflavik from '../../assets/iceland/keflavik-airport.webp';
 import kirkjufell from '../../assets/iceland/kirkjufell.webp';
 import sunVoyager from '../../assets/iceland/sun-voyager.webp';
 import monsterTruck from '../../assets/iceland/monster-truck.webp';
+import snowmobiling from '../../assets/iceland/snowmobiling.webp';
 
 // ---------------------------------------------------------------------------
 // Hero — act 1: the reference site's door animation (287 frames) opens and the camera walks in;
@@ -50,7 +51,7 @@ export const hero = {
   location: 'Reykjavík, Iceland',
   title: 'Land of Fire & Ice.',
   subtitle: 'An EO Experience Like No Other.',
-  stats: ['112 Travellers', '49 EO Members & Families', '4 Extraordinary Nights'],
+  stats: ['114 Travellers', '49 EO Members & Families', '4 Extraordinary Nights'],
   startsAt: '2027-03-31T18:30:00Z', // Iceland runs on UTC all year
   poster: heroPoster,
   panels: [
@@ -62,7 +63,7 @@ export const hero = {
     {
       key: '_03',
       title: 'Where Fire Meets Ice, and EO Meets Family.',
-      text: 'Four nights across Reykjavík, the Golden Circle and Langjökull glacier, designed for 112 travellers to move as one. Everything you need is on this site, and the retreat desk is one enquiry away.',
+      text: 'Four nights across Reykjavík, the Golden Circle and Langjökull glacier, designed for 114 travellers to move as one. Everything you need is on this site, and the retreat desk is one enquiry away.',
     },
   ],
   card: {
@@ -106,7 +107,7 @@ export const days = [
     tagline: 'Walk between two continents. Then ride a glacier.',
     image: gullfoss,
     alt: 'Gullfoss waterfall, Golden Circle',
-    gallery: [{ image: thingvellir, name: 'Thingvellir', caption: 'Walk between two continents' }, { image: fridheimar, name: 'Friðheimar', caption: 'Lunch in the tomato greenhouse' }, { image: monsterTruck, name: 'Langjökull', caption: 'Monster truck + snowmobiles' }, { image: strokkur, name: 'Strokkur', caption: 'Erupts every few minutes' }],
+    gallery: [{ image: thingvellir, name: 'Thingvellir', caption: 'Walk between two continents' }, { image: fridheimar, name: 'Friðheimar', caption: 'Lunch in the tomato greenhouse' }, { image: monsterTruck, name: 'Monster Truck', caption: 'Up to the top of Langjökull' }, { image: snowmobiling, name: 'Snowmobiling', caption: 'Across the glacier' }, { image: strokkur, name: 'Strokkur', caption: 'Erupts every few minutes' }],
     timeline: [
       { time: 'Morning', label: 'Breakfast, then a full-day excursion through the highlights of the Golden Circle.' },
       { time: 'Late morning', label: 'Thingvellir National Park: walk from North America to Europe across the rift where the tectonic plates drift apart.' },
@@ -121,25 +122,26 @@ export const days = [
     number: '03',
     date: '2 April',
     title: 'Sky Lagoon & Harpa',
-    subtitle: 'Sky Lagoon → Pósthús → Leisure → Harpa Dinner',
+    subtitle: 'Sky Lagoon → Pósthús → Lava Tunnel → Harpa Dinner',
     tagline: 'Slow morning. Big night.',
     image: skyLagoon,
     alt: 'Geothermal lagoon in Iceland',
-    gallery: [{ image: skyLagoon, name: 'Sky Lagoon', caption: 'Warm geothermal waters' }, { image: reykjavikStreet, name: 'Reykjavík', caption: 'Pósthús Food Hall + leisure' }, { image: harpa, name: 'Harpa', caption: 'The dressiest night' }],
+    gallery: [{ image: skyLagoon, name: 'Sky Lagoon', caption: 'Warm geothermal waters' }, { image: lavaTunnel, name: 'Lava Tunnel', caption: 'Raufarhólshellir, 3 PM' }, { image: harpa, name: 'Harpa', caption: 'The dressiest night' }],
     timeline: [
       { time: 'Morning', label: 'Breakfast at the hotel.' },
       { time: '11:30 AM', label: 'Sky Lagoon: warm geothermal waters framed by dramatic coastal scenery, and a taste of Iceland’s bathing culture.' },
       { time: '2:00 PM', label: 'Lunch at Pósthús Food Hall in the heart of Reykjavík, choosing from sushi, Italian, Mexican and more.' },
-      { time: 'Afternoon', label: 'At leisure: explore the city’s streets, browse local boutiques or relax at the hotel.' },
+      { time: '3:00 PM', label: 'Leave the hotel for the Lava Tunnel: walk the path of lava that flowed during the Leitahraun eruption about 5,200 years ago, deep inside Raufarhólshellir.' },
+      { time: '6:00 PM', label: 'Return to the hotel and change for the evening.' },
       { time: '8:00 PM', label: 'Dinner at Harpa Concert Hall, Reykjavík’s landmark of glass on the harbour. The dressiest night of the retreat.' },
     ],
-    expect: ['Swimwear and easy change clothes for the lagoon', 'Chic Reykjavík casual for the afternoon', 'Harpa: blazer or suit separates; elegant dress or trouser ensemble, plus a sophisticated overcoat', 'Overnight in Reykjavík'],
+    expect: ['Swimwear and easy change clothes for the lagoon', 'Warm layers and sturdy footwear for the Lava Tunnel; helmets and lights provided', 'Harpa: blazer or suit separates; elegant dress or trouser ensemble, plus a sophisticated overcoat', 'Overnight in Reykjavík'],
   },
   {
     number: '04',
     date: '3 April',
     title: 'Choose Your Adventure & Farewell',
-    subtitle: 'Breakouts → Snorkelling / Lava Tunnel / Horse Riding / ATV → Lunch → Reykjavík Treasure Hunt → Farewell Dinner & After-Party',
+    subtitle: 'Breakouts → Snorkelling / Horse Riding / ATV → Lunch → Reykjavík Treasure Hunt → Farewell Dinner & After-Party',
     tagline: 'Your morning, your way.',
     image: silfra,
     alt: 'Snorkellers in the Silfra fissure, Thingvellir',
@@ -186,18 +188,6 @@ export const activities = [
     alt: 'Snorkellers in the Silfra fissure',
   },
   {
-    id: 'lava-tunnel',
-    name: 'Lava Tunnel',
-    location: 'Raufarhólshellir',
-    duration: 'Approx. 3 hours incl. transfers',
-    level: 'Easy · guided walk',
-    wear: 'Warm layers, sturdy waterproof boots, gloves; helmets and lights provided',
-    age: 'Suitable for most ages; surfaces are uneven',
-    text: 'Walk the path of lava that flowed during the Leitahraun eruption about 5,200 years ago and see the inner workings of a volcanic eruption.',
-    image: lavaTunnel,
-    alt: 'Inside the Raufarhólshellir lava tunnel',
-  },
-  {
     id: 'horse-riding',
     name: 'Icelandic Horse Riding',
     location: 'Volcanic landscapes near Reykjavík',
@@ -212,14 +202,14 @@ export const activities = [
   {
     id: 'atv',
     name: 'ATV Adventure',
-    location: 'Rugged terrain outside Reykjavík',
+    location: 'Black sand and lava fields outside Reykjavík',
     duration: 'Approx. 3.5 hours incl. transfers',
     level: 'Moderate · driving',
     wear: 'Warm waterproof layers and boots; overalls, helmets and gloves provided',
     age: 'Drivers need a valid driving licence; passenger age limits set by the operator',
     text: 'Set out across Iceland’s rugged terrain on an exhilarating ATV ride, taking in spectacular landscapes along the way.',
-    image: atvTerrain,
-    alt: 'Black sand plain at Sólheimasandur',
+    image: vik,
+    alt: 'Black sand and cliffs on Iceland’s south coast',
   },
 ];
 
@@ -245,6 +235,25 @@ export const keyTimes = [
 ];
 
 /** The two desks members deal with: the retreat planner and the flight agent. */
+/**
+ * "Who to contact" — the table the retreat chairs circulated. Rendered by ContactTable.jsx and
+ * reproduced in the itinerary PDF. `people` holds one or two names per row.
+ */
+export const contactTable = [
+  { for: 'Stay extensions', people: [{ name: 'Mallika Iyyer', role: 'The Villa Escape', phone: '+91 98200 43566', tel: 'tel:+919820043566' }] },
+  { for: 'Flight bookings', people: [{ name: 'Rishita', role: 'EaseMyTrip', phone: '+91 62001 50904', tel: 'tel:+916200150904' }] },
+  { for: 'Accounts, invoicing and payment queries', people: [{ name: 'Mayanka', role: 'Chapter Manager · EO Punjab', phone: '+91 98738 91512', tel: 'tel:+919873891512' }] },
+  {
+    for: 'Upgrades, about the retreat and any other queries',
+    people: [
+      { name: 'Vidur Varma', role: 'Retreat Chair · EO Punjab', phone: '+91 73556 88888', tel: 'tel:+917355688888', portrait: 'vidur' },
+      { name: 'Munish Dua', role: 'Retreat Chair · EO Punjab', phone: '+91 98155 55575', tel: 'tel:+919815555575', portrait: 'munish' },
+    ],
+  },
+  { for: 'All escalations', people: [{ name: 'Mohit Saharan', role: 'President · EO Punjab', phone: '+91 98155 05000', tel: 'tel:+919815505000', portrait: 'mohit' }] },
+  { for: 'Day-to-day permissions', people: [{ name: 'Call your spouse', role: 'IYKYK', phone: '', tel: '' }], light: true },
+];
+
 export const partners = [
   {
     id: 'villa-escape',
@@ -295,7 +304,7 @@ export const essentials = {
   items: ['2 thermal sets', 'Waterproof insulated jacket or parka', 'Waterproof trousers', 'Fleece or wool mid-layer', '2–3 sweaters or knits', 'Waterproof boots', 'Wool socks', 'Gloves', 'Beanie', 'Neck warmer', 'Sunglasses', 'Swimwear', 'Compact day backpack'],
   notes: [
     'For the snowmobiling and glacier day, do not rely on fashion winterwear. The priority is warm + waterproof + windproof. Thermal overalls, gloves and helmets are provided for snowmobiling, but arrive properly layered underneath.',
-    'Separate guidance for the Day 4 breakouts will follow once you choose between Silfra snorkelling, the Lava Tunnel, horse riding and the ATV adventure, because footwear and layering requirements differ.',
+    'Separate guidance for the Day 4 breakouts will follow once you choose between Silfra snorkelling, horse riding and the ATV adventure, because footwear and layering requirements differ.',
   ],
 };
 
@@ -351,10 +360,10 @@ export const extensions = [
 // The EO Punjab Family
 // ---------------------------------------------------------------------------
 export const family = {
-  headline: '112 People. One Iceland Adventure.',
+  headline: '114 People. One Iceland Adventure.',
   counts: [
     { value: '49', label: 'EO Members' },
-    { value: '112', label: 'Travellers' },
+    { value: '114', label: 'Travellers' },
     { value: '4', label: 'Nights' },
   ],
   text: 'Members, spouses and kids, travelling as one chapter. Member and couple photographs with names will fill this wall before departure, and during the retreat it becomes the live photo wall.',
@@ -404,11 +413,23 @@ export const leadership = {
   chairs: { role: 'Retreat Chairs', name: 'Vidur Varma & Munish Dua' },
 };
 
+/**
+ * The three people everyone should be able to recognise on the trip. `photo` stays null until the
+ * chapter sends portraits — the card falls back to initials, and dropping a file into
+ * assets/iceland/people/<id>.webp plus an import here is the only change needed.
+ */
+export const leaders = [
+  { id: 'mohit', name: 'Mohit Saharan', role: 'President · EO Punjab', phone: '+91 98155 05000', tel: 'tel:+919815505000', photo: null },
+  { id: 'vidur', name: 'Vidur Varma', role: 'Retreat Chair · EO Punjab', phone: '+91 73556 88888', tel: 'tel:+917355688888', photo: null },
+  { id: 'munish', name: 'Munish Dua', role: 'Retreat Chair · EO Punjab', phone: '+91 98155 55575', tel: 'tel:+919815555575', photo: null },
+];
+
 export const navigation = [
   { href: '/journey', label: 'The Journey', short: 'Journey', anchor: '#journey' },
   { href: '/adventure', label: 'Choose Your Adventure', short: 'Adventure', anchor: '#adventure' },
   { href: '/stay', label: 'Stay & Experiences', short: 'Stay', anchor: '#stay' },
   { href: '/extensions', label: 'Extensions', short: 'Extensions', anchor: '#extensions' },
+  { href: '/essentials', label: 'Iceland Essentials', short: 'Essentials', anchor: '#essentials' },
   { href: '/travel-desk', label: 'Travel Desk', short: 'Travel Desk', anchor: '#travel-desk' },
   { href: '/family', label: 'The EO Punjab Family', short: 'Family', anchor: '#family' },
   { href: '/accounts', label: 'Accounts & Payments', short: 'Accounts', anchor: '#accounts' },

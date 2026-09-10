@@ -13,6 +13,7 @@ export const ROUTES = {
   '/adventure': 'adventure',
   '/stay': 'stay',
   '/extensions': 'extensions',
+  '/essentials': 'essentials',
   '/enquire': 'enquire',
   '/travel-desk': 'travel-desk',
   '/family': 'family',

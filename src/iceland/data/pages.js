@@ -18,7 +18,7 @@ export const ITINERARY_PDF = '/downloads/EO-Punjab-Iceland-2027-Itinerary.pdf';
 export const pageHeroes = {
   journey: {
     kicker: ['Day by Day', '31 Mar – 4 Apr 2027'],
-    title: 'The Journey. Five days, one chapter, 112 travellers moving as one.',
+    title: 'The Journey. Five days, one chapter, 114 travellers moving as one.',
     image: canyonAerial,
     video: DRONE_VIDEO,
   },
@@ -37,6 +37,11 @@ export const pageHeroes = {
     title: 'Stay longer. Three curated extensions, booked separately.',
     image: diamondBeach,
   },
+  essentials: {
+    kicker: ['Iceland Essentials', 'Pack · Wear'],
+    title: 'Warm, waterproof, windproof. Everything to pack and what to wear each day.',
+    image: images.langjokull,
+  },
   enquire: {
     kicker: ['Enquire', 'One form, one reply'],
     title: 'Ask the retreat desk anything about Iceland 2027.',
@@ -49,7 +54,7 @@ export const pageHeroes = {
   },
   family: {
     kicker: ['49 EO Members', 'Spouses · Kids'],
-    title: '112 People. One Iceland Adventure.',
+    title: '114 People. One Iceland Adventure.',
     image: images.kirkjufell,
   },
   accounts: {
@@ -69,17 +74,26 @@ export const pageHeroes = {
 export const essentialIcons = [
   { icon: 'Layers', title: '2 thermal sets', desc: 'Base layer' },
   { icon: 'Shirt', title: 'Insulated jacket / parka', desc: 'Waterproof outer' },
-  { icon: 'CloudRain', title: 'Waterproof trousers', desc: 'Outer layer' },
-  { icon: 'Flame', title: 'Fleece or wool mid-layer', desc: 'Mid layer' },
-  { icon: 'Shirt', title: '2–3 sweaters / knits', desc: 'Evenings' },
-  { icon: 'Footprints', title: 'Waterproof boots', desc: 'Footwear' },
-  { icon: 'Snowflake', title: 'Wool socks', desc: 'Footwear' },
-  { icon: 'Hand', title: 'Gloves', desc: 'Accessories' },
-  { icon: 'Snowflake', title: 'Beanie', desc: 'Accessories' },
-  { icon: 'Wind', title: 'Neck warmer', desc: 'Accessories' },
-  { icon: 'Glasses', title: 'Sunglasses', desc: 'Glacier glare' },
-  { icon: 'Waves', title: 'Swimwear', desc: 'Sky Lagoon' },
-  { icon: 'Backpack', title: 'Compact day backpack', desc: 'Every day' },
+];
+
+/**
+ * Iceland Essentials, drawn rather than iconified (components/Garments.jsx). `group` sorts the
+ * thirteen things into how you actually pack them.
+ */
+export const essentialGarments = [
+  { art: 'Thermals', name: '2 thermal sets', note: 'Base layer, worn under everything', group: 'Layers' },
+  { art: 'Fleece', name: 'Fleece or wool mid-layer', note: 'The warm middle', group: 'Layers' },
+  { art: 'Sweater', name: '2–3 sweaters or knits', note: 'Evenings and dinners', group: 'Layers' },
+  { art: 'Parka', name: 'Insulated jacket or parka', note: 'Waterproof and windproof outer', group: 'Outer shell' },
+  { art: 'Trousers', name: 'Waterproof trousers', note: 'Glacier day and every excursion', group: 'Outer shell' },
+  { art: 'Boots', name: 'Waterproof boots', note: 'Grip matters more than looks', group: 'Feet' },
+  { art: 'Socks', name: 'Wool socks', note: 'Several pairs, thicker than you think', group: 'Feet' },
+  { art: 'Gloves', name: 'Gloves', note: 'Windproof, and a thin pair underneath', group: 'Extremities' },
+  { art: 'Beanie', name: 'Beanie', note: 'Covering the ears', group: 'Extremities' },
+  { art: 'NeckWarmer', name: 'Neck warmer', note: 'Better than a scarf in wind', group: 'Extremities' },
+  { art: 'Sunglasses', name: 'Sunglasses', note: 'Glacier glare is real', group: 'Extras' },
+  { art: 'Swimwear', name: 'Swimwear', note: 'Sky Lagoon, day three', group: 'Extras' },
+  { art: 'Backpack', name: 'Compact day backpack', note: 'Every day out', group: 'Extras' },
 ];
 
 /** Compact travel-desk topics for the home page tiles. */

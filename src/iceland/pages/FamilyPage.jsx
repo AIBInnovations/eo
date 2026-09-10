@@ -4,6 +4,7 @@ import PageHero from '../blocks/PageHero.jsx';
 import LSection from '../blocks/LSection.jsx';
 import PointsGrid from '../blocks/PointsGrid.jsx';
 import Statement from '../blocks/Statement.jsx';
+import Leaders from '../components/Leaders.jsx';
 import PhotoStrip from '../blocks/PhotoStrip.jsx';
 import Btn from '../blocks/Btn.jsx';
 import { family, leadership } from '../data/retreat.js';
@@ -24,7 +25,7 @@ export default function FamilyPage() {
         columns={3}
         items={[
           { number: '49', title: 'EO Members', text: 'One chapter, travelling together.' },
-          { number: '112', title: 'Travellers', text: 'Members, spouses and kids, moving as one.' },
+          { number: '114', title: 'Travellers', text: 'Members, spouses and kids, moving as one.' },
           { number: '4', title: 'Nights', text: 'Reykjavík, the Golden Circle and Langjökull glacier.' },
         ]}
       />
@@ -39,9 +40,11 @@ export default function FamilyPage() {
         columns={4}
       />
 
+      <Leaders id="leaders" />
+
       <Statement
         title="One chapter. One trip."
-        text="Members, spouses and kids, travelling as one chapter. Four nights designed so that 112 people move like a single family."
+        text="Members, spouses and kids, travelling as one chapter. Four nights designed so that 114 people move like a single family."
         icons={[
           { icon: 'Users', title: 'EO Members', desc: '49' },
           { icon: 'Heart', title: 'Spouses', desc: 'Travelling together' },
@@ -53,7 +56,7 @@ export default function FamilyPage() {
       />
 
       <LSection
-        title="112 people. One Iceland adventure."
+        title="114 people. One Iceland adventure."
         text="Want to bring your family, or have a question about the trip? Ask the retreat desk."
         cta={<Btn onClick={() => openPanel('Joining the retreat')}>Enquire now</Btn>}
         image={pageImages.canyonPlateau}

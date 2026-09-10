@@ -64,7 +64,7 @@ export default function IcelandFooter() {
                   <Link to="/" className="footer_link color-inversion-target w-inline-block">
                     <div>Home</div>
                   </Link>
-                  {navigation.slice(0, 4).map((l) => (
+                  {navigation.slice(0, 5).map((l) => (
                     <Link key={l.href} to={l.href} className="footer_link color-inversion-target w-inline-block">
                       <div>{l.label}</div>
                     </Link>
@@ -74,7 +74,7 @@ export default function IcelandFooter() {
               <div className="div-block-3">
                 <div className="title_footer color-inversion-target">Members</div>
                 <div className="links_flex">
-                  {navigation.slice(4).map((l) => (
+                  {navigation.slice(5).map((l) => (
                     <Link key={l.href} to={l.href} className="footer_link color-inversion-target w-inline-block">
                       <div>{l.label}</div>
                     </Link>

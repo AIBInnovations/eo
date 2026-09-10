@@ -25,7 +25,7 @@ export default function HomePage() {
       {/* 1 · The Journey */}
       <section className="ice-section ice-teaser" id="journey">
         <div className="wrapper_base spec_cms">
-          <SectionHead text="Five days, one chapter, and a plan that moves 112 people like a single family." title="The Journey" caption="Day by day · 31 March – 4 April" />
+          <SectionHead text="Five days, one chapter, and a plan that moves 114 people like a single family." title="The Journey" caption="Day by day · 31 March – 4 April" />
         </div>
         <StepsSplit
           teaser

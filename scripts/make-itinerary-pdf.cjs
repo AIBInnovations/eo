@@ -23,6 +23,20 @@ const block = (bl) => {
   if (bl.t) return `<div class="row"><div class="time">${esc(bl.t)}</div><p>${esc(bl.p)}</p></div>`;
   return `<div class="row"><div class="time"></div><p class="${bl.muted ? 'muted' : ''}">${esc(bl.p)}</p></div>`;
 };
+const CONTACTS = [
+  ['Stay extensions', [['Mallika Iyyer', 'The Villa Escape', '+91 98200 43566']]],
+  ['Flight bookings', [['Rishita', 'EaseMyTrip', '+91 62001 50904']]],
+  ['Accounts, invoicing and payment queries', [['Mayanka', 'Chapter Manager · EO Punjab', '+91 98738 91512']]],
+  ['Upgrades, about the retreat and any other queries', [['Vidur Varma', 'Retreat Chair · EO Punjab', '+91 73556 88888'], ['Munish Dua', 'Retreat Chair · EO Punjab', '+91 98155 55575']]],
+  ['All escalations', [['Mohit Saharan', 'President · EO Punjab', '+91 98155 05000']]],
+  ['Day-to-day permissions', [['Call your spouse', 'IYKYK', '']], true],
+];
+const contactRows = CONTACTS.map(([what, people, light]) => `<tr class="${light ? 'light' : ''}">
+  <td>${esc(what)}</td>
+  <td class="who">${people.map((p, i) => `<div class="${i ? 'p2' : ''}"><b>${esc(p[0])}</b><span class="role">${esc(p[1])}</span></div>`).join('')}</td>
+  <td class="num">${people.map((p) => `<div>${p[2] ? esc(p[2]) : '<span style="color:#8a8172">IYKYK</span>'}</div>`).join('')}</td>
+</tr>`).join('');
+
 const day = (d) => `
   <section class="day">
     <div class="day-head">
@@ -42,13 +56,13 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .cover img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .cover .shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,18,36,.55) 0%, rgba(6,18,36,.25) 40%, rgba(6,18,36,.92) 100%); }
   .cover .inner { position: absolute; inset: 0; padding: 14mm 14mm 16mm; display: flex; flex-direction: column; justify-content: space-between; color: #f4efe6; }
-  .cover .logo { height: 16mm; width: auto; }
+  .cover .logo { height: 16mm; width: auto; align-self: flex-start; flex: 0 0 auto; object-fit: contain; }
   .cover .eyebrow { font-size: 8.4pt; letter-spacing: .28em; text-transform: uppercase; color: #c9a24a; margin-bottom: 5mm; }
   .cover h1 { font-size: 34pt; line-height: 1.02; margin: 0 0 4mm; font-weight: 400; }
   .cover .sub { font-size: 13pt; opacity: .92; margin: 0 0 9mm; }
   .cover .facts { display: flex; gap: 9mm; font-size: 8.6pt; letter-spacing: .16em; text-transform: uppercase; border-top: .4pt solid rgba(244,239,230,.45); padding-top: 5mm; }
   .head { display: flex; justify-content: space-between; align-items: center; border-bottom: .5pt solid #d9d2c5; padding-bottom: 4mm; margin-bottom: 7mm; }
-  .head img { height: 11mm; width: auto; }
+  .head img { height: 11mm; width: auto; flex: 0 0 auto; object-fit: contain; }
   .head .t { font-size: 7.6pt; letter-spacing: .2em; text-transform: uppercase; color: #8a8172; text-align: right; }
   .day { margin-bottom: 7mm; }
   .day-head { display: flex; gap: 5mm; align-items: baseline; border-bottom: .5pt solid #d9d2c5; padding-bottom: 2.5mm; margin-bottom: 3.5mm; page-break-after: avoid; page-break-inside: avoid; }
@@ -69,7 +83,19 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
   .end .desks b { font-weight: 400; }
   .end .desks div { margin-bottom: 1.2mm; }
   .end .desks .lbl { font-size: 7.4pt; letter-spacing: .18em; text-transform: uppercase; color: #8a8172; }
-  .end img { height: 11mm; width: auto; }
+  .end img { height: 11mm; width: auto; flex: 0 0 auto; object-fit: contain; }
+  .contacts { page-break-before: always; }
+  .contacts h2 { font-size: 16pt; font-weight: 400; margin: 0 0 1.5mm; }
+  .contacts .lead { color: #6f6858; margin: 0 0 6mm; font-size: 9.4pt; }
+  table.ct { width: 100%; border-collapse: collapse; }
+  table.ct th { text-align: left; font-size: 7.4pt; letter-spacing: .18em; text-transform: uppercase; color: #8a8172; font-weight: 400; padding: 0 4mm 2.5mm 0; border-bottom: .5pt solid #d9d2c5; }
+  table.ct td { padding: 3.2mm 4mm 3.2mm 0; border-bottom: .5pt solid #e6e0d4; vertical-align: top; font-size: 9.4pt; }
+  table.ct td.who b { font-weight: 400; }
+  table.ct td.who .role { color: #6f6858; font-size: 8.6pt; display: block; }
+  table.ct td.who .p2 { margin-top: 2mm; }
+  table.ct td.num { color: #0b1f3a; white-space: nowrap; }
+  table.ct td.num div + div { margin-top: 2mm; }
+  table.ct tr.light td { color: #6f6858; font-style: italic; }
 </style></head><body>
   <div class="cover">
     <img class="bg" src="${cover}" alt="">
@@ -80,7 +106,7 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
         <div class="eyebrow">EO Punjab Retreat × Amplify · 31 March – 4 April 2027</div>
         <h1>Land of Fire &amp; Ice.</h1>
         <p class="sub">An EO Experience Like No Other · Reykjavík, Iceland</p>
-        <div class="facts"><span>112 Travellers</span><span>49 EO Members &amp; Families</span><span>4 Extraordinary Nights</span></div>
+        <div class="facts"><span>114 Travellers</span><span>49 EO Members &amp; Families</span><span>4 Extraordinary Nights</span></div>
       </div>
     </div>
   </div>
@@ -90,16 +116,23 @@ const html = `<!doctype html><html><head><meta charset="utf-8"><style>
     <div class="t">Iceland 2027 · Itinerary<br>31 March – 4 April 2027</div>
   </div>
   ${data.days.map(day).join('')}
-  <div class="end">
-    <div class="desks">
-      <div class="lbl">Retreat Planner</div>
-      <div><b>The Villa Escape</b> · Mallika Iyyer · +91 98200 43566</div>
-      <div class="lbl" style="margin-top:3mm">Flight Bookings</div>
-      <div><b>EaseMyTrip</b> · Rishita · +91 6200 150 904</div>
-      <div style="color:#6f6858;font-size:8.4pt;margin-top:2.5mm">Booking flights through EaseMyTrip is not compulsory.</div>
+  <section class="contacts">
+    <div class="head">
+      <img src="${logo}" alt="EO Punjab × Amplify">
+      <div class="t">Iceland 2027 · Who to contact</div>
     </div>
-    <img src="${sponsors}" alt="Sponsors">
-  </div>
+    <h2>Who to contact</h2>
+    <p class="lead">One number for each kind of question, so nothing bounces around the group.</p>
+    <table class="ct">
+      <thead><tr><th style="width:34%">Connect for</th><th style="width:36%">Name &amp; role</th><th style="width:30%">Contact number</th></tr></thead>
+      <tbody>${contactRows}</tbody>
+    </table>
+    <p style="color:#6f6858;font-size:8.6pt;margin-top:5mm">Booking flights through EaseMyTrip is not compulsory. You are free to book your own tickets — just share the final itinerary with the retreat desk so your airport transfer can be arranged.</p>
+    <div class="end">
+      <div class="desks"><div class="lbl">EO Punjab × Amplify</div><div>Iceland 2027 · 31 March – 4 April</div></div>
+      <img src="${sponsors}" alt="Sponsors">
+    </div>
+  </section>
 </body></html>`;
 
 (async () => {

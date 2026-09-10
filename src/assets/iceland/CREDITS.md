@@ -22,7 +22,6 @@ Attribution (file → source file, author, licence):
 - `kirkjufell.webp` — File:Kirkjufell, Iceland, 20240714 1631 0713.jpg · Jakub Hałun · CC BY 4.0 · https://commons.wikimedia.org/wiki/File:Kirkjufell,_Iceland,_20240714_1631_0713.jpg
 - `langjokull.webp` — File:Langjökull 3.JPG · Zairon · CC BY-SA 3.0 · https://commons.wikimedia.org/wiki/File:Langjökull_3.JPG
 - `lava-tunnel.webp` — File:Raufarhólshellir, Iceland, 20230502 1203 4152.jpg · Jakub Hałun · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Raufarhólshellir,_Iceland,_20230502_1203_4152.jpg
-- `monster-truck.webp` — File:Gilsbakki - Langjökull 14.jpg · Reykholt · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Gilsbakki_-_Langjökull_14.jpg
 - `reykjavik-city.webp` — File:Calle Skólavörðustígur, Reikiavik, Distrito de la Capital, Islandia, 2014-08-13, DD 111.jpg · Diego Delso · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Calle_Skólavörðustígur,_Reikiavik,_Distrito_de_la_Capital,_Islandia,_2014-08-13,_DD_111.jpg
 - `reykjavik-harbour.webp` — File:HDR Reykjavik skyline (10139777493).jpg · allen watkin from London, UK · CC BY 2.0 · https://commons.wikimedia.org/wiki/File:HDR_Reykjavik_skyline_(10139777493).jpg
 - `reykjavik-street.webp` — File:Laugavegur, Reykjavik.jpg · Marek Ślusarczyk (Tupungato) Photo gallery · CC BY 3.0 · https://commons.wikimedia.org/wiki/File:Laugavegur,_Reykjavik.jpg
@@ -33,6 +32,9 @@ Attribution (file → source file, author, licence):
 - `sun-voyager.webp` — File:1990 zum 200-jährigen Jubiläum von Reykjavik wurde die Skulptur Solfar (Sonnenfahrt) enthüllt. 03.jpg · Holger Uwe Schmitt · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:1990_zum_200-jährigen_Jubiläum_von_Reykjavik_wurde_die_Skulptur_Solfar_(Sonnenfahrt)_enthüllt._03.jpg
 - `thingvellir.webp` — File:Roca de la Ley, Parque Nacional de Þingvellir, Suðurland, Islandia, 2014-08-16, DD 019.jpg · Diego Delso · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Roca_de_la_Ley,_Parque_Nacional_de_Þingvellir,_Suðurland,_Islandia,_2014-08-16,_DD_019.jpg
 - `vik-village.webp` — File:Reynisfjara, Suðurland, Islandia, 2014-08-17, DD 164.JPG · Diego Delso · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Reynisfjara,_Suðurland,_Islandia,_2014-08-17,_DD_164.JPG
+- `harpa.webp` — File:*Das Opern- und Konzerthaus in Reykjavik. 04.jpg · Holger Uwe Schmitt · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:*Das_Opern-_und_Konzerthaus_in_Reykjavik._04.jpg
+- `snowmobiling.webp` — File:Vélsleðar á Seljalandsdal.jpg · Gylfiolafsson · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Vélsleðar_á_Seljalandsdal.jpg
+- `monster-truck.webp` — supplied by the retreat chairs (glacier truck operator photograph)
 - `poster-cover.webp`, `hero-poster.webp` — EO Punjab retreat poster (own material)
 
 ## Logos

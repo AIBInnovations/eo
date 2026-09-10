@@ -7,8 +7,10 @@ import StepsSplit from '../blocks/StepsSplit.jsx';
 import Faq from '../blocks/Faq.jsx';
 import PhotoStrip from '../blocks/PhotoStrip.jsx';
 import LSection from '../blocks/LSection.jsx';
+import ContactTable from '../components/ContactTable.jsx';
+import Leaders from '../components/Leaders.jsx';
 import Btn from '../blocks/Btn.jsx';
-import { announcements, deadlines, downloads, faqs, contacts, leadership } from '../data/retreat.js';
+import { announcements, deadlines, downloads, faqs } from '../data/retreat.js';
 import { pageHeroes, pageImages, ITINERARY_PDF } from '../data/pages.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
 
@@ -54,26 +56,9 @@ export default function UpdatesPage() {
 
       <Faq id="faq" items={faqs} />
 
-      <LineList
-        id="contacts"
-        title="Who to call"
-        text="The retreat team, the travel agent and emergency assistance."
-        items={[
-          ...contacts.map((c) => ({
-            name: c.role,
-            sub: c.name,
-            body: c.href ? (
-              <a href={c.href} className="ice-line-link">
-                {c.value}
-              </a>
-            ) : (
-              c.value
-            ),
-          })),
-          { name: leadership.president.role, sub: 'EO Punjab', body: leadership.president.name },
-          { name: leadership.chairs.role, sub: 'EO Punjab', body: leadership.chairs.name },
-        ]}
-      />
+      <ContactTable id="contacts" />
+
+      <Leaders id="who-to-look-for" />
 
       <LSection
         title="Still have a question?"

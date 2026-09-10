@@ -4,20 +4,18 @@ import PageHero from '../blocks/PageHero.jsx';
 import LSection from '../blocks/LSection.jsx';
 import PointsGrid from '../blocks/PointsGrid.jsx';
 import StepsSplit from '../blocks/StepsSplit.jsx';
-import Statement from '../blocks/Statement.jsx';
 import PhotoStrip from '../blocks/PhotoStrip.jsx';
 import PartnerCards from '../components/PartnerCards.jsx';
-import WardrobeCards from '../components/WardrobeCards.jsx';
-import RoomUpgrades from '../components/RoomUpgrades.jsx';
+import ContactTable from '../components/ContactTable.jsx';
 import Btn from '../blocks/Btn.jsx';
-import { keyTimes, travelDesk, essentials } from '../data/retreat.js';
-import { pageHeroes, pageImages, essentialIcons } from '../data/pages.js';
+import { keyTimes, travelDesk } from '../data/retreat.js';
+import { pageHeroes, pageImages } from '../data/pages.js';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { scrollToHash } from '../router.jsx';
 
 const LETTERS = 'abcdefghijklmnop'.split('').map((l) => `(${l})`);
 
-/** Travel Desk — key times, the nine topics, Iceland Essentials + wardrobe planner, add-ons and the extensions. */
+/** Travel Desk — key times, the partner desks, who to contact, the nine topics, rooms and upgrades. */
 export default function TravelDeskPage() {
   useSplitLines(null);
   const h = pageHeroes.travelDesk;
@@ -41,9 +39,17 @@ export default function TravelDeskPage() {
         alt="Icelandair aircraft at Keflavík"
       />
 
-      <Statement id="essentials" title={essentials.title} text="Warm + waterproof + windproof. Every traveller should ideally carry these thirteen things." icons={essentialIcons} />
+      <ContactTable id="who-to-contact" />
 
-      <WardrobeCards id="wardrobe" />
+      <LSection
+        short
+        tag="Iceland Essentials"
+        title="What to pack, and what to wear each day."
+        text="Thirteen things every traveller should carry, and a day-by-day wardrobe planner from the glacier to the dressiest night at Harpa."
+        cta={<Btn to="/essentials">Open Iceland Essentials</Btn>}
+        image={pageImages.langjokull}
+        alt="Langjökull glacier"
+      />
 
       <PhotoStrip
         photos={[
@@ -53,7 +59,15 @@ export default function TravelDeskPage() {
         ]}
       />
 
-      <RoomUpgrades id="add-ons" />
+      <LSection
+        short
+        tag="Rooms"
+        title="Move up a room, or add a night."
+        text="Suites, loft rooms and terrace kings at The Reykjavik EDITION, with every room type the hotel has."
+        cta={<Btn to="/stay#upgrades">Rooms &amp; upgrades</Btn>}
+        image={pageImages.reykjavikHarbour}
+        alt="Reykjavík harbourfront"
+      />
 
       <LSection
         short
