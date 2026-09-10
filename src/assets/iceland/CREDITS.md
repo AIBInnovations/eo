@@ -15,7 +15,7 @@ Attribution (file → source file, author, licence):
 - `fridheimar.webp` — File:Iceland - 2017-02-22 - Friðheimar Greenhouse - 3661.jpg · Pierre-Selim Huard · CC BY 4.0 · https://commons.wikimedia.org/wiki/File:Iceland_-_2017-02-22_-_Friðheimar_Greenhouse_-_3661.jpg
 - `glacier-lagoon.webp` — File:033 Freshly rotated iceberg at Jökulsárlón (Iceland) Photo by Giles Laurent.jpg · Giles Laurent · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:033_Freshly_rotated_iceberg_at_Jökulsárlón_(Iceland)_Photo_by_Giles_Laurent.jpg
 - `gullfoss.webp` — File:Gullfoss, Suðurland, Islandia, 2014-08-16, DD 119.JPG · Diego Delso · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Gullfoss,_Suðurland,_Islandia,_2014-08-16,_DD_119.JPG
-- `harpa-concert-hall.webp` — File:*Das Opern- und Konzerthaus in Reykjavik. 03.jpg · Holger Uwe Schmitt · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:*Das_Opern-_und_Konzerthaus_in_Reykjavik._03.jpg
+- `harpa-concert-hall.webp` — File:*Das Opern- und Konzerthaus in Reykjavik. 04.jpg · Holger Uwe Schmitt · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:*Das_Opern-_und_Konzerthaus_in_Reykjavik._04.jpg
 - `icelandic-horses.webp` — File:IcelandicHorseInWinter.jpg · Andreas Tille · CC BY-SA 3.0 · https://commons.wikimedia.org/wiki/File:IcelandicHorseInWinter.jpg
 - `katla-ice-cave.webp` — File:Glacier-cave-man-iceland (Unsplash).jpg · Davide Cantelli cant89 · CC0 · https://commons.wikimedia.org/wiki/File:Glacier-cave-man-iceland_(Unsplash).jpg
 - `keflavik-airport.webp` — File:Icelandair Boeing 757-200 at KEF.jpg · Wissembourg · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Icelandair_Boeing_757-200_at_KEF.jpg
@@ -32,7 +32,6 @@ Attribution (file → source file, author, licence):
 - `sun-voyager.webp` — File:1990 zum 200-jährigen Jubiläum von Reykjavik wurde die Skulptur Solfar (Sonnenfahrt) enthüllt. 03.jpg · Holger Uwe Schmitt · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:1990_zum_200-jährigen_Jubiläum_von_Reykjavik_wurde_die_Skulptur_Solfar_(Sonnenfahrt)_enthüllt._03.jpg
 - `thingvellir.webp` — File:Roca de la Ley, Parque Nacional de Þingvellir, Suðurland, Islandia, 2014-08-16, DD 019.jpg · Diego Delso · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Roca_de_la_Ley,_Parque_Nacional_de_Þingvellir,_Suðurland,_Islandia,_2014-08-16,_DD_019.jpg
 - `vik-village.webp` — File:Reynisfjara, Suðurland, Islandia, 2014-08-17, DD 164.JPG · Diego Delso · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Reynisfjara,_Suðurland,_Islandia,_2014-08-17,_DD_164.JPG
-- `harpa.webp` — File:*Das Opern- und Konzerthaus in Reykjavik. 04.jpg · Holger Uwe Schmitt · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:*Das_Opern-_und_Konzerthaus_in_Reykjavik._04.jpg
 - `snowmobiling.webp` — File:Vélsleðar á Seljalandsdal.jpg · Gylfiolafsson · CC BY-SA 4.0 · https://commons.wikimedia.org/wiki/File:Vélsleðar_á_Seljalandsdal.jpg
 - `monster-truck.webp` — supplied by the retreat chairs (glacier truck operator photograph)
 - `poster-cover.webp`, `hero-poster.webp` — EO Punjab retreat poster (own material)
