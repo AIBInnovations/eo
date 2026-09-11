@@ -43,3 +43,5 @@ The files in `src/assets/logos/` are EO Punjab brand assets supplied by the clie
 - `eo-amplify-light.png`, `eo-amplify-dark.png` — the EO Punjab × Amplify lockup (backgrounds removed for the two polarities).
 - `sponsors.png` — the full sponsor lockup: EaseMyTrip (annual travel partner), Nuvama Private (annual sponsor), MyEO, EO Punjab × Amplify.
 - `easemytrip.png` — the EaseMyTrip mark, cropped from the same supplied lockup and used to identify the retreat's flight-booking partner.
+
+- `atv-snow.jpeg` — supplied by the client as Downloads/2.jpeg on 2026-09-11; photographer and original source not supplied.

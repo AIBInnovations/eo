@@ -30,7 +30,7 @@ export default function Leaders({ id, title = 'Who to look for', text = 'The peo
         <div className="ice-leader-grid">
           {leaders.map((l) => (
             <article className="ice-leader" key={l.id}>
-              <div className="ice-leader-face">
+              <div className={`ice-leader-face ice-leader-face--${l.id}`}>
                 {l.photo ? <img src={l.photo} alt={l.name} className="ice-leader-img" loading="lazy" decoding="async" /> : <span className="ice-leader-initials">{initials(l.name)}</span>}
               </div>
               <div className="ice-leader-body">

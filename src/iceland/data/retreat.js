@@ -25,7 +25,9 @@ import fridheimar from '../../assets/iceland/fridheimar.webp';
 import silfra from '../../assets/iceland/silfra.webp';
 import lavaTunnel from '../../assets/iceland/lava-tunnel.webp';
 import horses from '../../assets/iceland/icelandic-horses.webp';
-import atvTerrain from '../../assets/iceland/atv-terrain.webp';
+import atvTerrain from '../../assets/iceland/atv-snow.jpeg';
+import mohitPhoto from '../../assets/portraits/mohit.jpeg';
+import vidurPhoto from '../../assets/portraits/vidur.jpeg';
 import keflavik from '../../assets/iceland/keflavik-airport.webp';
 import kirkjufell from '../../assets/iceland/kirkjufell.webp';
 import sunVoyager from '../../assets/iceland/sun-voyager.webp';
@@ -145,7 +147,7 @@ export const days = [
     tagline: 'Your morning, your way.',
     image: silfra,
     alt: 'Snorkellers in the Silfra fissure, Thingvellir',
-    gallery: [{ image: silfra, name: 'Silfra', caption: 'Snorkel between the plates' }, { image: lavaTunnel, name: 'Lava Tunnel', caption: 'Raufarhólshellir' }, { image: horses, name: 'Icelandic horses', caption: 'Volcanic scenery on horseback' }, { image: atvTerrain, name: 'ATV', caption: 'Black sand and lava fields' }],
+    gallery: [{ image: silfra, name: 'Silfra', caption: 'Snorkel between the plates' }, { image: lavaTunnel, name: 'Lava Tunnel', caption: 'Raufarhólshellir' }, { image: horses, name: 'Icelandic horses', caption: 'Volcanic scenery on horseback' }, { image: atvTerrain, name: 'ATV', caption: 'Adventure across snowy terrain' }],
     timeline: [
       { time: 'Morning', label: 'Breakout activities: snorkelling at Silfra, the Lava Tunnel, Icelandic horse riding or an ATV adventure. Or simply explore Reykjavík.' },
       { time: 'Lunch', label: 'Regroup in Reykjavík for a relaxed lunch at a local restaurant and a taste of Icelandic flavours.' },
@@ -208,8 +210,8 @@ export const activities = [
     wear: 'Warm waterproof layers and boots; overalls, helmets and gloves provided',
     age: 'Drivers need a valid driving licence; passenger age limits set by the operator',
     text: 'Set out across Iceland’s rugged terrain on an exhilarating ATV ride, taking in spectacular landscapes along the way.',
-    image: vik,
-    alt: 'Black sand and cliffs on Iceland’s south coast',
+    image: atvTerrain,
+    alt: 'ATV riders crossing snow-covered terrain',
   },
 ];
 
@@ -419,8 +421,8 @@ export const leadership = {
  * assets/iceland/people/<id>.webp plus an import here is the only change needed.
  */
 export const leaders = [
-  { id: 'mohit', name: 'Mohit Saharan', role: 'President · EO Punjab', phone: '+91 98155 05000', tel: 'tel:+919815505000', photo: null },
-  { id: 'vidur', name: 'Vidur Varma', role: 'Retreat Chair · EO Punjab', phone: '+91 73556 88888', tel: 'tel:+917355688888', photo: null },
+  { id: 'mohit', name: 'Mohit Saharan', role: 'President · EO Punjab', phone: '+91 98155 05000', tel: 'tel:+919815505000', photo: mohitPhoto },
+  { id: 'vidur', name: 'Vidur Varma', role: 'Retreat Chair · EO Punjab', phone: '+91 73556 88888', tel: 'tel:+917355688888', photo: vidurPhoto },
   { id: 'munish', name: 'Munish Dua', role: 'Retreat Chair · EO Punjab', phone: '+91 98155 55575', tel: 'tel:+919815555575', photo: null },
 ];
 
