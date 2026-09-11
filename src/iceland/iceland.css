@@ -5990,3 +5990,56 @@ body.iceland .ice-leader-body .ice-ct-tel {
     line-height: 22px;
   }
 }
+
+/* ---------- leaders on phones: one featured row, two below, photos never cropped ----------
+   Portrait files are 4:5, so every face box is 4:5 too and object-fit has nothing to trim. */
+@media screen and (max-width: 767px) {
+  body.iceland .ice-leader-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  body.iceland .ice-leader-face {
+    aspect-ratio: 4 / 5;
+  }
+  body.iceland .ice-leader-face .ice-leader-img {
+    object-position: 50% 0%;
+  }
+  /* the president: photo left, details right, across the full width */
+  body.iceland .ice-leader:first-child {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: stretch;
+  }
+  body.iceland .ice-leader:first-child .ice-leader-face {
+    flex: 0 0 46%;
+    width: 46%;
+  }
+  body.iceland .ice-leader:first-child .ice-leader-body {
+    align-self: center;
+    padding: 16px 16px 16px 18px;
+  }
+  body.iceland .ice-leader:first-child .ice-leader-name {
+    font-size: 22px;
+  }
+  /* the two chairs, side by side */
+  body.iceland .ice-leader:not(:first-child) .ice-leader-body {
+    padding: 12px 12px 14px;
+    gap: 4px;
+  }
+  body.iceland .ice-leader:not(:first-child) .ice-leader-name {
+    font-size: 17px;
+  }
+  body.iceland .ice-leader:not(:first-child) .ice-leader-role {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    line-height: 1.35;
+    margin-bottom: 4px;
+  }
+  body.iceland .ice-leader:not(:first-child) .ice-ct-tel {
+    font-size: 13px;
+    gap: 5px;
+  }
+  body.iceland .ice-leader:not(:first-child) .ice-leader-initials {
+    font-size: 44px;
+  }
+}
