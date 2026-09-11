@@ -28,6 +28,7 @@ import horses from '../../assets/iceland/icelandic-horses.webp';
 import atvTerrain from '../../assets/iceland/atv-snow.jpeg';
 import mohitPhoto from '../../assets/portraits/mohit.jpeg';
 import vidurPhoto from '../../assets/portraits/vidur.jpeg';
+import munishPhoto from '../../assets/portraits/munish.jpeg';
 import keflavik from '../../assets/iceland/keflavik-airport.webp';
 import kirkjufell from '../../assets/iceland/kirkjufell.webp';
 import sunVoyager from '../../assets/iceland/sun-voyager.webp';
@@ -425,7 +426,7 @@ export const leadership = {
 export const leaders = [
   { id: 'mohit', name: 'Mohit Saharan', role: 'President · EO Punjab', phone: '+91 98155 05000', tel: 'tel:+919815505000', photo: mohitPhoto },
   { id: 'vidur', name: 'Vidur Varma', role: 'Retreat Chair · EO Punjab', phone: '+91 73556 88888', tel: 'tel:+917355688888', photo: vidurPhoto },
-  { id: 'munish', name: 'Munish Dua', role: 'Retreat Chair · EO Punjab', phone: '+91 98155 55575', tel: 'tel:+919815555575', photo: null },
+  { id: 'munish', name: 'Munish Dua', role: 'Retreat Chair · EO Punjab', phone: '+91 98155 55575', tel: 'tel:+919815555575', photo: munishPhoto },
 ];
 
 export const navigation = [
