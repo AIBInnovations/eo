@@ -5688,3 +5688,134 @@ body.iceland .ice-gm-grid > li {
     max-width: none;
   }
 }
+
+/* Mobile: paint the sticky background in the same grid cell as the story from first load.
+   Stable viewport heights and normal-flow copy avoid browser-toolbar and font-size jumps. */
+@media screen and (max-width: 991px) {
+  body.iceland .ice-main > .ice-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    height: auto;
+    isolation: isolate;
+  }
+  body.iceland .ice-hero > .div-block-7,
+  body.iceland .ice-hero > .background_interaction {
+    grid-area: 1 / 1;
+    width: 100%;
+  }
+  body.iceland .ice-hero > .background_interaction {
+    position: sticky;
+    align-self: start;
+    top: 0;
+    height: 100svh;
+    background: var(--black);
+    overflow: hidden;
+  }
+  body.iceland .ice-hero > .div-block-7 {
+    height: auto;
+    min-width: 0;
+  }
+  body.iceland .ice-hero .hero_b {
+    width: 100%;
+    height: auto;
+    min-height: 100svh;
+  }
+  body.iceland .ice-hero .wrapper_hero {
+    height: auto;
+    min-height: 100svh;
+    padding: 132px 24px 40px;
+    display: flex;
+  }
+  body.iceland .ice-hero .txt_side,
+  body.iceland .ice-hero .hero_b:first-child .txt_side {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    margin: 0;
+    gap: 32px;
+    justify-content: space-between;
+  }
+  body.iceland .ice-hero .box_in._01,
+  body.iceland .ice-hero .box_in._02,
+  body.iceland .ice-hero .box_in._03 {
+    width: 100%;
+    max-width: 600px;
+    margin: 0;
+    padding: 0;
+  }
+  body.iceland .ice-hero .hero_b:not(:first-child) .txt_side {
+    justify-content: center;
+  }
+  body.iceland .ice-hero .h1_interaction {
+    font-size: clamp(54px, 12vw, 88px);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+  body.iceland .ice-hero .h1_interaction.second_part {
+    font-size: clamp(40px, 9vw, 68px);
+    line-height: 1.08;
+  }
+  body.iceland .ice-hero .ice-eyebrow {
+    font-size: 11px;
+    line-height: 1.7;
+    letter-spacing: 0.12em;
+    max-width: 36ch;
+  }
+  body.iceland .ice-hero-sub { font-size: 24px; line-height: 1.3; }
+  body.iceland .ice-hero .description { width: 100%; max-width: 42ch; margin-top: 20px; }
+  body.iceland .ice-hero .b_txt.white { font-size: 17px; line-height: 1.6; }
+  body.iceland .ice-stats { font-size: 11px; line-height: 1.7; gap: 6px 10px; margin-top: 20px; }
+  body.iceland .ice-hero .ice-hero-bottom {
+    position: static;
+    padding: 0;
+    margin: 0;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  body.iceland .ice-hero .ice-hero-bottom .ice-countdown { margin: 0; }
+  body.iceland .ice-countdown-label { font-size: 10px; line-height: 1.5; }
+  body.iceland .ice-countdown-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  body.iceland .ice-countdown-value { font-size: 32px; }
+  body.iceland .ice-countdown-unit { font-size: 9px; letter-spacing: 0.08em; }
+  body.iceland .ice-scroll-cue { flex: 0 0 52px; width: 52px; height: 52px; }
+  body.iceland .recent_destination.ice-hero-card {
+    position: relative;
+    inset: auto;
+    width: auto;
+    margin: 0 24px 32px;
+  }
+  body.iceland .ice-page-hero {
+    width: 100%;
+    height: auto;
+    min-height: 100svh;
+  }
+  body.iceland .ice-page-hero .wrapper_hero.partnerships {
+    height: auto;
+    min-height: 100svh;
+    padding: 132px 24px 40px;
+    gap: 36px;
+    justify-content: space-between;
+  }
+  body.iceland .ice-page-hero .middle_headline {
+    height: auto;
+    margin: 0;
+    width: 100%;
+  }
+  body.iceland .ice-page-hero .flex_middle.spec_partners { height: auto; gap: 16px; }
+  body.iceland .ice-page-hero .partner_heading { width: 100%; gap: 24px; }
+}
+@media screen and (max-width: 767px) {
+  body.iceland .ice-hero .wrapper_hero,
+  body.iceland .ice-page-hero .wrapper_hero.partnerships { padding-left: 20px; padding-right: 20px; }
+  body.iceland .recent_destination.ice-hero-card { margin-left: 20px; margin-right: 20px; }
+  body.iceland .wrapper_base { padding-left: 20px; padding-right: 20px; }
+  body.iceland .ice-btn-row { flex-wrap: wrap; gap: 12px; }
+  body.iceland .button_base { min-height: 44px; max-width: 100%; white-space: normal; }
+  body.iceland input, body.iceland select, body.iceland textarea { font-size: 16px; }
+  body.iceland .ice-leader { padding: 16px; gap: 14px; }
+  body.iceland .ice-cookie { padding: 12px 14px; gap: 8px; }
+  body.iceland .ice-cookie-txt { font-size: 12px; line-height: 1.45; }
+  body.iceland .ice-cookie-btn { min-height: 44px; }
+}

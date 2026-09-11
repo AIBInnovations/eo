@@ -31,7 +31,7 @@ export default function HeroVideo() {
     end: 'bottom top',
     doorEnd: 0.42,
     fade: 0.06,
-    doorLastFrame: 230,
+    doorLastFrame: LOW_POWER ? doorFramesSm.length - 1 : 230,
     poster: hero.poster,
     dprCap: LOW_POWER ? 1 : 2,
     smoothing: LOW_POWER ? 0.22 : 0.16,
@@ -118,6 +118,7 @@ export default function HeroVideo() {
       </div>
 
       <div className="background_interaction">
+        <img className="ice-hero-poster" src={hero.poster} alt="" fetchPriority="high" decoding="async" aria-hidden="true" />
         <div className="overlay_mobile" />
         <div className="ice-hero-shade" />
         <div className="interaction_door ice-frames" ref={canvasHostRef} />

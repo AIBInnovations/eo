@@ -32,6 +32,10 @@ export default function useDoorComposite(
     canvas.style.height = '100%';
     container.appendChild(canvas);
     const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      canvas.remove();
+      return undefined;
+    }
 
     const door = doorFrames.map(() => null);
     const video = videoFrames.map(() => null);
@@ -43,8 +47,11 @@ export default function useDoorComposite(
     const size = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
       const { width, height } = container.getBoundingClientRect();
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
+      const nextWidth = Math.max(1, Math.round(width * dpr));
+      const nextHeight = Math.max(1, Math.round(height * dpr));
+      if (canvas.width === nextWidth && canvas.height === nextHeight) return;
+      canvas.width = nextWidth;
+      canvas.height = nextHeight;
       dirty = true;
     };
 
@@ -140,11 +147,12 @@ export default function useDoorComposite(
 
     if (poster) {
       posterImg = new Image();
-      posterImg.src = poster;
       posterImg.onload = () => {
+        if (destroyed) return;
         dirty = true;
         draw();
       };
+      posterImg.src = poster;
     }
     // the door first (it is what the visitor sees first), then the footage
     for (let i = 0; i <= lastDoor; i += 1) load(door, doorFrames, i, true);
@@ -180,11 +188,15 @@ export default function useDoorComposite(
       draw();
     };
     window.addEventListener('resize', onResize);
+    // CSS, fonts and the mobile scroll container can settle after the initial effect.
+    const observer = new ResizeObserver(onResize);
+    observer.observe(container);
 
     return () => {
       destroyed = true;
       gsap.ticker.remove(tick);
       window.removeEventListener('resize', onResize);
+      observer.disconnect();
       st.kill();
       canvas.remove();
     };

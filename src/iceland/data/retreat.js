@@ -43,9 +43,11 @@ export const FRAME_COUNT = 773;
 export const heroFrames = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames/iceland/f_${String(i + 1).padStart(4, '0')}.webp`);
 export const DOOR_FRAME_COUNT = 287;
 export const doorFrames = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images/image_${i}.webp`);
-/** Phone / low-power sets: every second footage frame at 720 px, door frames at 960 px (5 MB + 4 MB instead of 24 MB + 10 MB). */
-export const heroFramesSm = heroFrames.filter((_, i) => i % 2 === 0);
-export const doorFramesSm = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm/image_${i}.webp`);
+/** Bound decoded image memory on phones; retain both endpoints of each act. */
+export const heroFramesSm = heroFrames.filter((_, i) => i % 12 === 0 || i === FRAME_COUNT - 1);
+export const doorFramesSm = Array.from({ length: 231 }, (_, i) => i)
+  .filter((i) => i % 6 === 0 || i === 230)
+  .map((i) => `/lottie/door/images-sm/image_${i}.webp`);
 
 export const hero = {
   eyebrow: 'EO Punjab Retreat × Amplify',
