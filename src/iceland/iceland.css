@@ -5819,3 +5819,174 @@ body.iceland .ice-gm-grid > li {
   body.iceland .ice-cookie-txt { font-size: 12px; line-height: 1.45; }
   body.iceland .ice-cookie-btn { min-height: 44px; }
 }
+
+/* ---------- partner desks: spacing and alignment on tablets and phones ----------
+   The person row inherited the viewport-scaled font size, so its em padding and gaps
+   collapsed to ~2px and the divider sat on top of the name. Everything here is in px. */
+@media screen and (max-width: 991px) {
+  body.iceland .ice-partner-person {
+    font-size: 16px;
+    line-height: 1.3;
+    align-items: center;
+    gap: 6px 16px;
+    padding-top: 14px;
+  }
+  body.iceland .ice-partner-name {
+    font-size: 17px;
+    line-height: 1.3;
+  }
+  body.iceland .ice-partner-phone {
+    font-size: 15px;
+    line-height: 1.3;
+    gap: 6px;
+    text-underline-offset: 4px;
+    white-space: nowrap;
+  }
+  body.iceland .ice-partner-phone svg {
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+}
+@media screen and (max-width: 767px) {
+  body.iceland .ice-partner-grid {
+    gap: 14px;
+  }
+  /* one rhythm per card: label → name → copy → contact → note */
+  body.iceland .ice-partner-card {
+    gap: 0;
+    padding: 20px 18px 20px;
+  }
+  body.iceland .ice-partner-role {
+    font-size: 11px;
+    line-height: 1.2;
+    margin: 0 0 8px;
+  }
+  body.iceland .ice-partner-org {
+    font-size: 22px;
+    line-height: 1.15;
+    margin: 0 0 10px;
+  }
+  body.iceland .ice-partner-logo {
+    height: 54px;
+    margin: 0 0 10px;
+  }
+  body.iceland .ice-partner-card .ice-partner-txt {
+    font-size: 15px;
+    line-height: 1.55;
+    margin: 0 0 16px;
+  }
+  body.iceland .ice-partner-note {
+    margin: 16px 0 0;
+    padding: 12px 14px;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+}
+
+/* ---------- leaders: large portrait cards ----------
+   Portraits are pre-cropped to head-and-shoulders 4:5 frames (assets/portraits), so the
+   old zoom transforms for the 68px circles are switched off. */
+body.iceland .ice-leader-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 2.4em;
+}
+body.iceland .ice-leader {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 10px;
+}
+body.iceland .ice-leader-face {
+  flex: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: 0;
+  background: linear-gradient(160deg, #12305a 0%, var(--black) 70%);
+}
+body.iceland .ice-leader-face .ice-leader-img {
+  transform: none;
+  object-position: 50% 32%;
+  display: block;
+}
+body.iceland .ice-leader-initials {
+  font-size: clamp(56px, 6vw, 96px);
+  letter-spacing: 0.06em;
+}
+body.iceland .ice-leader-body {
+  padding: 18px 20px 20px;
+  gap: 6px;
+}
+body.iceland .ice-leader-name {
+  font-size: max(1.7em, 22px);
+  line-height: 1.1;
+}
+body.iceland .ice-leader-role {
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 1;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+body.iceland .ice-leader-body .ice-ct-tel {
+  font-size: 15px;
+}
+@media screen and (max-width: 991px) {
+  body.iceland .ice-leader-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+  body.iceland .ice-leader-body {
+    padding: 14px 14px 16px;
+  }
+  body.iceland .ice-leader-name {
+    font-size: 19px;
+  }
+  body.iceland .ice-leader-role {
+    font-size: 11px;
+  }
+  body.iceland .ice-leader-body .ice-ct-tel {
+    font-size: 14px;
+  }
+}
+@media screen and (max-width: 767px) {
+  body.iceland .ice-leader-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  body.iceland .ice-leader {
+    padding: 0;
+  }
+  body.iceland .ice-leader-face {
+    width: 100%;
+    height: auto;
+    flex-basis: auto;
+    aspect-ratio: 4 / 3;
+  }
+  body.iceland .ice-leader-face .ice-leader-img {
+    object-position: 50% 28%;
+  }
+  body.iceland .ice-leader-body {
+    padding: 16px 18px 18px;
+  }
+  body.iceland .ice-leader-name {
+    font-size: 22px;
+  }
+  body.iceland .ice-leader-role {
+    font-size: 11.5px;
+  }
+}
+/* same size for name and number so their glyphs share one baseline when centred */
+@media screen and (max-width: 991px) {
+  body.iceland .ice-partner-name,
+  body.iceland .ice-partner-phone {
+    font-size: 16px;
+    line-height: 22px;
+  }
+}
