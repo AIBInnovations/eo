@@ -55,14 +55,20 @@ export const heroFramesSm = heroFrames.filter((_, i) => i % 2 === 0);
 /** The same sequences encoded as AVIF (~35% smaller at matched quality); WebP stays as the fallback. */
 export const heroFramesAvif = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames/iceland-avif/f_${String(i + 1).padStart(4, '0')}.avif`);
 /**
- * Phone sets are cropped to the 3:4 slice a portrait screen actually shows, so the browser never
- * decodes the ~60% of every widescreen frame that sits off the edges. Same pixels on screen, far
- * less decode work and memory — which is what lets phones run the full 773-frame sequence rather
- * than every second frame, so the footage is as smooth here as on desktop.
+ * Portrait sets, cropped to the 3:4 slice a tall screen actually shows, so the browser never
+ * decodes the ~60% of every widescreen frame that sits off the edges. That saving is what lets a
+ * phone carry the whole 773-frame sequence rather than every second frame.
+ *
+ * These are only correct for a tall, small screen: used on a wide one the crop has to be blown up
+ * to fill, which reads as zoomed in. HeroVideo picks by viewport shape, never by device power.
  */
-export const heroFramesSmAvif = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames/iceland-mob/f_${String(i + 1).padStart(4, '0')}.avif`);
+export const heroFramesPortraitAvif = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames/iceland-mob/f_${String(i + 1).padStart(4, '0')}.avif`);
+export const doorFramesPortraitAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-mob/image_${i}.avif`);
+/** Half the frames at full width: for wide screens that still want the lighter load. */
+export const heroFramesHalfAvif = heroFramesAvif.filter((_, i) => i % 2 === 0);
+/** Full-width door art, for desktop. */
 export const doorFramesAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-avif/image_${i}.avif`);
-export const doorFramesSmAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-mob/image_${i}.avif`);
+export const doorFramesSmAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm-avif/image_${i}.avif`);
 export const doorFramesSm = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm/image_${i}.webp`);
 
 export const hero = {

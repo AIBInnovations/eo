@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import useDoorComposite from '../hooks/useDoorComposite.js';
 import Countdown from './Countdown.jsx';
-import { hero, heroFrames, doorFrames, heroFramesSm, doorFramesSm, heroFramesAvif, doorFramesAvif, heroFramesSmAvif, doorFramesSmAvif } from '../data/retreat.js';
+import { hero, heroFrames, doorFrames, heroFramesSm, doorFramesSm, heroFramesAvif, doorFramesAvif, heroFramesHalfAvif, doorFramesSmAvif, heroFramesPortraitAvif, doorFramesPortraitAvif } from '../data/retreat.js';
 import { LOW_POWER, avifReady } from '../perf.js';
 
 /** Nudge the page down by a little over half a screen (enough to start the door opening). */
@@ -33,8 +33,35 @@ export default function HeroVideo() {
       live = false;
     };
   }, []);
-  const footage = avif === null ? [] : LOW_POWER ? (avif ? heroFramesSmAvif : heroFramesSm) : avif ? heroFramesAvif : heroFrames;
-  const doors = avif === null ? [] : LOW_POWER ? (avif ? doorFramesSmAvif : doorFramesSm) : avif ? doorFramesAvif : doorFrames;
+
+  // The cropped sets only suit a tall, small screen. Anything wider — a phone turned sideways, a
+  // tablet, a desktop — takes the full-width frames, or the crop would be enlarged to fill and look
+  // zoomed in. Re-checked on rotate and resize.
+  const [tall, setTall] = useState(() => (typeof window === 'undefined' ? true : window.innerHeight / window.innerWidth >= 1.2 && window.innerWidth <= 600));
+  useEffect(() => {
+    const check = () => setTall(window.innerHeight / window.innerWidth >= 1.2 && window.innerWidth <= 600);
+    check();
+    window.addEventListener('resize', check, { passive: true });
+    window.addEventListener('orientationchange', check);
+    return () => {
+      window.removeEventListener('resize', check);
+      window.removeEventListener('orientationchange', check);
+    };
+  }, []);
+
+  const footage = useMemo(() => {
+    if (avif === null) return [];
+    if (!avif) return LOW_POWER ? heroFramesSm : heroFrames;
+    if (tall) return heroFramesPortraitAvif;
+    return LOW_POWER ? heroFramesHalfAvif : heroFramesAvif;
+  }, [avif, tall]);
+  const doors = useMemo(() => {
+    if (avif === null) return [];
+    if (!avif) return LOW_POWER ? doorFramesSm : doorFrames;
+    if (tall) return doorFramesPortraitAvif;
+    return LOW_POWER ? doorFramesSmAvif : doorFramesAvif;
+  }, [avif, tall]);
+
   useDoorComposite(canvasHostRef, storyRef, {
     doorFrames: doors,
     videoFrames: footage,
