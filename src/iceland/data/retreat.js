@@ -57,9 +57,10 @@ export const heroFramesAvif = Array.from({ length: FRAME_COUNT }, (_, i) => `/fr
 /**
  * Phone sets are cropped to the 3:4 slice a portrait screen actually shows, so the browser never
  * decodes the ~60% of every widescreen frame that sits off the edges. Same pixels on screen, far
- * less decode work and memory.
+ * less decode work and memory — which is what lets phones run the full 773-frame sequence rather
+ * than every second frame, so the footage is as smooth here as on desktop.
  */
-export const heroFramesSmAvif = Array.from({ length: Math.ceil(FRAME_COUNT / 2) }, (_, i) => `/frames/iceland-mob/f_${String(i * 2 + 1).padStart(4, '0')}.avif`);
+export const heroFramesSmAvif = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames/iceland-mob/f_${String(i + 1).padStart(4, '0')}.avif`);
 export const doorFramesAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-avif/image_${i}.avif`);
 export const doorFramesSmAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-mob/image_${i}.avif`);
 export const doorFramesSm = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm/image_${i}.webp`);

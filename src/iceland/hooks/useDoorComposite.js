@@ -81,6 +81,7 @@ export default function useDoorComposite(
       let budget = TRIM_BUDGET;
       for (let k = 0; k < arr.length && budget > 0; k += 1) {
         if (k >= idx - KEEP_BACK && k <= idx + KEEP_AHEAD) continue;
+        if (arr === video && k % SPARSE_STRIDE === 0) continue; // keep the spread
         if (arr[k]) {
           if (arr[k].close) arr[k].close();
           arr[k] = null;
@@ -149,6 +150,22 @@ export default function useDoorComposite(
       const vp = (clamped - fadeStart) / (1 - fadeStart);
       return { d: Math.round(Math.min(1, clamped / doorEnd) * lastDoor), v: Math.round(Math.min(1, Math.max(0, vp)) * (videoFrames.length - 1)) };
     };
+    // A fast flick can cross hundreds of frames in a second — far more than any mobile connection
+    // can deliver. So a sparse spread across the whole footage is fetched alongside the dense fill
+    // near the playhead: wherever you land, a frame within a few of it already exists, and the
+    // sequence keeps moving instead of freezing on one image.
+    const SPARSE_STRIDE = 8;
+    let sparseCursor = 0;
+    const nextSparse = () => {
+      while (sparseCursor < videoFrames.length) {
+        const i = sparseCursor;
+        sparseCursor += SPARSE_STRIDE;
+        if (!asked.video[i]) return i;
+      }
+      return -1;
+    };
+    let pickTurn = 0;
+
     const nextUnasked = (flags, from, limit) => {
       for (let k = from; k < limit; k += 1) if (!flags[k]) return k;
       for (let k = 0; k < from; k += 1) if (!flags[k]) return k;
@@ -191,7 +208,13 @@ export default function useDoorComposite(
         const { d, v } = indices(p);
         let kind = null;
         let index = -1;
-        if (p < fadeEnd) {
+        pickTurn += 1;
+        // one in three goes to the spread until it is complete
+        if (pickTurn % 3 === 0) {
+          index = nextSparse();
+          if (index >= 0) kind = 'video';
+        }
+        if (index < 0 && p < fadeEnd) {
           index = nextUnasked(asked.door, d, doorTotal);
           if (index >= 0) kind = 'door';
         }
