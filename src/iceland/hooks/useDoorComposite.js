@@ -58,29 +58,34 @@ export default function useDoorComposite(
     const cover = (img, alpha = 1) => {
       const cw = canvas.width;
       const ch = canvas.height;
-      const scale = Math.max(cw / img.naturalWidth, ch / img.naturalHeight);
-      const w = img.naturalWidth * scale;
-      const h = img.naturalHeight * scale;
+      const iw = img.naturalWidth || img.width;
+      const ih = img.naturalHeight || img.height;
+      const scale = Math.max(cw / iw, ch / ih);
+      const w = iw * scale;
+      const h = ih * scale;
       ctx.globalAlpha = alpha;
       ctx.drawImage(img, (cw - w) / 2, (ch - h) / 2, w, h);
       ctx.globalAlpha = 1;
     };
 
-    const ready = (img) => img && img.complete && img.naturalWidth > 0;
+    const ready = (img) => Boolean(img && (img.width || img.naturalWidth));
     // A full sequence held in memory decodes to well over a gigabyte on a phone, which makes the
     // browser purge and re-decode frames mid-scroll — the stutter this is here to avoid. Frames far
     // from the playhead are released (they come back from the HTTP cache in a few ms if revisited).
-    const KEEP_BACK = 40;
-    const KEEP_AHEAD = 160;
+    const KEEP_BACK = 24;
+    const KEEP_AHEAD = 96;
     let trimTick = 0;
+    const TRIM_BUDGET = 6; // release a few per pass; closing many at once costs a frame
     const trim = (arr, flags, idx) => {
       if (idx < 0) return;
-      for (let k = 0; k < arr.length; k += 1) {
+      let budget = TRIM_BUDGET;
+      for (let k = 0; k < arr.length && budget > 0; k += 1) {
         if (k >= idx - KEEP_BACK && k <= idx + KEEP_AHEAD) continue;
         if (arr[k]) {
-          arr[k].src = '';
+          if (arr[k].close) arr[k].close();
           arr[k] = null;
           flags[k] = false;
+          budget -= 1;
         }
       }
     };
@@ -117,7 +122,7 @@ export default function useDoorComposite(
       lastKey = key;
       dirty = false;
       trimTick += 1;
-      if (trimTick % 24 === 0) {
+      if (trimTick % 12 === 0) {
         trim(video, asked.video, videoIndex);
         // past the door act: keep only its tail, in case the visitor scrolls back up
         trim(door, asked.door, doorIndex >= 0 ? doorIndex : lastDoor);
@@ -156,13 +161,13 @@ export default function useDoorComposite(
       const isGate = kind === 'door' ? i < gateDoor : i < gateVideo;
       asked[kind][i] = true;
       inflight += 1;
-      const img = new Image();
-      img.decoding = 'async';
-      if (isGate) img.fetchPriority = 'high';
-      const settle = () => {
+      const settle = (bitmap) => {
         inflight -= 1;
-        if (destroyed) return;
-        if (img.naturalWidth > 0) arr[i] = img;
+        if (destroyed) {
+          if (bitmap && bitmap.close) bitmap.close();
+          return;
+        }
+        if (bitmap) arr[i] = bitmap;
         if (isGate) {
           gateLoaded += 1;
           report();
@@ -171,10 +176,13 @@ export default function useDoorComposite(
         draw();
         pump();
       };
-      // decode off the main thread so drawing the frame cannot stall the scroll
-      img.onload = () => (img.decode ? img.decode().then(settle, settle) : settle());
-      img.onerror = settle;
-      img.src = urls[i];
+      // Decode once into an ImageBitmap. An <img> lets the browser drop its decoded pixels under
+      // memory pressure and decode again at draw time, which is what stalls the scroll; a bitmap
+      // is owned here, costs one decode, and draws as a straight blit.
+      fetch(urls[i], { cache: 'force-cache' })
+        .then((r) => (r.ok ? r.blob() : Promise.reject(new Error('frame'))))
+        .then((blob) => createImageBitmap(blob))
+        .then(settle, () => settle(null));
     };
 
     function pump() {

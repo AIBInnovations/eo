@@ -54,9 +54,14 @@ export const heroFramesSm = heroFrames.filter((_, i) => i % 2 === 0);
 
 /** The same sequences encoded as AVIF (~35% smaller at matched quality); WebP stays as the fallback. */
 export const heroFramesAvif = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames/iceland-avif/f_${String(i + 1).padStart(4, '0')}.avif`);
-export const heroFramesSmAvif = heroFramesAvif.filter((_, i) => i % 2 === 0);
+/**
+ * Phone sets are cropped to the 3:4 slice a portrait screen actually shows, so the browser never
+ * decodes the ~60% of every widescreen frame that sits off the edges. Same pixels on screen, far
+ * less decode work and memory.
+ */
+export const heroFramesSmAvif = Array.from({ length: Math.ceil(FRAME_COUNT / 2) }, (_, i) => `/frames/iceland-mob/f_${String(i * 2 + 1).padStart(4, '0')}.avif`);
 export const doorFramesAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-avif/image_${i}.avif`);
-export const doorFramesSmAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm-avif/image_${i}.avif`);
+export const doorFramesSmAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-mob/image_${i}.avif`);
 export const doorFramesSm = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm/image_${i}.webp`);
 
 export const hero = {
