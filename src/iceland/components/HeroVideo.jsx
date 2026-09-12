@@ -31,7 +31,7 @@ export default function HeroVideo() {
     end: 'bottom top',
     doorEnd: 0.42,
     fade: 0.06,
-    doorLastFrame: LOW_POWER ? doorFramesSm.length - 1 : 230,
+    doorLastFrame: 230,
     poster: hero.poster,
     dprCap: LOW_POWER ? 1 : 2,
     smoothing: LOW_POWER ? 0.22 : 0.16,

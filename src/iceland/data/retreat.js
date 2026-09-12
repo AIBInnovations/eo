@@ -44,11 +44,13 @@ export const FRAME_COUNT = 773;
 export const heroFrames = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames/iceland/f_${String(i + 1).padStart(4, '0')}.webp`);
 export const DOOR_FRAME_COUNT = 287;
 export const doorFrames = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images/image_${i}.webp`);
-/** Bound decoded image memory on phones; retain both endpoints of each act. */
-export const heroFramesSm = heroFrames.filter((_, i) => i % 12 === 0 || i === FRAME_COUNT - 1);
-export const doorFramesSm = Array.from({ length: 231 }, (_, i) => i)
-  .filter((i) => i % 6 === 0 || i === 230)
-  .map((i) => `/lottie/door/images-sm/image_${i}.webp`);
+/**
+ * Phone / low-power sets. These must point at the 720 px copies in /frames/iceland-sm and
+ * /lottie/door/images-sm — iceland-sm holds exactly every second footage frame (387 files, 5 MB
+ * against 24 MB), so the scrub keeps its frame density while the download and decoded memory drop.
+ */
+export const heroFramesSm = Array.from({ length: Math.ceil(FRAME_COUNT / 2) }, (_, i) => `/frames/iceland-sm/f_${String(i * 2 + 1).padStart(4, '0')}.webp`);
+export const doorFramesSm = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm/image_${i}.webp`);
 
 export const hero = {
   eyebrow: 'EO Punjab Retreat × Amplify',

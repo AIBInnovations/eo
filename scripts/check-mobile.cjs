@@ -32,6 +32,15 @@ const options = engine === webkit
       assert.equal(first.width, width);
       assert.ok(first.height > 0 && first.alpha > 0, 'Canvas must paint at first load');
       assert.equal(first.overflow, false);
+      const paragraphs = await page.locator('.ice-hero .ice-description p').evaluateAll(elements => elements.map(p => {
+        const box = p.closest('.ice-box').getBoundingClientRect();
+        const paragraph = p.getBoundingClientRect();
+        return { available: box.width, width: paragraph.width, right: paragraph.right };
+      }));
+      for (const paragraph of paragraphs) {
+        assert.ok(paragraph.width >= paragraph.available * 0.9, 'Hero paragraphs must use the available text column');
+        assert.ok(paragraph.right <= width, 'Hero paragraphs must fit the viewport');
+      }
       await page.setViewportSize({ width, height: 640 });
       await page.waitForTimeout(200);
       assert.ok((await heroState()).alpha > 0, 'Resize must repaint without a scroll gesture');
