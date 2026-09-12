@@ -45,11 +45,12 @@ export const heroFrames = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames
 export const DOOR_FRAME_COUNT = 287;
 export const doorFrames = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images/image_${i}.webp`);
 /**
- * Phone / low-power sets. These must point at the 720 px copies in /frames/iceland-sm and
- * /lottie/door/images-sm — iceland-sm holds exactly every second footage frame (387 files, 5 MB
- * against 24 MB), so the scrub keeps its frame density while the download and decoded memory drop.
+ * Phone / low-power sets. The footage stays full size: the clip is 16:9 and a phone is portrait, so
+ * the canvas only ever shows a tall slice of each frame — a 720 px copy leaves ~230 px of real
+ * detail to stretch over the screen and looks soft. Half the frames at full size is the trade that
+ * keeps it sharp. The door art is wide and flat, so its 960 px copies hold up.
  */
-export const heroFramesSm = Array.from({ length: Math.ceil(FRAME_COUNT / 2) }, (_, i) => `/frames/iceland-sm/f_${String(i * 2 + 1).padStart(4, '0')}.webp`);
+export const heroFramesSm = heroFrames.filter((_, i) => i % 2 === 0);
 export const doorFramesSm = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm/image_${i}.webp`);
 
 export const hero = {

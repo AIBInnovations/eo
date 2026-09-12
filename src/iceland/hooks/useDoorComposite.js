@@ -101,49 +101,81 @@ export default function useDoorComposite(
       dirty = false;
     };
 
-    // Frames stream in through a small queue (instead of ~1000 simultaneous requests): the door first,
-    // reporting progress for the preloader, then the footage.
-    const queue = [];
+    // ---- frame loading -------------------------------------------------
+    // Frames are fetched nearest-first around the scroll playhead rather than in one fixed order,
+    // so scrolling ahead never waits behind frames that are already off screen. The preloader is
+    // told about a small "gate" set (the opening of each act) and the rest streams behind the page.
+    const doorTotal = lastDoor + 1;
+    const gateDoor = Math.min(doorTotal, 44);
+    const gateVideo = Math.min(videoFrames.length, 8);
+    const gateSize = gateDoor + gateVideo;
+    let gateLoaded = 0;
+    const report = () => window.dispatchEvent(new CustomEvent('ice:hero-progress', { detail: { loaded: gateLoaded, total: gateSize, gate: gateSize } }));
+
     let inflight = 0;
-    let doorLoaded = 0;
-    const doorTotal = Math.min(doorLastFrame, doorFrames.length - 1) + 1;
-    // the preloader only waits for the first `gate` frames; the rest keep streaming behind the page
-    const gate = Math.min(doorTotal, 48);
-    const report = () => window.dispatchEvent(new CustomEvent('ice:hero-progress', { detail: { loaded: doorLoaded, total: doorTotal, gate } }));
-    const pump = () => {
-      while (inflight < concurrency && queue.length) {
-        const job = queue.shift();
-        inflight += 1;
-        job(() => {
-          inflight -= 1;
-          pump();
-        });
-      }
+    const asked = { door: new Array(doorFrames.length).fill(false), video: new Array(videoFrames.length).fill(false) };
+
+    // the frame each act is showing at progress `p`
+    const indices = (p) => {
+      const clamped = Math.min(1, Math.max(0, p));
+      const vp = (clamped - fadeStart) / (1 - fadeStart);
+      return { d: Math.round(Math.min(1, clamped / doorEnd) * lastDoor), v: Math.round(Math.min(1, Math.max(0, vp)) * (videoFrames.length - 1)) };
     };
-    const load = (arr, urls, i, isDoor) => {
-      if (arr[i]) return;
+    const nextUnasked = (flags, from, limit) => {
+      for (let k = from; k < limit; k += 1) if (!flags[k]) return k;
+      for (let k = 0; k < from; k += 1) if (!flags[k]) return k;
+      return -1;
+    };
+
+    const fetchFrame = (kind, i) => {
+      const arr = kind === 'door' ? door : video;
+      const urls = kind === 'door' ? doorFrames : videoFrames;
+      const isGate = kind === 'door' ? i < gateDoor : i < gateVideo;
+      asked[kind][i] = true;
+      inflight += 1;
       const img = new Image();
       img.decoding = 'async';
-      arr[i] = img;
-      queue.push((done) => {
-        if (destroyed) return done();
-        const finish = () => {
-          if (!destroyed) {
-            dirty = true;
-            draw();
-            if (isDoor) {
-              doorLoaded += 1;
-              report();
-            }
-          }
-          done();
-        };
-        img.onload = finish;
-        img.onerror = finish;
-        img.src = urls[i];
-        return undefined;
-      });
+      if (isGate) img.fetchPriority = 'high';
+      const settle = () => {
+        inflight -= 1;
+        if (destroyed) return;
+        if (img.naturalWidth > 0) arr[i] = img;
+        if (isGate) {
+          gateLoaded += 1;
+          report();
+        }
+        dirty = true;
+        draw();
+        pump();
+      };
+      // decode off the main thread so drawing the frame cannot stall the scroll
+      img.onload = () => (img.decode ? img.decode().then(settle, settle) : settle());
+      img.onerror = settle;
+      img.src = urls[i];
     };
+
+    function pump() {
+      while (!destroyed && inflight < concurrency) {
+        const p = stateRef.current.target;
+        const { d, v } = indices(p);
+        let kind = null;
+        let index = -1;
+        if (p < fadeEnd) {
+          index = nextUnasked(asked.door, d, doorTotal);
+          if (index >= 0) kind = 'door';
+        }
+        if (index < 0) {
+          index = nextUnasked(asked.video, v, videoFrames.length);
+          if (index >= 0) kind = 'video';
+        }
+        if (index < 0) {
+          index = nextUnasked(asked.door, 0, doorTotal);
+          if (index >= 0) kind = 'door';
+        }
+        if (index < 0) return;
+        fetchFrame(kind, index);
+      }
+    }
 
     if (poster) {
       posterImg = new Image();
@@ -154,9 +186,6 @@ export default function useDoorComposite(
       };
       posterImg.src = poster;
     }
-    // the door first (it is what the visitor sees first), then the footage
-    for (let i = 0; i <= lastDoor; i += 1) load(door, doorFrames, i, true);
-    for (let i = 0; i < videoFrames.length; i += 1) load(video, videoFrames, i, false);
     report();
     pump();
 
@@ -169,6 +198,7 @@ export default function useDoorComposite(
       end,
       onUpdate(self) {
         stateRef.current.target = self.progress;
+        pump();
       },
     });
     stateRef.current.target = st.progress;

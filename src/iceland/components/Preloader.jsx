@@ -4,7 +4,7 @@ import { lockScroll } from '../perf.js';
 import logo from '../../assets/logos/eo-amplify-light.png';
 
 const MIN_MS = 700;
-const MAX_MS = 6000;
+const MAX_MS = 4500;
 
 /**
  * First-load screen: the wordmark and a progress bar while the fonts and the hero's first act
