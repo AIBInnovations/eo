@@ -6086,3 +6086,23 @@ body.iceland .airplane_middle.ice-pill {
     font-size: 11px;
   }
 }
+
+/* ---------- mobile hero: restore the original scroll length ----------
+   The story block was reduced to the height of its three panels (~300svh), so the door and the
+   footage were scrubbed through in a third of the scroll and the sequence flew past. The hero is
+   500svh again, as it was before, leaving the long footage run after the last panel; the card
+   returns to the foot of the viewport so that stretch is not empty. */
+@media screen and (max-width: 991px) {
+  body.iceland .ice-main > .ice-hero {
+    min-height: 500svh;
+    /* the single grid row must fill the taller section, otherwise it stays panel-height and the
+       card stops sticking part-way down */
+    grid-template-rows: minmax(0, 1fr);
+  }
+  body.iceland .recent_destination.ice-hero-card {
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+    z-index: 10;
+  }
+}
