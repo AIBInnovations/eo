@@ -67,6 +67,23 @@ export default function useDoorComposite(
     };
 
     const ready = (img) => img && img.complete && img.naturalWidth > 0;
+    // A full sequence held in memory decodes to well over a gigabyte on a phone, which makes the
+    // browser purge and re-decode frames mid-scroll — the stutter this is here to avoid. Frames far
+    // from the playhead are released (they come back from the HTTP cache in a few ms if revisited).
+    const KEEP_BACK = 40;
+    const KEEP_AHEAD = 160;
+    let trimTick = 0;
+    const trim = (arr, flags, idx) => {
+      if (idx < 0) return;
+      for (let k = 0; k < arr.length; k += 1) {
+        if (k >= idx - KEEP_BACK && k <= idx + KEEP_AHEAD) continue;
+        if (arr[k]) {
+          arr[k].src = '';
+          arr[k] = null;
+          flags[k] = false;
+        }
+      }
+    };
     // nearest loaded frame at or before index (keeps motion continuous while the sequence streams in)
     const nearest = (arr, i) => {
       for (let k = i; k >= 0; k -= 1) if (ready(arr[k])) return arr[k];
@@ -99,6 +116,12 @@ export default function useDoorComposite(
       if (!v && !d && ready(posterImg)) cover(posterImg);
       lastKey = key;
       dirty = false;
+      trimTick += 1;
+      if (trimTick % 24 === 0) {
+        trim(video, asked.video, videoIndex);
+        // past the door act: keep only its tail, in case the visitor scrolls back up
+        trim(door, asked.door, doorIndex >= 0 ? doorIndex : lastDoor);
+      }
     };
 
     // ---- frame loading -------------------------------------------------

@@ -51,6 +51,12 @@ export const doorFrames = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/l
  * keeps it sharp. The door art is wide and flat, so its 960 px copies hold up.
  */
 export const heroFramesSm = heroFrames.filter((_, i) => i % 2 === 0);
+
+/** The same sequences encoded as AVIF (~35% smaller at matched quality); WebP stays as the fallback. */
+export const heroFramesAvif = Array.from({ length: FRAME_COUNT }, (_, i) => `/frames/iceland-avif/f_${String(i + 1).padStart(4, '0')}.avif`);
+export const heroFramesSmAvif = heroFramesAvif.filter((_, i) => i % 2 === 0);
+export const doorFramesAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-avif/image_${i}.avif`);
+export const doorFramesSmAvif = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm-avif/image_${i}.avif`);
 export const doorFramesSm = Array.from({ length: DOOR_FRAME_COUNT }, (_, i) => `/lottie/door/images-sm/image_${i}.webp`);
 
 export const hero = {

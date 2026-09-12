@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import useDoorComposite from '../hooks/useDoorComposite.js';
 import Countdown from './Countdown.jsx';
-import { hero, heroFrames, doorFrames, heroFramesSm, doorFramesSm } from '../data/retreat.js';
-import { LOW_POWER } from '../perf.js';
+import { hero, heroFrames, doorFrames, heroFramesSm, doorFramesSm, heroFramesAvif, doorFramesAvif, heroFramesSmAvif, doorFramesSmAvif } from '../data/retreat.js';
+import { LOW_POWER, avifReady } from '../perf.js';
 
 /** Nudge the page down by a little over half a screen (enough to start the door opening). */
 const nudgeDown = () => {
@@ -24,9 +24,20 @@ import { getScroller, scrollTop } from '../perf.js';
 export default function HeroVideo() {
   const storyRef = useRef(null);
   const canvasHostRef = useRef(null);
+  // null while the AVIF probe runs (a few ms); the sequence starts as soon as it settles
+  const [avif, setAvif] = useState(null);
+  useEffect(() => {
+    let live = true;
+    avifReady.then((ok) => live && setAvif(ok));
+    return () => {
+      live = false;
+    };
+  }, []);
+  const footage = avif === null ? [] : LOW_POWER ? (avif ? heroFramesSmAvif : heroFramesSm) : avif ? heroFramesAvif : heroFrames;
+  const doors = avif === null ? [] : LOW_POWER ? (avif ? doorFramesSmAvif : doorFramesSm) : avif ? doorFramesAvif : doorFrames;
   useDoorComposite(canvasHostRef, storyRef, {
-    doorFrames: LOW_POWER ? doorFramesSm : doorFrames,
-    videoFrames: LOW_POWER ? heroFramesSm : heroFrames,
+    doorFrames: doors,
+    videoFrames: footage,
     start: 'top top',
     end: 'bottom top',
     doorEnd: 0.42,

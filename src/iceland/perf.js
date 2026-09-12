@@ -45,3 +45,16 @@ export const lockScroll = (on) => {
   const lenis = window.__lenis;
   if (lenis) (locked ? lenis.stop : lenis.start).call(lenis);
 };
+
+/**
+ * AVIF support, probed once with a 1px data URI. The hero frame sets exist in both AVIF and WebP;
+ * AVIF is ~35% smaller at the same quality and decodes no slower, but Safari only gained it in 16.
+ */
+export const avifReady = new Promise((resolve) => {
+  if (typeof Image === 'undefined') return resolve(false);
+  const img = new Image();
+  img.onload = () => resolve(img.width > 0);
+  img.onerror = () => resolve(false);
+  img.src = 'data:image/avif;base64,AAAAHGZ0eXBhdmlmAAAAAG1pZjFhdmlmbWlhZgAAANZtZXRhAAAAAAAAACFoZGxyAAAAAAAAAABwaWN0AAAAAAAAAAAAAAAAAAAAAA5waXRtAAAAAAABAAAAImlsb2MAAAAAREAAAQABAAAAAAD6AAEAAAAAAAAAHAAAACNpaW5mAAAAAAABAAAAFWluZmUCAAAAAAEAAGF2MDEAAAAAVmlwcnAAAAA4aXBjbwAAAAxhdjFDgUBsAAAAABRpc3BlAAAAAAAAAAIAAAACAAAAEHBpeGkAAAAAAwwMDAAAABZpcG1hAAAAAAAAAAEAAQOBAgMAAAAkbWRhdBIACghYADY0BDQbhDIOGYAVVVVEAACwDGHk08A='
+  return undefined;
+});
