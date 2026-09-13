@@ -5998,15 +5998,19 @@ body.iceland .ice-leader-body .ice-ct-tel {
   body.iceland .ice-leader-face .ice-leader-img {
     object-position: 50% 0%;
   }
-  /* the president: photo left, details right, across the full width */
+  /* the president: photo left, details right, across the full width.
+     align-items must not be stretch: WebKit then treats the photo's height as definite and ignores
+     its aspect ratio, flattening the box and cropping the face. */
   body.iceland .ice-leader:first-child {
     grid-column: 1 / -1;
     flex-direction: row;
-    align-items: stretch;
+    align-items: flex-start;
   }
   body.iceland .ice-leader:first-child .ice-leader-face {
     flex: 0 0 46%;
     width: 46%;
+    align-self: flex-start;
+    height: auto;
   }
   body.iceland .ice-leader:first-child .ice-leader-body {
     align-self: center;
