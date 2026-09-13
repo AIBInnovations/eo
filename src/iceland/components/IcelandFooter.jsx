@@ -1,11 +1,13 @@
 import React from 'react';
-import { leadership, hero, navigation, contacts } from '../data/retreat.js';
+import { leadership, leaders, hero, navigation, contacts } from '../data/retreat.js';
 import { legalEntity } from '../data/legal.js';
 import sponsors from '../../assets/logos/sponsors.png';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { Link } from '../router.jsx';
 
 /** Navy footer: enquiry call-to-action, leadership, navigation and branding. */
+const face = (id) => leaders.find((l) => l.id === id);
+
 export default function IcelandFooter() {
   const { openPanel } = useEnquiry();
   return (
@@ -33,9 +35,20 @@ export default function IcelandFooter() {
             <div className="dt_nw_wrapper">
               <div className="heading_prefooter">
                 <div className="ice-eyebrow ice-eyebrow--light">{leadership.president.role}</div>
-                <h2 className="h3 white color-inversion-target">{leadership.president.name}</h2>
+                <div className="ice-footer-lead">
+                  <span className="ice-footer-faces">
+                    <img src={face('mohit').photo} alt={face('mohit').name} className="ice-footer-face" loading="lazy" decoding="async" />
+                  </span>
+                  <h2 className="h3 white color-inversion-target">{leadership.president.name}</h2>
+                </div>
                 <div className="ice-eyebrow ice-eyebrow--light ice-mt">{leadership.chairs.role}</div>
-                <h3 className="h3 white color-inversion-target">{leadership.chairs.name}</h3>
+                <div className="ice-footer-lead">
+                  <span className="ice-footer-faces">
+                    <img src={face('vidur').photo} alt={face('vidur').name} className="ice-footer-face" loading="lazy" decoding="async" />
+                    <img src={face('munish').photo} alt={face('munish').name} className="ice-footer-face" loading="lazy" decoding="async" />
+                  </span>
+                  <h3 className="h3 white color-inversion-target">{leadership.chairs.name}</h3>
+                </div>
               </div>
               <div className="txt_box">
                 <div className="b_txt white color-inversion-target">EO Punjab × Amplify. Same destination. We added a little chaos.</div>

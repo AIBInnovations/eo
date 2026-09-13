@@ -6098,3 +6098,44 @@ body.iceland .airplane_middle.ice-pill {
     z-index: 10;
   }
 }
+
+/* ---------- footer: faces beside the President and Retreat Chairs ---------- */
+.ice-footer-lead {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.ice-footer-faces {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.ice-footer-face {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 32%;
+  border: 1px solid rgba(244, 239, 230, 0.35);
+  background: var(--black);
+}
+.ice-footer-faces .ice-footer-face + .ice-footer-face {
+  margin-left: -12px;
+}
+@media screen and (max-width: 991px) {
+  .ice-footer-lead {
+    gap: 12px;
+  }
+  .ice-footer-face {
+    width: 40px;
+    height: 40px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .ice-footer-face {
+    width: 36px;
+    height: 36px;
+  }
+  .ice-footer-faces .ice-footer-face + .ice-footer-face {
+    margin-left: -10px;
+  }
+}
