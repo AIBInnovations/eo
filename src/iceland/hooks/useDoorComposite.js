@@ -4,6 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const MB = 1024 * 1024;
+const IS_IOS =
+  typeof navigator !== 'undefined' &&
+  (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+
 /**
  * Scroll-scrubbed hero sequence on one canvas, in two acts:
  *
@@ -14,11 +19,23 @@ gsap.registerPlugin(ScrollTrigger);
  *
  * Nothing autoplays: both sequences are driven only by the section's scroll progress, which is
  * eased towards its target every tick (`smoothing`) so fast wheel input never jumps frames.
+ *
+ * Memory model. Frames are decoded once into ImageBitmaps (an <img> lets the browser drop and
+ * re-decode its pixels mid-scroll). Decoded pixels live under a hard byte budget, sized per device:
+ * iOS kills a page's rendering process ("A problem repeatedly occurred") long before desktop limits.
+ *
+ *   dense lane   full-resolution frames around the playhead. When a nearer frame is needed and the
+ *                lane is full, the frame farthest from the playhead is released; a released frame is
+ *                only fetched again once it is nearer than something still held, so the loader
+ *                settles instead of cycling.
+ *   spread lane  a small, capped set of low-resolution copies of every STRIDE-th footage frame. A
+ *                fast flick crosses more frames than a phone connection can deliver; these keep the
+ *                footage moving (motion blur hides the lower detail) until full frames arrive.
  */
 export default function useDoorComposite(
   containerRef,
   triggerRef,
-  { doorFrames, videoFrames, start = 'top top', end = 'bottom top', doorEnd = 0.42, fade = 0.06, doorLastFrame = 230, smoothing = 0.16, poster, dprCap = 2, concurrency = 8 }
+  { doorFrames, videoFrames, start = 'top top', end = 'bottom top', doorEnd = 0.42, fade = 0.06, doorLastFrame = 230, smoothing = 0.16, poster, dprCap = 2, concurrency }
 ) {
   const stateRef = useRef({ target: 0, current: 0 });
 
@@ -39,10 +56,23 @@ export default function useDoorComposite(
 
     const door = doorFrames.map(() => null);
     const video = videoFrames.map(() => null);
+    const spread = videoFrames.map(() => null);
     let posterImg = null;
     let destroyed = false;
     let dirty = true;
     let lastKey = '';
+
+    // ---- device budget ---------------------------------------------------
+    const small = Math.min(window.innerWidth, window.innerHeight) <= 600;
+    // spread copies decode at half width (~0.4MB each on a phone), so the full spread fits its cap
+    const BUDGET = IS_IOS ? (small ? 190 : 330) * MB : (small ? 330 : 1024) * MB;
+    const SPREAD_CAP = IS_IOS ? (small ? 40 : 70) * MB : (small ? 40 : 90) * MB;
+    const DENSE_BUDGET = BUDGET - SPREAD_CAP;
+    const CONCURRENCY = concurrency || (IS_IOS ? 6 : 8);
+    const KEEP_BACK = 24;
+    const KEEP_AHEAD = 96;
+    const STRIDE = 8;
+    const SPREAD_WIDTH = small ? 270 : 640;
 
     const size = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
@@ -55,11 +85,16 @@ export default function useDoorComposite(
       dirty = true;
     };
 
+    const dims = (img) => [img.naturalWidth || img.width || 0, img.naturalHeight || img.height || 0];
+    const bytesOf = (img) => {
+      const [w, h] = dims(img);
+      return w * h * 4;
+    };
+
     const cover = (img, alpha = 1) => {
       const cw = canvas.width;
       const ch = canvas.height;
-      const iw = img.naturalWidth || img.width;
-      const ih = img.naturalHeight || img.height;
+      const [iw, ih] = dims(img);
       const scale = Math.max(cw / iw, ch / ih);
       const w = iw * scale;
       const h = ih * scale;
@@ -68,28 +103,7 @@ export default function useDoorComposite(
       ctx.globalAlpha = 1;
     };
 
-    const ready = (img) => Boolean(img && (img.width || img.naturalWidth));
-    // A full sequence held in memory decodes to well over a gigabyte on a phone, which makes the
-    // browser purge and re-decode frames mid-scroll — the stutter this is here to avoid. Frames far
-    // from the playhead are released (they come back from the HTTP cache in a few ms if revisited).
-    const KEEP_BACK = 24;
-    const KEEP_AHEAD = 96;
-    let trimTick = 0;
-    const TRIM_BUDGET = 6; // release a few per pass; closing many at once costs a frame
-    const trim = (arr, flags, idx) => {
-      if (idx < 0) return;
-      let budget = TRIM_BUDGET;
-      for (let k = 0; k < arr.length && budget > 0; k += 1) {
-        if (k >= idx - KEEP_BACK && k <= idx + KEEP_AHEAD) continue;
-        if (arr === video && k % SPARSE_STRIDE === 0) continue; // keep the spread
-        if (arr[k]) {
-          if (arr[k].close) arr[k].close();
-          arr[k] = null;
-          flags[k] = false;
-          budget -= 1;
-        }
-      }
-    };
+    const ready = (img) => Boolean(img && dims(img)[0]);
     // nearest loaded frame at or before index (keeps motion continuous while the sequence streams in)
     const nearest = (arr, i) => {
       for (let k = i; k >= 0; k -= 1) if (ready(arr[k])) return arr[k];
@@ -100,6 +114,20 @@ export default function useDoorComposite(
     const lastDoor = Math.min(doorLastFrame, doorFrames.length - 1);
     const fadeStart = doorEnd;
     const fadeEnd = Math.min(1, doorEnd + fade);
+    const lastVideo = videoFrames.length - 1;
+
+    // Footage: a full frame within one stride of the playhead wins; failing that, the nearest spread
+    // copy, so a flick shows motion rather than a frame left far behind.
+    const nearestVideo = (i) => {
+      for (let k = i; k >= Math.max(0, i - STRIDE); k -= 1) if (ready(video[k])) return video[k];
+      for (let k = i + 1; k <= Math.min(lastVideo, i + STRIDE); k += 1) if (ready(video[k])) return video[k];
+      const s = Math.round(i / STRIDE) * STRIDE;
+      for (let r = 0; r <= lastVideo + STRIDE; r += STRIDE) {
+        if (s - r >= 0 && ready(spread[s - r])) return spread[s - r];
+        if (s + r <= lastVideo && ready(spread[s + r])) return spread[s + r];
+      }
+      return nearest(video, i);
+    };
 
     const draw = () => {
       const p = stateRef.current.current;
@@ -109,31 +137,24 @@ export default function useDoorComposite(
       if (p < fadeEnd) doorIndex = Math.round(Math.min(1, p / doorEnd) * lastDoor);
       if (p >= fadeStart) {
         const vp = (p - fadeStart) / (1 - fadeStart);
-        videoIndex = Math.round(vp * (videoFrames.length - 1));
+        videoIndex = Math.round(vp * lastVideo);
         doorAlpha = p >= fadeEnd ? 0 : 1 - (p - fadeStart) / (fadeEnd - fadeStart);
       }
       const key = `${doorIndex}:${videoIndex}:${doorAlpha.toFixed(2)}`;
       if (!dirty && key === lastKey) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const v = videoIndex >= 0 ? nearest(video, videoIndex) : null;
+      const v = videoIndex >= 0 ? nearestVideo(videoIndex) : null;
       const d = doorIndex >= 0 ? nearest(door, doorIndex) : null;
       if (v) cover(v);
       if (d && doorAlpha > 0) cover(d, doorAlpha);
       if (!v && !d && ready(posterImg)) cover(posterImg);
       lastKey = key;
       dirty = false;
-      trimTick += 1;
-      if (trimTick % 12 === 0) {
-        trim(video, asked.video, videoIndex);
-        // past the door act: keep only its tail, in case the visitor scrolls back up
-        trim(door, asked.door, doorIndex >= 0 ? doorIndex : lastDoor);
-      }
     };
 
     // ---- frame loading -------------------------------------------------
-    // Frames are fetched nearest-first around the scroll playhead rather than in one fixed order,
-    // so scrolling ahead never waits behind frames that are already off screen. The preloader is
-    // told about a small "gate" set (the opening of each act) and the rest streams behind the page.
+    // The preloader is told about a small "gate" set (the opening of each act); the rest streams
+    // behind the page, nearest the scroll position first.
     const doorTotal = lastDoor + 1;
     const gateDoor = Math.min(doorTotal, 44);
     const gateVideo = Math.min(videoFrames.length, 8);
@@ -141,93 +162,243 @@ export default function useDoorComposite(
     let gateLoaded = 0;
     const report = () => window.dispatchEvent(new CustomEvent('ice:hero-progress', { detail: { loaded: gateLoaded, total: gateSize, gate: gateSize } }));
 
+    const asked = { door: new Array(doorFrames.length).fill(false), video: new Array(videoFrames.length).fill(false), spread: new Array(videoFrames.length).fill(false) };
+    const estimate = { door: 1.6 * MB, video: 1.6 * MB, spread: 0.4 * MB };
+    // Every frame download this hero starts can be cancelled at once: leaving the page must not
+    // keep downloading and decoding frames nobody will see.
+    const controller = typeof AbortController === 'function' ? new AbortController() : null;
     let inflight = 0;
-    const asked = { door: new Array(doorFrames.length).fill(false), video: new Array(videoFrames.length).fill(false) };
+    let held = 0;
+    let reserved = 0;
+    let spreadHeld = 0;
+    let spreadReserved = 0;
+    const stats = { fetches: 0, released: 0, held: 0, frames: 0, spread: 0, budget: BUDGET };
+    window.__iceHero = stats;
+    const count = (arr) => arr.reduce((n, x) => n + (x ? 1 : 0), 0);
+    const syncStats = () => {
+      stats.held = held + spreadHeld;
+      stats.frames = count(door) + count(video);
+      stats.spread = count(spread);
+    };
 
     // the frame each act is showing at progress `p`
     const indices = (p) => {
       const clamped = Math.min(1, Math.max(0, p));
       const vp = (clamped - fadeStart) / (1 - fadeStart);
-      return { d: Math.round(Math.min(1, clamped / doorEnd) * lastDoor), v: Math.round(Math.min(1, Math.max(0, vp)) * (videoFrames.length - 1)) };
+      return { d: Math.round(Math.min(1, clamped / doorEnd) * lastDoor), v: Math.round(Math.min(1, Math.max(0, vp)) * lastVideo) };
     };
-    // A fast flick can cross hundreds of frames in a second — far more than any mobile connection
-    // can deliver. So a sparse spread across the whole footage is fetched alongside the dense fill
-    // near the playhead: wherever you land, a frame within a few of it already exists, and the
-    // sequence keeps moving instead of freezing on one image.
-    const SPARSE_STRIDE = 8;
-    let sparseCursor = 0;
-    const nextSparse = () => {
-      while (sparseCursor < videoFrames.length) {
-        const i = sparseCursor;
-        sparseCursor += SPARSE_STRIDE;
-        if (!asked.video[i]) return i;
-      }
-      return -1;
+    // Distance from the playhead in progress units; frames ahead count half, so the loader leans forward.
+    const distOf = (kind, k, target) => {
+      const pk = kind === 'door' ? (k / Math.max(1, lastDoor)) * doorEnd : fadeStart + (k / Math.max(1, lastVideo)) * (1 - fadeStart);
+      return pk >= target ? (pk - target) * 0.5 : target - pk;
     };
-    let pickTurn = 0;
 
-    const nextUnasked = (flags, from, limit) => {
-      for (let k = from; k < limit; k += 1) if (!flags[k]) return k;
-      for (let k = 0; k < from; k += 1) if (!flags[k]) return k;
-      return -1;
+    const bestCandidate = (target) => {
+      const { d, v } = indices(target);
+      let bestKind = null;
+      let bestIndex = -1;
+      let bestDist = Infinity;
+      const consider = (kind, k) => {
+        if (asked[kind][k]) return;
+        const dd = distOf(kind, k, target);
+        if (dd < bestDist) {
+          bestDist = dd;
+          bestKind = kind;
+          bestIndex = k;
+        }
+      };
+      for (let k = Math.max(0, d - KEEP_BACK); k <= Math.min(lastDoor, d + KEEP_AHEAD); k += 1) consider('door', k);
+      for (let k = Math.max(0, v - KEEP_BACK); k <= Math.min(lastVideo, v + KEEP_AHEAD); k += 1) consider('video', k);
+      for (let k = 0; k < gateVideo; k += 1) consider('video', k);
+      return bestKind ? { kind: bestKind, index: bestIndex, dist: bestDist } : null;
     };
+
+    const farthestHeld = (target) => {
+      let kind = null;
+      let index = -1;
+      let dist = -1;
+      for (let k = 0; k < door.length; k += 1) {
+        if (!door[k]) continue;
+        const dd = distOf('door', k, target);
+        if (dd > dist) {
+          dist = dd;
+          kind = 'door';
+          index = k;
+        }
+      }
+      for (let k = 0; k < video.length; k += 1) {
+        if (!video[k]) continue;
+        const dd = distOf('video', k, target);
+        if (dd > dist) {
+          dist = dd;
+          kind = 'video';
+          index = k;
+        }
+      }
+      return kind ? { kind, index, dist } : null;
+    };
+
+    const release = (kind, k) => {
+      const arr = kind === 'door' ? door : video;
+      const img = arr[k];
+      if (!img) return;
+      held -= bytesOf(img);
+      if (img.close) img.close();
+      arr[k] = null;
+      asked[kind][k] = false;
+      stats.released += 1;
+    };
+
+    // Decode once into an ImageBitmap (optionally resized while decoding). Falls back to decoding
+    // without options, then through an <img>, and to the <img> itself where createImageBitmap is missing.
+    const viaImage = (blob, toBitmap) =>
+      new Promise((resolve, reject) => {
+        const url = URL.createObjectURL(blob);
+        const img = new Image();
+        img.onload = () => {
+          if (!toBitmap) {
+            URL.revokeObjectURL(url);
+            resolve(img);
+            return;
+          }
+          createImageBitmap(img).then(
+            (bm) => {
+              URL.revokeObjectURL(url);
+              resolve(bm);
+            },
+            (e) => {
+              URL.revokeObjectURL(url);
+              reject(e);
+            }
+          );
+        };
+        img.onerror = (e) => {
+          URL.revokeObjectURL(url);
+          reject(e);
+        };
+        img.src = url;
+      });
+    const decode = (blob, options) => {
+      if (typeof createImageBitmap !== 'function') return viaImage(blob, false);
+      const first = options ? createImageBitmap(blob, options) : createImageBitmap(blob);
+      return first.catch(() => (options ? createImageBitmap(blob) : Promise.reject())).catch(() => viaImage(blob, true));
+    };
+    const download = (url) =>
+      fetch(url, { cache: 'force-cache', signal: controller ? controller.signal : undefined }).then((r) => (r.ok ? r.blob() : Promise.reject(new Error('frame'))));
 
     const fetchFrame = (kind, i) => {
       const arr = kind === 'door' ? door : video;
       const urls = kind === 'door' ? doorFrames : videoFrames;
       const isGate = kind === 'door' ? i < gateDoor : i < gateVideo;
+      const est = estimate[kind];
       asked[kind][i] = true;
       inflight += 1;
-      const settle = (bitmap) => {
+      reserved += est;
+      stats.fetches += 1;
+      const settle = (img) => {
         inflight -= 1;
+        reserved -= est;
         if (destroyed) {
-          if (bitmap && bitmap.close) bitmap.close();
+          if (img && img.close) img.close();
           return;
         }
-        if (bitmap) arr[i] = bitmap;
+        if (img) {
+          const bytes = bytesOf(img);
+          estimate[kind] = bytes;
+          held += bytes;
+          arr[i] = img;
+        }
         if (isGate) {
           gateLoaded += 1;
           report();
         }
+        syncStats();
         dirty = true;
         draw();
         pump();
       };
-      // Decode once into an ImageBitmap. An <img> lets the browser drop its decoded pixels under
-      // memory pressure and decode again at draw time, which is what stalls the scroll; a bitmap
-      // is owned here, costs one decode, and draws as a straight blit.
-      fetch(urls[i], { cache: 'force-cache' })
-        .then((r) => (r.ok ? r.blob() : Promise.reject(new Error('frame'))))
-        .then((blob) => createImageBitmap(blob))
+      download(urls[i])
+        .then((blob) => decode(blob))
         .then(settle, () => settle(null));
     };
 
+    let spreadCursor = 0;
+    const spreadRoom = () => spreadHeld + spreadReserved + estimate.spread <= SPREAD_CAP;
+    const nextSpread = () => {
+      while (spreadCursor <= lastVideo) {
+        const i = spreadCursor;
+        spreadCursor += STRIDE;
+        if (!asked.spread[i]) return i;
+      }
+      return -1;
+    };
+    const fetchSpread = (i) => {
+      const est = estimate.spread;
+      asked.spread[i] = true;
+      inflight += 1;
+      spreadReserved += est;
+      stats.fetches += 1;
+      const settle = (img) => {
+        inflight -= 1;
+        spreadReserved -= est;
+        if (destroyed) {
+          if (img && img.close) img.close();
+          return;
+        }
+        if (img) {
+          const bytes = bytesOf(img);
+          estimate.spread = bytes;
+          spreadHeld += bytes;
+          spread[i] = img;
+        }
+        syncStats();
+        dirty = true;
+        draw();
+        pump();
+      };
+      download(videoFrames[i])
+        .then((blob) => decode(blob, { resizeWidth: SPREAD_WIDTH, resizeQuality: 'low' }))
+        .then(settle, () => settle(null));
+    };
+    // hand spare capacity to the spread lane; true if a download was started
+    const trySpread = () => {
+      if (!spreadRoom()) return false;
+      const si = nextSpread();
+      if (si < 0) return false;
+      fetchSpread(si);
+      return true;
+    };
+
+    let pickTurn = 0;
     function pump() {
-      while (!destroyed && inflight < concurrency) {
-        const p = stateRef.current.target;
-        const { d, v } = indices(p);
-        let kind = null;
-        let index = -1;
+      while (!destroyed && inflight < CONCURRENCY) {
         pickTurn += 1;
-        // one in three goes to the spread until it is complete
-        if (pickTurn % 3 === 0) {
-          index = nextSparse();
-          if (index >= 0) kind = 'video';
+        // one download in three goes to the spread until it is complete
+        if (pickTurn % 3 === 0 && trySpread()) continue;
+        const target = stateRef.current.target;
+        const cand = bestCandidate(target);
+        if (!cand) {
+          if (trySpread()) continue;
+          syncStats();
+          return;
         }
-        if (index < 0 && p < fadeEnd) {
-          index = nextUnasked(asked.door, d, doorTotal);
-          if (index >= 0) kind = 'door';
+        const need = estimate[cand.kind];
+        let blocked = false;
+        while (held + reserved + need > DENSE_BUDGET) {
+          const far = farthestHeld(target);
+          // nothing held is farther than what we want: stop here rather than cycle frames
+          if (!far || far.dist <= cand.dist) {
+            blocked = true;
+            break;
+          }
+          release(far.kind, far.index);
         }
-        if (index < 0) {
-          index = nextUnasked(asked.video, v, videoFrames.length);
-          if (index >= 0) kind = 'video';
+        if (blocked) {
+          if (trySpread()) continue;
+          syncStats();
+          return;
         }
-        if (index < 0) {
-          index = nextUnasked(asked.door, 0, doorTotal);
-          if (index >= 0) kind = 'door';
-        }
-        if (index < 0) return;
-        fetchFrame(kind, index);
+        fetchFrame(cand.kind, cand.index);
       }
     }
 
@@ -276,13 +447,47 @@ export default function useDoorComposite(
     const observer = new ResizeObserver(onResize);
     observer.observe(container);
 
+    const onPageHide = () => {
+      if (controller) controller.abort();
+    };
+    const onPageShow = (e) => {
+      if (!e.persisted) return;
+      // restored from the back/forward cache: downloads cancelled on hide are wanted again
+      for (const [kind, arr] of [['door', door], ['video', video], ['spread', spread]]) {
+        for (let k = 0; k < arr.length; k += 1) if (!arr[k]) asked[kind][k] = false;
+      }
+      spreadCursor = 0;
+      inflight = 0;
+      reserved = 0;
+      spreadReserved = 0;
+      pump();
+    };
+    window.addEventListener('pagehide', onPageHide);
+    window.addEventListener('pageshow', onPageShow);
+
     return () => {
       destroyed = true;
+      if (controller) controller.abort();
+      window.removeEventListener('pagehide', onPageHide);
+      window.removeEventListener('pageshow', onPageShow);
       gsap.ticker.remove(tick);
       window.removeEventListener('resize', onResize);
       observer.disconnect();
       st.kill();
+      // Leaving the page must hand every decoded frame and the canvas backing store back at once;
+      // on iOS, waiting for garbage collection is what pushed a second visit over the limit.
+      for (const arr of [door, video, spread]) {
+        for (let k = 0; k < arr.length; k += 1) {
+          if (arr[k] && arr[k].close) arr[k].close();
+          arr[k] = null;
+        }
+      }
+      held = 0;
+      spreadHeld = 0;
+      canvas.width = 0;
+      canvas.height = 0;
       canvas.remove();
+      if (window.__iceHero === stats) delete window.__iceHero;
     };
   }, [containerRef, triggerRef, doorFrames, videoFrames, start, end, doorEnd, fade, doorLastFrame, smoothing, poster, dprCap, concurrency]);
 }
