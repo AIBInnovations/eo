@@ -57,6 +57,7 @@ export default function useDoorComposite(
     const door = doorFrames.map(() => null);
     const video = videoFrames.map(() => null);
     const spread = videoFrames.map(() => null);
+    const spreadDoor = doorFrames.map(() => null);
     let posterImg = null;
     let destroyed = false;
     let dirty = true;
@@ -64,9 +65,9 @@ export default function useDoorComposite(
 
     // ---- device budget ---------------------------------------------------
     const small = Math.min(window.innerWidth, window.innerHeight) <= 600;
-    // spread copies decode at half width (~0.4MB each on a phone), so the full spread fits its cap
-    const BUDGET = IS_IOS ? (small ? 190 : 330) * MB : (small ? 330 : 1024) * MB;
-    const SPREAD_CAP = IS_IOS ? (small ? 40 : 70) * MB : (small ? 40 : 90) * MB;
+    // spread copies decode at half width (~0.4MB each on a phone); the cap fits every door and footage copy
+    const BUDGET = IS_IOS ? (small ? 205 : 350) * MB : (small ? 345 : 1024) * MB;
+    const SPREAD_CAP = IS_IOS ? (small ? 55 : 90) * MB : (small ? 55 : 110) * MB;
     const DENSE_BUDGET = BUDGET - SPREAD_CAP;
     const CONCURRENCY = concurrency || (IS_IOS ? 6 : 8);
     const KEEP_BACK = 24;
@@ -128,6 +129,17 @@ export default function useDoorComposite(
       }
       return nearest(video, i);
     };
+    // Door: the same rule, so a flick from the top keeps the door moving through frames not yet loaded.
+    const nearestDoor = (i) => {
+      for (let k = i; k >= Math.max(0, i - STRIDE); k -= 1) if (ready(door[k])) return door[k];
+      for (let k = i + 1; k <= Math.min(lastDoor, i + STRIDE); k += 1) if (ready(door[k])) return door[k];
+      const s = Math.round(i / STRIDE) * STRIDE;
+      for (let r = 0; r <= lastDoor + STRIDE; r += STRIDE) {
+        if (s - r >= 0 && ready(spreadDoor[s - r])) return spreadDoor[s - r];
+        if (s + r <= lastDoor && ready(spreadDoor[s + r])) return spreadDoor[s + r];
+      }
+      return nearest(door, i);
+    };
 
     const draw = () => {
       const p = stateRef.current.current;
@@ -144,7 +156,7 @@ export default function useDoorComposite(
       if (!dirty && key === lastKey) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const v = videoIndex >= 0 ? nearestVideo(videoIndex) : null;
-      const d = doorIndex >= 0 ? nearest(door, doorIndex) : null;
+      const d = doorIndex >= 0 ? nearestDoor(doorIndex) : null;
       if (v) cover(v);
       if (d && doorAlpha > 0) cover(d, doorAlpha);
       if (!v && !d && ready(posterImg)) cover(posterImg);
@@ -162,7 +174,7 @@ export default function useDoorComposite(
     let gateLoaded = 0;
     const report = () => window.dispatchEvent(new CustomEvent('ice:hero-progress', { detail: { loaded: gateLoaded, total: gateSize, gate: gateSize } }));
 
-    const asked = { door: new Array(doorFrames.length).fill(false), video: new Array(videoFrames.length).fill(false), spread: new Array(videoFrames.length).fill(false) };
+    const asked = { door: new Array(doorFrames.length).fill(false), video: new Array(videoFrames.length).fill(false), spread: new Array(videoFrames.length).fill(false), spreadDoor: new Array(doorFrames.length).fill(false) };
     const estimate = { door: 1.6 * MB, video: 1.6 * MB, spread: 0.4 * MB };
     // Every frame download this hero starts can be cancelled at once: leaving the page must not
     // keep downloading and decoding frames nobody will see.
@@ -178,7 +190,7 @@ export default function useDoorComposite(
     const syncStats = () => {
       stats.held = held + spreadHeld;
       stats.frames = count(door) + count(video);
-      stats.spread = count(spread);
+      stats.spread = count(spread) + count(spreadDoor);
     };
 
     // the frame each act is showing at progress `p`
@@ -322,19 +334,25 @@ export default function useDoorComposite(
         .then(settle, () => settle(null));
     };
 
+    // door copies first (a flick from the top crosses the door first), then the footage
+    const spreadOrder = [];
+    for (let k = 0; k <= lastDoor; k += STRIDE) spreadOrder.push(['spreadDoor', k]);
+    for (let k = 0; k <= lastVideo; k += STRIDE) spreadOrder.push(['spread', k]);
     let spreadCursor = 0;
     const spreadRoom = () => spreadHeld + spreadReserved + estimate.spread <= SPREAD_CAP;
     const nextSpread = () => {
-      while (spreadCursor <= lastVideo) {
-        const i = spreadCursor;
-        spreadCursor += STRIDE;
-        if (!asked.spread[i]) return i;
+      while (spreadCursor < spreadOrder.length) {
+        const item = spreadOrder[spreadCursor];
+        spreadCursor += 1;
+        if (!asked[item[0]][item[1]]) return item;
       }
-      return -1;
+      return null;
     };
-    const fetchSpread = (i) => {
+    const fetchSpread = (lane, i) => {
+      const arr = lane === 'spreadDoor' ? spreadDoor : spread;
+      const url = lane === 'spreadDoor' ? doorFrames[i] : videoFrames[i];
       const est = estimate.spread;
-      asked.spread[i] = true;
+      asked[lane][i] = true;
       inflight += 1;
       spreadReserved += est;
       stats.fetches += 1;
@@ -347,25 +365,25 @@ export default function useDoorComposite(
         }
         if (img) {
           const bytes = bytesOf(img);
-          estimate.spread = bytes;
+          estimate.spread = Math.max(estimate.spread, bytes);
           spreadHeld += bytes;
-          spread[i] = img;
+          arr[i] = img;
         }
         syncStats();
         dirty = true;
         draw();
         pump();
       };
-      download(videoFrames[i])
+      download(url)
         .then((blob) => decode(blob, { resizeWidth: SPREAD_WIDTH, resizeQuality: 'low' }))
         .then(settle, () => settle(null));
     };
     // hand spare capacity to the spread lane; true if a download was started
     const trySpread = () => {
       if (!spreadRoom()) return false;
-      const si = nextSpread();
-      if (si < 0) return false;
-      fetchSpread(si);
+      const item = nextSpread();
+      if (!item) return false;
+      fetchSpread(item[0], item[1]);
       return true;
     };
 
@@ -453,7 +471,7 @@ export default function useDoorComposite(
     const onPageShow = (e) => {
       if (!e.persisted) return;
       // restored from the back/forward cache: downloads cancelled on hide are wanted again
-      for (const [kind, arr] of [['door', door], ['video', video], ['spread', spread]]) {
+      for (const [kind, arr] of [['door', door], ['video', video], ['spread', spread], ['spreadDoor', spreadDoor]]) {
         for (let k = 0; k < arr.length; k += 1) if (!arr[k]) asked[kind][k] = false;
       }
       spreadCursor = 0;
@@ -476,7 +494,7 @@ export default function useDoorComposite(
       st.kill();
       // Leaving the page must hand every decoded frame and the canvas backing store back at once;
       // on iOS, waiting for garbage collection is what pushed a second visit over the limit.
-      for (const arr of [door, video, spread]) {
+      for (const arr of [door, video, spread, spreadDoor]) {
         for (let k = 0; k < arr.length; k += 1) {
           if (arr[k] && arr[k].close) arr[k].close();
           arr[k] = null;
