@@ -8,6 +8,7 @@ import PointsGrid from '../blocks/PointsGrid.jsx';
 import LSection from '../blocks/LSection.jsx';
 import LineList from '../blocks/LineList.jsx';
 import Btn from '../blocks/Btn.jsx';
+import Leaders from '../components/Leaders.jsx';
 import { days, activities, keyTimes, flightDesk, family, announcements } from '../data/retreat.js';
 import { pageImages } from '../data/pages.js';
 
@@ -93,7 +94,10 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* 6 · Updates & Help */}
+      {/* 6 · Who to look for */}
+      <Leaders id="leaders" />
+
+      {/* 7 · Updates & Help */}
       <section className="ice-section ice-teaser" id="updates">
         <LineList
           title="Updates & Help"

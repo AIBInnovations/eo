@@ -5553,14 +5553,6 @@ body.iceland .ice-gm-grid > li {
   height: 100%;
   object-fit: cover;
 }
-.ice-leader-face--mohit .ice-leader-img {
-  transform: scale(2.8);
-  transform-origin: 50% 51%;
-}
-.ice-leader-face--vidur .ice-leader-img {
-  transform: scale(1.8);
-  transform-origin: 54% 25%;
-}
 .ice-leader-initials {
   font-family: var(--serif);
   font-size: 24px;
