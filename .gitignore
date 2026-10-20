@@ -8,3 +8,6 @@ dist
 # raw source material (original video / PDFs / poster PNGs) and the old public copy — not part of the site
 source/
 public copy/
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
