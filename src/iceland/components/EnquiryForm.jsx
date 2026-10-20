@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
 import { useEnquiry } from '../EnquiryContext.jsx';
 import { useRouter } from '../router.jsx';
+import { syncContact } from '../../lib/slideContact.js';
 
 export const ENQUIRY_TOPICS = ['Joining the retreat', 'Day 4 breakout activity', 'Room upgrade or extra night', 'Trip extension', 'Flights and transfers', 'Invoices and payments', 'Something else'];
 
@@ -37,26 +38,37 @@ export default function EnquiryForm({ compact = false }) {
     return next;
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
-    const next = validate(e.currentTarget);
+    const form = e.currentTarget;
+    const next = validate(form);
     setErrors(next);
     if (Object.keys(next).length) {
-      const first = e.currentTarget.querySelector('[aria-invalid="true"]');
+      const first = form.querySelector('[aria-invalid="true"]');
       if (first) first.focus();
       return;
     }
     setSending(true);
-    // Front-end only for now: replace this timeout with the real request to the retreat desk.
-    setTimeout(() => {
-      setSending(false);
-      if (compact) {
-        setDone(true);
-      } else {
-        closePanel();
-        navigate('/thank-you');
-      }
-    }, 700);
+    const f = new FormData(form);
+    const [firstName, ...rest] = String(f.get('name') || '').trim().split(/\s+/);
+    const topicValue = String(f.get('topic') || '').trim();
+    const message = String(f.get('message') || '').trim();
+    // Syncs the contact to Slide CRM. The retreat desk itself still isn't notified — see EnquiryContext.jsx.
+    await syncContact({
+      source: 'Website – Iceland retreat enquiry',
+      email: String(f.get('email') || '').trim(),
+      firstName,
+      lastName: rest.join(' '),
+      phone: String(f.get('mobile') || '').trim(),
+      notes: [topicValue && `Topic: ${topicValue}`, message && `Message: ${message}`].filter(Boolean).join('\n'),
+    });
+    setSending(false);
+    if (compact) {
+      setDone(true);
+    } else {
+      closePanel();
+      navigate('/thank-you');
+    }
   };
   const field = (name) => ({ 'aria-invalid': errors[name] ? 'true' : undefined, 'aria-describedby': errors[name] ? `err-${name}` : undefined, onInput: () => errors[name] && setErrors((er) => ({ ...er, [name]: undefined })) });
   const err = (name) => errors[name] && <span className="ice-field-error" id={`err-${name}`} role="alert">{errors[name]}</span>;

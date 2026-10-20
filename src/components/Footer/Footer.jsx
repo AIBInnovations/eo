@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { footerColumns, legalLinks, footerCopy as c } from '../../data/footer.js';
+import { syncContact } from '../../lib/slideContact.js';
 import qrCode from '../../assets/images/whatsapp-qr.avif';
 
 /**
@@ -9,10 +10,16 @@ import qrCode from '../../assets/images/whatsapp-qr.avif';
 export default function Footer() {
   const [formState, setFormState] = useState('idle'); // idle | done | fail
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const email = new FormData(e.currentTarget).get('email-2');
-    setFormState(email ? 'done' : 'fail');
+    if (!email) {
+      setFormState('fail');
+      return;
+    }
+    setFormState('sending');
+    const ok = await syncContact({ source: 'Website – Newsletter signup', email });
+    setFormState(ok ? 'done' : 'fail');
   };
 
   return (
@@ -74,7 +81,13 @@ export default function Footer() {
                           id="email-2"
                           required
                         />
-                        <input type="submit" data-wait="Please wait..." className="footer_button color-inversion-target w-button" value={c.subscribe} />
+                        <input
+                          type="submit"
+                          data-wait="Please wait..."
+                          className="footer_button color-inversion-target w-button"
+                          value={formState === 'sending' ? 'Please wait…' : c.subscribe}
+                          disabled={formState === 'sending'}
+                        />
                       </form>
                     )}
                     <div className="subscribe_thanks w-form-done" tabIndex={-1} role="region" aria-label="Subscribe Form success" style={{ display: formState === 'done' ? 'block' : 'none' }}>
